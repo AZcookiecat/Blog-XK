@@ -1,0 +1,207 @@
+/*鼠标小黑猫光标*/
+button {cursor:url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/work.cur),alias}
+p {cursor:url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/texto.cur),auto}
+a {cursor:url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/ayuda.cur),auto}
+a:active {cursor:url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/work.cur),alias}
+body {cursor:url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/normal.cur),auto}
+/*CSS 代码网站底部按钮美化 blog.sxchl.cn*/
+:root{--theme-color:#faf5f8;--focus-shadow-color:rgb(255, 250, 253);--mian-max-width:1200px;}.github-badge {
+    display: inline-block;
+    border-radius: 6px;
+    text-shadow: none;
+    font-size: 13px;
+    color: #fff;
+    line-height: 15px;
+    margin-bottom: 8px;
+}
+.badge-subject {
+    display: inline-block;
+    background-color: #272727;
+    padding: 4px 4px 4px 6px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.github-badge .bg-blue {
+    background-color: #007ec6;
+}
+.github-badge .bg-brightgreen {
+    background-color: #4dc820;
+}
+.github-badge .bg-blueviolet {
+    background-color: #8833d7;
+}
+.github-badge .badge-value {
+    display: inline-block;
+    padding: 4px 6px 4px 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.github-badge .bg-orange {
+    background-color: orange;
+}
+.github-badge .bg-red {
+    background-color: red;
+}
+/*CSS 代码网站底部按钮美化结束 */
+/*CSS 整体网页样式 */
+<style>*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: #1e1d1d;
+    color: rgb(255, 255, 255);
+    font-size: 17px;
+    font-family: monospace;
+
+}
+@keyframes typing {
+    0% {
+        width: 0;
+    }
+    /* 99% {
+        width: 72px;
+    }
+    100% {
+        width: 100%;
+    } */
+    100% {
+        width: 90px;
+    }
+}
+@keyframes flash {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+p.title {
+    animation: typing 1s;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.flash {
+    opacity: 0;
+    animation: flash 1s infinite;
+    animation-delay: 1s;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.nav-bar {
+    text-align: center;
+    margin-top: 3em;
+    opacity: 0;
+    animation: fade-in 1s forwards;
+    animation-delay: 1s;
+}
+.nav-bar a{
+    color: white;
+    text-decoration: none;
+}
+.nav-bar a:hover,
+
+</style>
+
+
+
+
+
+
+
+
+
+.navigation {
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    list-style-type: none;
+}
+.navigation__item {
+    display: inline-block;
+    line-height: 1em;
+    padding: 2em 0;
+}
+.navigation__item a {
+    position: relative;
+    color: #FFF;
+    opacity: 1;
+	transition: all .3s;
+	padding: 10px 20px;
+    border: 1px solid rgb(110, 107, 107);
+    border-radius: 15px;
+    font-size: .9em;
+   
+    letter-spacing: 1px;
+    text-shadow: none;
+	-webkit-font-smoothing: antialiased;
+	text-decoration: none;
+}
+.navigation__item a:hover {
+    color: rgb(253, 252, 252);
+    background: -webkit-linear-gradient(left, #bf4edb, #e26218);
+    background: -o-linear-gradient(left, #19c3ff, #0093ff);
+    background: -moz-linear-gradient(left, #19c3ff, #0093ff);
+    background: linear-gradient(left, #19c3ff, #0093ff);
+    opacity: ;
+    transition: all .3s;
+}
+ol, ul {
+	list-style: none;
+	margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+.icp{
+	margin: 20px;
+}
+.icpnum{
+	color: #fff;
+	text-decoration: none;
+}
+.main-info {
+    height: 0.80rem;
+    padding-bottom: 0.24rem;
+}
+.fund-info {
+    position: relative;
+    font-weight: normal;
+    padding: 0.2rem 0;
+    padding-right: 1.7rem;
+    padding-left: 0.23rem;
+    font-size: 0.32rem;
+    line-height: 0;
+}
+.profilepic {
+    text-align: center;
+    display: block;
+    -webkit-box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0px 2px 20px 3px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0px 2px 20px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 300px;
+    width: 148px;
+    height: 148px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    background: #0f0f0f;
+    -webkit-transition: all .2s ease-in;
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    text-align: center
+}
