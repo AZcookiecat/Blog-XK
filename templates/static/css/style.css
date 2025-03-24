@@ -450,7 +450,7 @@ body {
 .projectList {
     display: block; 
     flex-wrap: wrap;
-    width: 650px;
+    width: 700px;
 }
 
 .projectItem {
