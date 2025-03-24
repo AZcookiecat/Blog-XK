@@ -168,15 +168,7 @@ body {
     backdrop-filter: blur(var(--card_filter));
     background: var(--item_bg_color);
 }
-.left-div-music {
-    flex-shrink: 10;
-    width: 100%;
-    border-radius: 8px;
-    margin-top: 10px;
-    padding: 4px;
-    backdrop-filter: blur(var(--card_filter));
-    background: var(--item_bg_color);
-}
+
 .left-des {
     display: flex;
     flex-direction: column;
@@ -210,6 +202,17 @@ body {
 
 .left-tag-item {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 28px;
+    margin: 0px 5px 5px 0;
+    padding: 8px;
+    font-size: 13px;
+    border-radius: 10px;
+    background: var(--left_tag_item);
+}
+.left-tag-a {
+    display:block;
     justify-content: center;
     align-items: center;
     height: 28px;
@@ -445,8 +448,9 @@ body {
 }
 
 .projectList {
-    display: flex;
+    display: block; 
     flex-wrap: wrap;
+    width: 650px;
 }
 
 .projectItem {
@@ -455,8 +459,8 @@ body {
     background-color: var(--item_bg_color);
     border-radius: 8px;
     padding: 15px;
-    height: 95px;
-    width: calc(25% - 15px);
+    height: 110px;
+    width: 100%;
     backdrop-filter: blur(var(--card_filter));
     transition: opacity 0.3s ease, background-color 0.3s ease, border 0.3s ease, transform 0.2s ease;
 
@@ -467,8 +471,7 @@ body {
     background-color: var(--item_bg_color);
     border-radius: 8px;
     padding: 15px;
-    height: 100px;
-    width: calc(25% - 15px);
+    width: 100%;
     backdrop-filter: blur(var(--card_filter));
     transition: opacity 0.5s ease, background-color 0.2s ease, border 0.2s ease, transform 0.3s ease;
 }
@@ -489,13 +492,6 @@ body {
     width: 100%;
 }
 
-.projectItem:hover .projectItemRight {
-    width: 0%;
-}
-
-.projectItem:hover .projectItemRight img {
-    transform: rotate(40deg);
-}
 
 .projectItem:hover h1 {
     font-size: 18px;
@@ -521,23 +517,6 @@ body {
     transition: width 0.4s ease;
     height: 100%;
     width: 80%;
-}
-
-
-.projectItemRight {
-    overflow: hidden;
-    transition: width 0.4s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 20%;
-    height: 100%;
-}
-
-.projectItemRight img {
-    height: 39px;
-    width: 39px;
-
 }
 
 
