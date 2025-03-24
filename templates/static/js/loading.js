@@ -4,5 +4,5 @@ window.addEventListener('DOMContentLoaded', function() {
   // 设置一个定时器，在3秒后隐藏加载指示器
   setTimeout(function() {
     spinnerContainer.style.display = 'none';
-  }, 3000); // 3000毫秒即3秒
+  }, 2000); // 2500毫秒即2.5秒
 });
