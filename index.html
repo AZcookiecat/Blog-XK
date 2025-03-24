@@ -31,15 +31,11 @@
         function() {
             // 如果页面被隐藏
             if (document.hidden) {
-                // 更改 favicon 图标
-                $('[rel="shortcut icon"]').attr("href", "./assets/favicon.png");
                 // 更改页面标题以提醒用户
                 document.title = "你别走吖 Σ(っ °Д °;)っ";
                 // 清除定时器
                 clearTimeout(titleTime)
             } else {
-                // 如果页面再次可见，恢复 favicon 图标
-                $('[rel="shortcut icon"]').attr("href", "./assets/favicon.png");
                 // 恢复页面标题并添加欢迎信息
                 document.title = "你可算回来了 (｡•ˇ‸ˇ•｡)" + OriginTitile;
                 // 设置定时器，2秒后恢复原标题
