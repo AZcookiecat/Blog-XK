@@ -146,7 +146,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
  //*footer*//
  // 计算站点运行天数
- var startDate = new Date('2025/03/22');
+ var startDate = new Date('2025/03/1');
  var currentDate = new Date();
  var daysElement = document.getElementById('days');
  var days = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));

@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<head class="noisework.cn">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Ciin7mo's 个人博客</title>
+	<link rel="icon" href="./static/img/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="./static/css/style.css">
+	<link rel="stylesheet" href="./static/css/root.css">
+	<script src="https://kit.fontawesome.com/25cfefa7b1.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="./static/css/Right.css">
+	<link rel="stylesheet" type="text/css" href="./static/css/loading.css"> 
+	<script src="./static/js/Right.js"></script>
+</head>
+<body>
+	 <!-- loading加载--> 
+	 <div id="spinner-container">
+        <div class="spinner"></div>
+    </div>
+	 <!-- 右键菜单 -->
+	 <body oncontextmenu="openMenu(event)">
+		<div class="menu">
+			<ul class="menu-list01">
+				<li class="menu-item" onclick="toggleFullScreen()">
+					<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+						<path d="M200 32H56C42.7 32 32 42.7 32 56V200c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l40-40 79 79-79 79L73 295c-6.9-6.9-17.2-8.9-26.2-5.2S32 302.3 32 312V456c0 13.3 10.7 24 24 24H200c9.7 0 18.5-5.8 22.2-14.8s1.7-19.3-5.2-26.2l-40-40 79-79 79 79-40 40c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H456c13.3 0 24-10.7 24-24V312c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2l-40 40-79-79 79-79 40 40c6.9 6.9 17.2 8.9 26.2 5.2s14.8-12.5 14.8-22.2V56c0-13.3-10.7-24-24-24H312c-9.7 0-18.5 5.8-22.2 14.8s-1.7 19.3 5.2 26.2l40 40-79 79-79-79 40-40c6.9-6.9 8.9-17.2 5.2-26.2S209.7 32 200 32z"/>
+					</svg>
+					<span style="margin-left: 2px;">全屏</span>
+				</li>
+				<li class="menu-item" onclick="refreshPage()">
+					<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M142.9 142.9c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5c0 0 0 0 0 0H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5c7.7-21.8 20.2-42.3 37.8-59.8zM16 312v7.6 .7V440c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l41.6-41.6c87.6 86.5 228.7 86.2 315.8-1c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.2 62.2-162.7 62.5-225.3 1L185 329c6.9-6.9 8.9-17.2 5.2-26.2s-12.5-14.8-22.2-14.8H48.4h-.7H40c-13.3 0-24 10.7-24 24z"/></svg>
+					<span style="margin-left: 2.3px;">刷新</span>
+				</li>
+				<li class="menu-item" onclick="goBack()">
+					<svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32C28.7 32 0 60.7 0 96L0 416zM128 256c0-6.7 2.8-13 7.7-17.6l112-104c7-6.5 17.2-8.2 25.9-4.4s14.4 12.5 14.4 22l0 208c0 9.5-5.7 18.2-14.4 22s-18.9 2.1-25.9-4.4l-112-104c-4.9-4.5-7.7-10.9-7.7-17.6z"/></svg>
+					<span style="margin-left: 2.7px;">返回</span>
+				</li>
+				<li class="menu-item">
+					<a href="/" target="_blank" style="color: white; text-decoration: none;">
+						<svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
+							<path d="M385.2 167.6c6.4 0 12.6 .3 18.8 1.1C387.4 90.3 303.3 32 207.7 32 100.5 32 13 104.8 13 197.4c0 53.4 29.3 97.5 77.9 131.6l-19.3 58.6 68-34.1c24.4 4.8 43.8 9.7 68.2 9.7 6.2 0 12.1-.3 18.3-.8-4-12.9-6.2-26.6-6.2-40.8-.1-84.9 72.9-154 165.3-154zm-104.5-52.9c14.5 0 24.2 9.7 24.2 24.4 0 14.5-9.7 24.2-24.2 24.2-14.8 0-29.3-9.7-29.3-24.2 .1-14.7 14.6-24.4 29.3-24.4zm-136.4 48.6c-14.5 0-29.3-9.7-29.3-24.2 0-14.8 14.8-24.4 29.3-24.4 14.8 0 24.4 9.7 24.4 24.4 0 14.6-9.6 24.2-24.4 24.2zM563 319.4c0-77.9-77.9-141.3-165.4-141.3-92.7 0-165.4 63.4-165.4 141.3S305 460.7 397.6 460.7c19.3 0 38.9-5.1 58.6-9.9l53.4 29.3-14.8-48.6C534 402.1 563 363.2 563 319.4zm-219.1-24.5c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.8 0 24.4 9.7 24.4 19.3 0 10-9.7 19.6-24.4 19.6zm107.1 0c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.5 0 24.4 9.7 24.4 19.3 .1 10-9.9 19.6-24.4 19.6z"/>
+						</svg>
+						<span style="margin-left: -4.5px;">联系</span>
+					</a>
+				</li>
+				<li class="menu-item-divider"></li>
+				<li class="menu-item menu-item-danger">
+					<a href="#" style="color: white; text-decoration: none;"></a>
+					<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm175 79c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>
+					<span style="margin-left: 2px;">关闭</span>
+				</li>
+			</ul>
+		</div>
+		 <!-- 在手机尺寸下显示的导航按钮 -->
+		 <div class="mobile-nav-button">
+			<i class="fa-solid fa-list"></i>
+			</div>  
+	  <!--侧边-->
+	<div class="noise-filter"></div>
+	<div class="noise-main">
+		<div class="noise-left">
+			<div class="logo" style="background-image: url(./static/img/2.jpg);">
+			</div>
+			 <!-- 坐标.个性签名-->
+			 <div class="left-div left-des">
+				<div class="left-des-item"><i class="fa-solid fa-location-dot"></i><span>地球</span></div>
+			</div>
+			<!-- 标签-->
+			<div class="left-div left-tag">
+				<div class="left-tag-item">HTML
+				</div>
+				<div class="left-tag-item">Javascript
+				</div>
+				<div class="left-tag-item">CSS
+				</div>
+				<div class="left-tag-item">Python全栈
+				</div>
+				<div class="left-tag-item">Web开发
+				</div>
+				<div class="left-tag-item">大数据
+				</div>
+				<div class="left-tag-item">C#</div>
+			</div>
+			<!-- 时间代码-->
+		    <div class="left-div left-time">
+			<ul id="line1">	
+				<div id="lbl"></div>
+				<div id="clock"></div>			
+			</ul>
+		   </div>
+	   <!-- 随机一言代码-->
+			<div class="left-div left-time">
+				<ul id="line1">
+						<div class="container">
+							<span id="hitokoto">正在获取中...</span>
+						</div>
+						<script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script>  
+				</ul>
+			</div>
+			<!-- 随机一言结束-->
+		</div>
+	
+		<div class="noise-right">
+			<header>
+				<!-- 手机页面头部logo -->		
+				<div class="index-logo" style="background-image: url(./static/img/logo3.png);">
+				</div>
+				<div class="welcome">⭐️
+					<span class="gradientText">凡星的个人'
+						<a href="/" target="_blank">主页</a></span>
+				</div>
+				<div class="description">👏<span class="purpleText">欢迎访问本站！ </span> 这是来自凡星的个人主页。公众号：凡星</span>
+				</div>							
+				<div class="description">📝点击 <span class="purpleText textBackground"><a href="./jianjie/index.html" style="color: red;">这里切换为简洁风格</a> </span>查看</span></div>
+				<div class="iconContainer">
+					<a class="iconItem" onclick="" target="_blank" href="/">
+						<svg t="1704870335945" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2487">
+                            <path d="M511.6 76.3C264.3 76.2 64 276.4 64 523.5 64 718.9 189.3 885 363.8 946c23.5 5.9 19.9-10.8 19.9-22.2v-77.5c-135.7 15.9-141.2-73.9-150.3-88.9C215 726 171.5 718 184.5 703c30.9-15.9 62.4 4 98.9 57.9 26.4 39.1 77.9 32.5 104 26 5.7-23.5 17.9-44.5 34.7-60.8-140.6-25.2-199.2-111-199.2-213 0-49.5 16.3-95 48.3-131.7-20.4-60.5 1.9-112.3 4.9-120 58.1-5.2 118.5 41.6 123.2 45.3 33-8.9 70.7-13.6 112.9-13.6 42.4 0 80.2 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.3-43.9 2.9 7.7 24.7 58.3 5.5 118 32.4 36.8 48.9 82.7 48.9 132.3 0 102.2-59 188.1-200 212.9 23.5 23.2 38.1 55.4 38.1 91v112.5c0.8 9 0 17.9 15 17.9 177.1-59.7 304.6-227 304.6-424.1 0-247.2-200.4-447.3-447.5-447.3z"  p-id="2488"></path>
+                        </svg>
+						<div class="iconTip">Github</div>
+					
+						<a class="iconItem" onclick="" target="_blank" href="https://img11.360buyimg.com/ddimg/jfs/t1/264060/33/30263/43307/67cc2365F4f39206b/04da0e22404966ba.jpg">
+						<svg t="1705247464964" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4987" >
+                            <path d="M995.575172 725.451034c-12.358621-26.835862-38.488276-64.794483-92.689655-94.27862-62.146207-33.721379-136.297931-40.96-208.860689-20.303448l-99.928276 28.424827-279.304828-126.057931H22.775172v489.401379h509.704828l432.375172-195.266207c15.006897-6.708966 26.835862-19.42069 32.662069-34.957241 5.649655-15.36 4.943448-31.955862-1.942069-46.962759z m-482.162758 188.910345H111.051034V601.688276h184.673104l166.664828 75.387586-3.354483 0.882759h-170.372414v88.275862H471.393103l246.819311-70.267586c49.434483-14.124138 101.517241-9.357241 142.653793 12.888275 18.184828 9.886897 30.72 20.833103 39.371034 30.896552l-386.824827 174.609655z"  p-id="4988"></path>
+                            <path d="M695.437241 163.486897l58.615173-142.30069h-397.24138l66.736552 143.36c-121.82069 53.142069-207.095172 174.433103-207.095172 315.674483 0 28.601379 3.531034 57.202759 10.593103 84.744827l85.627586-21.715862c-5.12-20.48-7.768276-41.666207-7.768275-63.028965 0-141.241379 114.758621-256 256-256s256 114.758621 256 256c0 51.023448-14.830345 100.104828-43.078621 142.300689l73.268965 49.08138c37.958621-56.673103 58.085517-122.88 58.085518-191.382069-0.176552-141.947586-86.686897-264.121379-209.743449-316.733793zM467.508966 91.983448h180.965517l-21.009655 50.846897a348.16 348.16 0 0 0-66.913104-6.708966c-23.834483 0-46.962759 2.471724-69.384827 7.062069l-23.657931-51.2z"  p-id="4989"></path>
+                            <path d="M683.431724 427.431724v-70.62069h-38.311724l30.190345-30.190344-49.964138-49.964138-62.49931 62.49931h-6.002759L494.344828 276.656552l-49.787587 49.964138 30.013793 30.190344h-38.311724v70.62069h88.275862v35.310345h-88.275862v70.62069h88.275862v52.965517h70.62069v-52.965517h88.275862v-70.62069h-88.275862v-35.310345z"  p-id="4990"></path>
+                        </svg>
+						<div class="iconTip">赞助</div>
+						<a class="iconItem" onclick="" target="_blank" href="/" >
+						<i class="fa-brands fa-square-x-twitter"></i>
+						<div class="iconTip">Twitter</div>
+						<a class="iconItem" onclick="" target="_blank" href="/">
+						<i class="fa-solid fa-blog"></i>
+						<div class="iconTip">Blog</div>
+					</a><a class="iconItem" onclick="pop('./static/img/weixin.png')" href="javascript:void(0)">
+						<i class="fa-brands fa-weixin"></i>
+						<div class="iconTip">微信</div>
+					</a><a class="iconItem" onclick="pop('./static/img/gongzhonghao.jpg')" href="javascript:void(0)">
+						<i class="fa-solid fa-comments"></i>
+						<div class="iconTip"> .公众号</div>
+						<a class="iconItem" onclick="" target="_blank" href="/">
+						<i class="fa-brands fa-telegram"></i>
+						<div class="iconTip">TG频道</div>
+					</a>  <a class="switch" href="javascript:void(0)">
+						<div class="onoffswitch">
+							<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
+								checked>
+							<label class="onoffswitch-label" for="myonoffswitch">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</a>
+				</div>
+				<!--图片弹出pop容器-->
+				<div id="imagePopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000;">
+					<img id="popupImage" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);" src="" alt="Popup Image">
+					<a href="javascript:void(0)" onclick="closePopup()" style="position:absolute; top:10px; right:10px; color:white; font-size:24px;">&times;</a>
+				</div>
+				 <!--公告-->
+				<style type="text/css">
+					.zzbuluoled:after {
+						content: ".";
+						display: block;
+						height: 0;
+						clear: both;
+						visibility: hidden;
+					}
+
+					</style>  
+					<div class="wp zzbuluoled"  style="margin-top:0px;">   
+					<div style="background:url('https://jsd.cdn.zzko.cn/gh/rcy1314/tuchuang@main/uPic/222.png'); text-align: center; height:80px; border: 0px solid #E8EFF5;" >          
+					<div id="zzbuluoled_sx" style="width:auto;overflow:hidden;height:80px;line-height:80px;text-align:left;">
+					<div id="zzbuluoled_sx1" > 
+					<p style="padding:0px 10px 0px 16px;vertical-align:middle;height:80px;overflow:hidden;">
+					  <marquee direction="lelf" scrollamount="5"><strong>
+					  <a href="/" target="_black" >
+					<span style="font-family: 'Tahoma';font-weight:900; color: #FF0000; font-size: 30px;line-height:80px;">👏欢迎访问本站，站点域名110.com👉
+					</span>
+					</a>   
+						<a href="/" target="_black" >
+					<span style="font-family: 'Tahoma';font-weight:900; color: #33a4e5; font-size: 30px;line-height:80px;">📢①：本站只是展示使用
+					</span>
+					</a>
+						<a href="/" target="_black" >
+							<span style="font-family: 'Tahoma';font-weight:900; color: #e56e33; font-size: 30px;line-height:80px;">📢②：资源可以去凡星源码网
+							</span>
+							</a>
+							<a href="/" target="_black" >
+								<span style="font-family: 'Tahoma';font-weight:900; color: #b333e5ce; font-size: 30px;line-height:80px;">📢③：本站永久托管至cloudflare
+								</span>
+								</a>
+						<a href="/" target="_black" >
+					<span style="font-family: 'Tahoma';font-weight:900; color: #FFFFFF; font-size: 30px;line-height:80px;">  公告已更新，欢迎随时回来👏
+					</span>
+					</a>
+						 </strong></marquee>
+					</p>
+				
+			</header>
+			
+			<content>
+				<div class="title"><i class="fa-solid fa-star"></i>
+				</svg>旗下站点 </div>
+
+				<div class="projectList">
+				
+				<a class="projectItem a" target="_blank" href="/">
+						<div class="projectItemLeft">
+							<h1>凡星源码网</h1>
+							<p>免费的源码程序和游戏端工具教程</p>
+						</div>
+						<div class="projectItemRight">
+							<img src="./static/img/i15.png" alt="">
+						</div></a>
+						
+					<a class="projectItem a" target="_blank" href="/">
+						<div class="projectItemLeft">
+							<h1>凡星博客</h1>
+							<p>暂时还不知道更新什么</p>
+						</div>
+						<div class="projectItemRight">
+							<img src="./static/img/i23.png" alt="">
+						</div>
+
+
+
+					</a></div>
+					<content>
+						<div class="title"><i class="fa-solid fa-star"></i>
+						</svg>关联站点 </div>
+						<div class="projectList"><a class="projectItem a" target="_blank" href="/">
+								<div class="projectItemLeft">
+									<h1>网盘拉新工具</h1>
+									<p>可以生成移动拉新链接</p>
+								</div>
+								<div class="projectItemRight">
+									<img src="./static/img/i16.png" alt="">
+								</div>
+		
+							</a><a class="projectItem a" target="_blank" href="/">
+								<div class="projectItemLeft">
+									<h1>挪车码生成</h1>
+									<p>免费生成挪车二维码</p>
+								</div>
+								<div class="projectItemRight">
+									<img src="./static/img/i17.png" alt="">
+								</div>
+		
+							</a><a class="projectItem a" target="_blank" href="/">
+								<div class="projectItemLeft">
+									<h1>图片拼接工具</h1>
+									<p>图片在线拼接横线纵向</p>
+								</div>
+								<div class="projectItemRight">
+									<img src="./static/img/i31.png" alt="">
+								</div>
+		
+							</a><a class="projectItem a" target="_blank" href="/">
+								<div class="projectItemLeft">
+									<h1>图片加水印</h1>
+									<p>可批量可单张，打开有点慢</p>
+								</div>
+								<div class="projectItemRight">
+									<img src="./static/img/i21.png" alt="">
+								</div>
+								</a><a class="projectItem a" target="_blank" href="/">
+								<div class="projectItemLeft">
+									<h1>网易云工具</h1>
+									<p>在线解析下载网易云音乐</p>
+								</div>
+								<div class="projectItemRight">
+									<img src="./static/img/i21.png" alt="">
+								</div>
+						</a><a class="projectItem a" target="_blank" href="/">
+						<div class="projectItemLeft">
+							<h1>视频解析</h1>
+							<p>无需VIP解析视频平台的链接观看</p>
+						</div>
+						<div class="projectItemRight">
+							<img src="./static/img/7y.png" alt="">
+						</div>
+							</a><a class="projectItem a" target="_blank" href="/">
+						<div class="projectItemLeft">
+							<h1>公益羊毛</h1>
+							<p>阳光开奖公益福彩</p>
+						</div>
+						<div class="projectItemRight">
+							<img src="./static/img/i8.png" alt="">
+						</div>
+							</a></div>
+
+				<content>
+					<div class="title"><i class="fa-solid fa-star"></i>
+					</svg>友情链接</div>
+				<div class="projectList"><a class="projectItem a" target="_blank" href="https://www.bing.com">
+						<div class="projectItemLeft">
+							<h1>必应搜索</h1>
+							<p>最多人用的搜索引擎</p>
+						</div>
+						<div class="projectItemRight">
+							<img src="./static/img/i32.png" alt="">
+						</div>
+
+					</a><a class="projectItem a" target="_blank" href="https://www.baidu.com">
+						<div class="projectItemLeft">
+							<h1>百度</h1>
+							<p>中国用户最多的搜索引擎</p>
+						</div>
+						<div class="projectItemRight">
+							<img src="./static/img/i20.png" alt="">
+						</div>
+
+					</a><a class="projectItem a" target="_blank" href="/">
+						<div class="projectItemLeft">
+							<h1>友情链接3</h1>
+							<p>知识效率集</p>
+						</div>
+						<div class="projectItemRight">
+							<img src="./static/img/i7.png" alt="">
+						</div>
+
+					</a><a class="projectItem a" target="_blank" href="https://">
+						<div class="projectItemLeft">
+							<h1>友情链接4</h1>
+							<p>全体打工人提醒您摸鱼</p>
+						</div>
+						<div class="projectItemRight">
+							<img src="./static/img/i13.png" alt="">
+						</div>
+
+					</a></div>
+						
+					<content>
+						<div class="title"><i class="fa-solid fa-star"></i>
+							</svg>赞助商</div>
+						<div class="projectList"><a class="projectItem a" target="_blank" href="/">
+								<div class="projectItemLeft">
+									<h1>全民TV</h1>
+									<p>赞助本站3年域名续费</p>
+								</div>
+								<div class="projectItemRight">
+									<img src="./static/img/i1.png" alt="">
+								</div>
+		
+							</a><a class="projectItem a" target="_blank" href="https://QQ.com/">
+								<div class="projectItemLeft">
+									<h1>赞助位</h1>
+									<p>等待一位大佬</p>
+								</div>
+								<div class="projectItemRight">
+									<img src="./static/img/i2.png" alt="">
+								</div>
+		
+							</a><a class="projectItem a" target="_blank" href="#">
+								<div class="projectItemLeft">
+									<h1>赞助位</h1>
+									<p>等待一位大佬</p>
+								</div>
+								<div class="projectItemRight">
+									<img src="./static/img/i3.png" alt="">
+								</div>
+		
+							</a><a class="projectItem a" target="_blank" href="#">
+								<div class="projectItemLeft">
+									<h1>赞助位</h1>
+									<p>等待一位大佬</p>
+								</div>
+								<div class="projectItemRight">
+									<img src="./static/img/i4.png" alt="">
+								</div>
+		
+							</a></div>
+							<content>
+								<div class="title"><i class="fa-solid fa-star"></i>
+								</svg>更多站点 </div>
+								<div class="projectList"><a class="projectItem a" target="_blank" href="https://">
+										<div class="projectItemLeft">
+											<h1>更多站点1</h1>
+											<p>聚合Rss阅读页</p>
+										</div>
+										<div class="projectItemRight">
+											<img src="./static/img/i38.png" alt="">
+										</div>
+				
+									</a><a class="projectItem a" target="_blank" href="https://">
+										<div class="projectItemLeft">
+											<h1>更多站点2</h1>
+											<p>fly.io运行RSShub实例</p>
+										</div>
+										<div class="projectItemRight">
+											<img src="./static/img/i39.png" alt="">
+										</div>
+				
+									</a><a class="projectItem a" target="_blank" href="https://">
+										<div class="projectItemLeft">
+											<h1>更多站点3</h1>
+											<p>RSS翻译转换实例</p>
+										</div>
+										<div class="projectItemRight">
+											<img src="./static/img/i37.png" alt="">
+										</div>
+				
+									</a><a class="projectItem a" target="_blank" href="https://">
+										<div class="projectItemLeft">
+											<h1>更多站点4</h1>
+											<p>公众号RSS</p>
+										</div>
+										<div class="projectItemRight">
+											<img src="./static/img/i14.png" alt="">
+										</div>
+				
+									</a><a class="projectItem a" target="_blank" href="https://">
+												<div class="projectItemLeft">
+													<h1>更多站点5</h1>
+													<p>Gpt-Next实例</p>
+												</div>
+												<div class="projectItemRight">
+													<img src="./static/img/i33.png" alt="">
+												</div>
+						
+											</a><a class="projectItem a" target="_blank" href="https://">
+												<div class="projectItemLeft">
+													<h1>更多站点6</h1>
+													<p>one-api</p>
+												</div>
+												<div class="projectItemRight">
+													<img src="./static/img/i14.png" alt="">
+												</div>
+						
+											</a><a class="projectItem a" target="_blank" href="#">
+												<div class="projectItemLeft">
+													<h1>更多站点7</h1>
+													<p>我的jsDelivr镜像站</p>
+												</div>
+												<div class="projectItemRight">
+													<img src="./static/img/i30.png" alt="">
+												</div>
+						
+											</a><a class="projectItem a" target="_blank" href="#">
+												<div class="projectItemLeft">
+													<h1>更多站点8</h1>
+													<p>一些备用站点域名</p>
+												</div>
+												<div class="projectItemRight">
+													<img src="./static/img/i18.png" alt="">
+												</div>
+						
+											</a><a class="projectItem b" target="_blank"
+							href="../e/photomosh/index.html">
+							<div class="projectItemLeft">
+								<h1>更多站点9</h1>
+								<p>图像和视频故障效果制作</p>
+							</div>
+							<div class="projectItemRight">
+								<img src="./static/img/i12.png" alt="">
+							</div>
+	
+						</a><a class="projectItem b" target="_blank" href="#">
+							<div class="projectItemLeft">
+								<h1>更多站点10</h1>
+								<p>在线文本编辑器</p>
+							</div>
+							<div class="projectItemRight">
+								<img src="./static/img/i36.png" alt="">
+							</div>
+	
+						</a><a class="projectItem b" target="_blank" href="#">
+							<div class="projectItemLeft">
+								<h1>更多站点11</h1>
+								<p>颜色选择器</p>
+							</div>
+							<div class="projectItemRight">
+								<img src="./static/img/i22.png" alt="">
+							</div>
+	
+						</a><a class="projectItem b" target="_blank" href="#">
+							<div class="projectItemLeft">
+								<h1>更多站点12</h1>
+								<p>在线网页直链播放</p>
+							</div>
+							<div class="projectItemRight">
+								<img src="./static/img/i35.png" alt="">
+							</div>
+
+					</a></div>
+				</br>
+					<div class="projectItemRightimg">
+						<img src="static/img/1bae.gif" id="img-1" />
+						<img src="static/img/2bae.gif" id="img-1" />
+						<img src="static/img/3bae.gif" id="img-1" />
+						<img src="static/img/4bae.gif" id="img-1" />	
+						<img src="static/img/5bae.gif" id="img-1" />
+						<img src="static/img/6bae.gif" id="img-1" />
+					</div>
+				</br>
+	<footer>		
+		  <span class="astro-OY55P3EK"><span class="astro-OY55P3EK">本站已运行 <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>现在时间：<span id="show_time"></span>   
+		  <script>
+		  var now = new Date();
+		  function createtime() {
+			var grt= new Date("08/08/2024 00:00:00");
+			now.setTime(now.getTime()+250);
+			days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+			hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+			if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+			mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+			seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+			snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+			document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+			document.getElementById("times").innerHTML = hnum + " 时 " ;
+		  }
+		  setInterval("createtime()",250);
+		  </script>
+		  <!-- 时间 -->
+			<span id="RGB"></span> 
+		  <meta charset="utf-8">   
+	  <div id="main">  
+	  <div id="show_time0">
+	  <script>
+	  //显示时间
+	  //setInterval("show_time0.innerHTML=new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay());",1000);
+	  </script>
+	  </div>
+	  <script>  
+	  //定义
+	  setInterval("fun(show_time)",1);
+	  function fun(timeID){ 
+	  var date = new Date();  //创建对象  
+	  var y = date.getFullYear();     //获取年份  
+	  var m =date.getMonth()+1;   //获取月份  返回0-11  
+	  var d = date.getDate(); // 获取日  
+	  var w = date.getDay();   //获取星期几  返回0-6   (0=星期天) 
+	  var ww = ' 星期'+'日一二三四五六'.charAt(new Date().getDay()) ;//星期几
+	  var h = date.getHours();  //时
+	  var minute = date.getMinutes()  //分
+	  var s = date.getSeconds(); //秒
+	  var sss = date.getMilliseconds() ; //毫秒
+	  if(m<10){
+	  m = "0"+m;
+	  }
+	  if(d<10){
+	  d = "0"+d;
+	  }
+	  if(h<10){
+	  h = "0"+h;
+	  }
+	  
+	  if(minute<10){
+	  minute = "0"+minute;
+	  }
+	  
+	  if(s<10){
+	  s = "0"+s;
+	  }
+	  
+	  if(sss<10){
+	  sss = "00"+sss;
+	  }else if(sss<100){
+	  sss = "0"+sss;
+	  }
+	  
+	  document.getElementById(timeID.id).innerHTML =  y+"-"+m+"-"+d+"   "+h+":"+minute+"     "+ww;
+	  //document.write(y+"-"+m+"-"+d+"   "+h+":"+minute+":"+s);  
+	  }
+	  </script>
+	</footer>
+	<div class="tc">
+		<div onclick="" class="tc-main">
+			<img class="tc-img" src="" alt="" srcset="">
+		</div>
+		<script>
+			// 使用 fetch API 请求指定的 URL
+			fetch('https://www.wudada.online/Api/ScD')
+				.then(response => response.json())
+				.then(data => {
+					// 检查data是否为null
+					if (data === null) {
+						// 如果data为null，显示默认错误消息
+						const contentDiv = document.querySelector('.content');
+						const p = document.createElement('p');
+						p.textContent = '请求失败，没有返回有效信息';
+						contentDiv.appendChild(p);
+					} else {
+						// 如果data不是null，检查code字段
+						if (data.code === '200') {
+							// 如果code是200，显示content字段的信息
+							const contentDiv = document.querySelector('.content');
+							data.data.content.forEach(item => {
+								const p = document.createElement('p');
+								p.textContent = item.content;
+								contentDiv.appendChild(p);
+							});
+						} else {
+							// 如果code不是200，显示msg字段的信息
+							const contentDiv = document.querySelector('.content');
+							const p = document.createElement('p');
+							p.textContent = data.msg || '请求失败，没有返回有效信息';
+							contentDiv.appendChild(p);
+						}
+					}
+				})
+				.catch(error => {
+					console.error('请求出错:', error);
+				});
+		</script>
+
+<script>
+    // 当文档加载完毕时执行
+    document.addEventListener('DOMContentLoaded', function() {
+        // 获取摸鱼日历API的URL
+        var apiURL = 'https://api.vvhan.com/api/moyu?type=json';
+
+        // 使用fetch API请求摸鱼日历API
+        fetch(apiURL)
+            .then(function(response) {
+                // 确保响应的状态是OK的
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                // 解析JSON响应
+                return response.json();
+            })
+            .then(function(data) {
+                // 假设API返回的图片URL在data.url中
+                // 更新图片元素的src属性并显示图片
+                var moyuImage = document.getElementById('moyuImage');
+                moyuImage.src = data.url;
+            })
+            .catch(function(error) {
+                // 在控制台打印错误信息
+                console.error('Error fetching moyu calendar:', error);
+                // 在页面上显示错误信息
+                var moyuImage = document.getElementById('moyuImage');
+                moyuImage.alt = '获取失败，请稍后再试。';
+            });
+    });
+</script>
+<script>
+	function updateClock() {
+	  const now = new Date();
+	  const year = now.getFullYear();
+	  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+	  const day = now.getDate().toString().padStart(2, '0');
+	  const hours = now.getHours().toString().padStart(2, '0');
+	  const minutes = now.getMinutes().toString().padStart(2, '0');
+	  document.getElementById('clock').textContent = `${year}年${month}月${day}日 ${hours}点${minutes}分`;
+	}
+  
+	// 初始更新时钟
+	updateClock();
+	// 每分钟更新时钟
+	setInterval(updateClock, 60000);
+  </script>
+  <script>
+    var weekday = new Array(7);
+    weekday[0] = "周日";
+    weekday[1] = "周一";
+    weekday[2] = "周二";
+    weekday[3] = "周三";
+    weekday[4] = "周四";
+    weekday[5] = "周五";
+    weekday[6] = "周六";
+
+    
+    var today = new Date();
+    var hrs = today.getHours();
+    var dayOfWeek = weekday[today.getDay()];
+    var date = dayOfWeek+" "   ;
+
+    var greet;
+
+    if (hrs >= 0 && hrs <= 4)
+        greet = "🙃 凌晨好  ";
+    if (hrs >= 5 && hrs <= 8) 
+        greet = "😘 早上好  ";
+    if (hrs >= 9 && hrs <= 11) 
+        greet = "😜 上午好  ";
+    if (hrs >= 11 && hrs <= 13) 
+        greet = "🥳 中午好  ";
+    if (hrs >= 13 && hrs <= 17) 
+        greet = "🥰 下午好  ";
+    if (hrs >= 18 && hrs <= 19) 
+        greet = "🧐 傍晚好  ";
+    if (hrs >= 19 && hrs <= 22) 
+       greet = "🥳 晚上好  ";
+    if (hrs >= 22 && hrs <= 24) 
+       greet = "🥺 夜深了  ";
+
+    document.getElementById('lbl').innerHTML =
+        greet+=` 👉 今天是：${date}</div>`;
+</script> 
+	</div>
+</body>
+<script src="./static/js/script.js"> </script>
+<script src="./static/js/Meting.min.js"> </script>
+<script src="./static/js/loading.js"></script>
+<script src="../js/fireworks.js"></script>
+</html>
