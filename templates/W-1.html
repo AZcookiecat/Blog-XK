@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<head class="noisework.cn">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>网页组协作及本地测试手册</title>
+	<link rel="icon" href="./static/img/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="./static/css/style.css">
+	<link rel="stylesheet" href="./static/css/root.css">
+	<script src="https://kit.fontawesome.com/25cfefa7b1.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="./static/css/loading.css"> 
+</head>
+<body>
+	 <!-- loading加载--> 
+	 <div id="spinner-container">
+        <div class="spinner"></div>
+	 </div>
+     <div class="container">
+        <h2>网页组协作及本地测试手册</h2>
+        <div class="meta-info">
+            <span>作者：Ciin7mo</span>
+            <span>发布时间：2025.03.21</span>
+        </div>
+        <div class="separator"></div>
+        <div class="content">
+            <h3>协作部分：</h3>
+            <h4>1.git, sourcetree安装</h4>
+            <p>&nbsp;&nbsp;下载连接：通过网盘分享的文件：网页组本地软件  
+                <p>&nbsp;&nbsp;提取码: hutb</p>
+                <a href ="https://pan.baidu.com/s/15YGC9gM98TOpCWBmVwk_PA" >&nbsp;&nbsp;链接: https://pan.baidu.com/s/15YGC9gM98TOpCWBmVwk_PA</a>
+                <br>&nbsp;&nbsp;下载完成后，无脑安装即可
+            </br>
+            </br>
+            <h4>2.访问gitee官网，并注册账号</h4>
+            <p>&nbsp;&nbsp;访问地址：<a href="https://gitee.com/">https://gitee.com/</a>
+                <p>&nbsp;&nbsp;若注册未绑定邮箱，先绑定邮箱，然后将注册或绑定邮箱发送至3424255277@qq.com</p>
+            </p>
+            </br>
+            <h4>3.创建本地仓库，并连接远端gitee仓库</h4>
+            <p>&nbsp;&nbsp;先在本地新建文件夹，命名完成之后，打开sourcetree，点击上方加号之后选择clone</p>
+            <img src="./static/imgs/1.png", class="images">
+            <p>&nbsp;&nbsp;输入gitee仓库地址，点击clone，等待克隆完成
+                <br>&nbsp;&nbsp;仓库url: https://gitee.com/xiang-embroidery-team/xiangxiu.git
+            </p>
+            </br>
+            <h5>&nbsp;&nbsp;!!!注意事项：
+                <br>&nbsp;&nbsp;1）在本地仓库中对原有代码进行修改保存，进入sourcetree点击文件状态会有刚才修改的文件，选择需要上传的代码，点击暂存所选，然后点击提交，在推送前点击拉去，防止有人同时提交代码，之后点击推送即可更新代码
+                <br>&nbsp;&nbsp;2）每次打开项目修改之前，先对最新代码进行拉取后再进行修改，避免冲突
+            </h5>
+            </br>
+            </br>
+            <h3>本地测试：</h3>
+            <h4>1.mysql数据库安装配置</h4>
+            <p>&nbsp;&nbsp;1）官网下载地址:<a href="https://dev.mysql.com/downloads/mysql/5.5.html#downloads">https://dev.mysql.com/downloads/mysql/5.5.html#downloads</a>
+                <br>&nbsp;&nbsp;建议下载LTS版本
+            </p>
+            <p>&nbsp;&nbsp;2）下载完成之后,将压缩包进行解压。建议大家把自己的mysql放到D盘根目录下,防止后面出现问题,自己找的时候也方便</p>
+            <p>&nbsp;&nbsp;3）环境配置
+                <br>&nbsp;&nbsp;>1 打开电脑系统环境变量,在系统变量中找到Path,点击进入编辑,加上自己mysql中bin文件夹的路径,然后确定退出即可
+                </br>
+                </br>
+                <h5>&nbsp;&nbsp;[注意:这一步非常重要,很多人就是因为没有进行环境变量的配置, 直接在任务指示符上用'mysqld'命令进行安装,就会爆出这样的错误:
+                    &nbsp;&nbsp;'mysqld' 不是内部或外部命令，也不是可运行的程序 或批处理文件。]
+                </h5>
+                <br>&nbsp;&nbsp;>2 安装mysql
+                <br>&nbsp;&nbsp;(1)新建一个txt文档，命名为my.ini,然后打开编辑器，输入以下内容：
+                <br>&nbsp;&nbsp;[mysql]
+                <br>&nbsp;&nbsp;# 设置mysql客户端默认字符集
+                <br>&nbsp;&nbsp;default-character-set=utf8
+                <br>&nbsp;&nbsp;[mysqld]
+                <br>&nbsp;&nbsp;# 设置3306端口
+                <br>&nbsp;&nbsp;port = 3306
+                <br>&nbsp;&nbsp;# 设置mysql的安装目录
+                <br>&nbsp;&nbsp;basedir = D:\mysql-9.1.0-winx64
+                <br>&nbsp;&nbsp;# 设置mysql数据库的数据的存放目录
+                <br>&nbsp;&nbsp;datadir = D:\mysql-9.1.0-winx64\data
+                <br>&nbsp;&nbsp;# 允许最大连接数
+                <br>&nbsp;&nbsp;max_connections=20
+                <br>&nbsp;&nbsp;# 服务端使用的字符集默认为8比特编码的latin1字符集
+                <br>&nbsp;&nbsp;character-set-server=utf8
+                <br>&nbsp;&nbsp;# 创建新表时将使用的默认存储引擎
+                <br>&nbsp;&nbsp;default-storage-engine=INNODB
+                <br>&nbsp;&nbsp;# 创建模式
+                <br>&nbsp;&nbsp;sql_mode = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+                <br>
+                <br><h5>&nbsp;&nbsp;[注意：这两个位置需要自己去设置的
+                        <br>&nbsp;&nbsp;# 设置mysql的安装目录
+                        <br>&nbsp;&nbsp;basedir = D:\mysql-9.1.0-winx64
+                        <br>&nbsp;&nbsp;# 设置mysql数据库的数据的存放目录
+                        <br>&nbsp;&nbsp;datadir = D:\mysql-9.1.0-winx64\data]
+                    </h5>
+            </p>
+                <br>&nbsp;&nbsp;(2)用管理员身份打开cmd命令行，进入下载好mysql中bin的路径下，输入代码进行初始化mysql: mysqld --initialize
+            </br>
+            </br>
+                <h5>&nbsp;&nbsp;[注意:这里一定要使用管理员的身份运行,不然后面可能会出现权限不够的错误]</h5>
+            </br>   
+                <p>&nbsp;&nbsp;命令成功后(没有出现错误信息),回到自己mysql的文件中,会出现之前没有的data文件,进入data文件,里面有后缀名.err的文件,里面存放了你登入mysql的密码,双击打开,找到自己的用户和密码
+                    &nbsp;&nbsp;一般来说root@localhost是你的初始账户,:冒号后面便是你的密码</p>
+                <br>&nbsp;&nbsp;(3)然后输入下面代码开启mysql服务: net start mysql  
+                <br>&nbsp;&nbsp;然后输入：mysql -u root -p 回车之后会提示输入密码.没有报错,显示你mysql的版本就是安装成功了
+                <p></p>
+                <br>&nbsp;&nbsp;(4)然后进行密码的修改,使用命令：
+                <br>&nbsp;&nbsp;alter user 'root'@'localhost' identified with mysql_native_password by ' **这里填写新密码** ';这里大家在''里面填入改后的密码
+            </br>
+            </br>
+            <h4>2.Navicat下载安装</h4>
+            <p>&nbsp;&nbsp;（1）下载：通过网盘分享的文件：Navicat  
+                <p>&nbsp;&nbsp;提取码: hutb</p>
+                <a href ="https://pan.baidu.com/s/15YGC9gM98TOpCWBmVwk_PA" >&nbsp;&nbsp;链接: https://pan.baidu.com/s/15YGC9gM98TOpCWBmVwk_PA</a>
+                <br>&nbsp;&nbsp;下载完成后，无脑安装即可
+                <img src = "./static/imgs/2.png", class="images">
+                <img src = "./static/imgs/3.png", class="images">
+                <img src = "./static/imgs/4.png", class="images">
+            </p>
+        </br>
+            <p>&nbsp;&nbsp;(2)关键步骤：
+                <br>&nbsp;&nbsp;1.解压补丁压缩包
+                <br>&nbsp;&nbsp;2.双击bat文件
+                <img src = "./static/imgs/5.png", class="images">
+                <br>&nbsp;&nbsp;3.将winmm.dll复制到安装Navicat的路径中
+                <img src = "./static/imgs/6.png", class="images">
+            </p>
+        </br>
+            <p>&nbsp;&nbsp;4.打开Navicat
+                <br>&nbsp;&nbsp;如果没有提示试用，则说明成功了</p>
+            </br>
+            </br>
+            <p>&nbsp;&nbsp;5.连接数据库
+                <br>&nbsp;&nbsp;新建连接，自行设置配置
+                <img src = "./static/imgs/7.png", class="images">
+            </p>
+        </br>
+            <P>&nbsp;&nbsp;6.用管理员身份打开命令窗口，输入net start mysql 启动mysql服务
+                <img src = "./static/imgs/8.png", class="images">
+            </p>
+        </br>
+            <p>&nbsp;&nbsp;7.输入mysql -u root -p，回车输入密码，进入mysql命令行
+                <img src = "./static/imgs/9.png", class="images">
+            </P>
+        </br>
+            <p>&nbsp;&nbsp;8.运行sql脚本，输入source + data.sql地址 回车提示全部OK即可
+                <img src = "./static/imgs/10.png", class="images">
+            </p>     
+        </br>
+            <p>&nbsp;&nbsp;9.将项目的config,py中的数据库配置改成自己的本地数据库配置
+                <br>&nbsp;&nbsp;主要是password
+                <img src = "./static/imgs/11.png", class="images">
+            </p>
+        </br>
+            <p>&nbsp;&nbsp;10.在vscode或者其他平台运行app.py  访问http://127.0.0.1:5000/  即可看到项目结果
+                <img src = "./static/imgs/12.png", class="images">
+            </p>
+        </br>
+            <h5>&nbsp;&nbsp;[注意：首次执行data.sql文件后，登录前需要先注册账号]</h5>
+        </div>
+    </div>
+
+	<footer>		
+		  <span class="astro-OY55P3EK"><span class="astro-OY55P3EK">@版权所有 &copy; 2025 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本站已安全运行 <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>现在时间：<span id="show_time"></span>   
+		  <script>
+		  var now = new Date();
+		  function createtime() {
+			var grt= new Date("03/01/2025 00:00:00");
+			now.setTime(now.getTime()+250);
+			days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+			hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+			if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+			mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+			seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+			snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+			document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+			document.getElementById("times").innerHTML = hnum + " 时 " ;
+		  }
+		  setInterval("createtime()",250);
+		  </script>
+		  <!-- 时间 -->
+			<span id="RGB"></span> 
+		  <meta charset="utf-8">   
+	    <div id="main">  
+	    <div id="show_time0">
+	    <script>
+	    //显示时间
+	    //setInterval("show_time0.innerHTML=new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay());",1000);
+	    </script>
+	    </div>
+	    <script>  
+	    //定义
+	    setInterval("fun(show_time)",1);
+	    function fun(timeID){ 
+	    var date = new Date();  //创建对象  
+	    var y = date.getFullYear();     //获取年份  
+	    var m =date.getMonth()+1;   //获取月份  返回0-11  
+	    var d = date.getDate(); // 获取日  
+	    var w = date.getDay();   //获取星期几  返回0-6   (0=星期天) 
+	    var ww = ' 星期'+'日一二三四五六'.charAt(new Date().getDay()) ;//星期几
+	    var h = date.getHours();  //时
+	    var minute = date.getMinutes()  //分
+	    var s = date.getSeconds(); //秒
+	    var sss = date.getMilliseconds() ; //毫秒
+	    if(m<10){
+	    m = "0"+m;
+	    }
+	    if(d<10){
+	    d = "0"+d;
+	    }
+	    if(h<10){
+	    h = "0"+h;
+	    }
+	  
+	    if(minute<10){
+	    minute = "0"+minute;
+	    }
+	  
+	    if(s<10){
+	    s = "0"+s;
+	    }
+	  
+	    if(sss<10){
+	    sss = "00"+sss;
+	    }else if(sss<100){
+	    sss = "0"+sss;
+	    }
+	  
+	    document.getElementById(timeID.id).innerHTML =  y+"-"+m+"-"+d+"   "+h+":"+minute+"     "+ww;
+	    //document.write(y+"-"+m+"-"+d+"   "+h+":"+minute+":"+s);  
+	    }
+	    </script>
+	</footer>
+    
+	
+<script>
+	function updateClock() {
+	  const now = new Date();
+	  const year = now.getFullYear();
+	  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+	  const day = now.getDate().toString().padStart(2, '0');
+	  const hours = now.getHours().toString().padStart(2, '0');
+	  const minutes = now.getMinutes().toString().padStart(2, '0');
+	  document.getElementById('clock').textContent = `${year}年${month}月${day}日 ${hours}点${minutes}分`;
+	}
+  
+	// 初始更新时钟
+	updateClock();
+	// 每分钟更新时钟
+	setInterval(updateClock, 60000);
+  </script>
+  <script>
+    var weekday = new Array(7);
+    weekday[0] = "周日";
+    weekday[1] = "周一";
+    weekday[2] = "周二";
+    weekday[3] = "周三";
+    weekday[4] = "周四";
+    weekday[5] = "周五";
+    weekday[6] = "周六";
+
+    
+    var today = new Date();
+    var hrs = today.getHours();
+    var dayOfWeek = weekday[today.getDay()];
+    var date = dayOfWeek+" "   ;
+
+    var greet;
+
+    if (hrs >= 0 && hrs <= 4)
+        greet = "🙃 凌晨好  ";
+    if (hrs >= 5 && hrs <= 8) 
+        greet = "😘 早上好  ";
+    if (hrs >= 9 && hrs <= 11) 
+        greet = "😜 上午好  ";
+    if (hrs >= 11 && hrs <= 13) 
+        greet = "🥳 中午好  ";
+    if (hrs >= 13 && hrs <= 17) 
+        greet = "🥰 下午好  ";
+    if (hrs >= 18 && hrs <= 19) 
+        greet = "🧐 傍晚好  ";
+    if (hrs >= 19 && hrs <= 22) 
+       greet = "🥳 晚上好  ";
+    if (hrs >= 22 && hrs <= 24) 
+       greet = "🥺 夜深了  ";
+
+    document.getElementById('lbl').innerHTML =
+        greet+=` 👉 今天是：${date}</div>`;
+</script> 
+	</div>
+</body>
+<script src="./static/js/script.js"> </script>
+<script src="./static/js/Meting.min.js"> </script>
+<script src="./static/js/loading.js"></script>
+<script src="..//js/fireworks.js"></script>
+</html>

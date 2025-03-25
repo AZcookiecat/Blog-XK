@@ -393,6 +393,8 @@ body {
     font-size: 22px;
      margin-right: 3px;
 }
+
+
 .switch {
     width: 55px;
     height: 43px;
@@ -450,8 +452,59 @@ body {
 .projectList {
     display: block; 
     flex-wrap: wrap;
-    width: 700px;
+    width: 750px;
 }
+
+.container {
+    width: 1300px;
+    background-color: var(--item_bg_color);
+    padding: 20px;
+}
+
+.container h2 {
+    margin-top: 0;
+    margin-left: 7.5%;
+    font-size: 2em;
+}
+
+.container h5 {
+    font-size: 20px;
+    font-weight:bold;
+    color: red;
+}
+
+.content {
+    width: 85%;
+    margin: 0 auto;
+    color:white;
+    text-align:left;
+}
+.meta-info {
+    font-size: 0.9em;
+    color: gray;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 7.5%;
+}
+
+.meta-info span {
+    margin-right: 10px;
+}
+
+.separator {
+    border-top: 2px solid white;
+    width: 85%;
+    margin: 0 auto 20px auto;
+    border-radius: 5px; /* 圆头效果 */
+}
+
+.content img {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px; /* 图片圆角效果 */
+}
+
 
 .projectItem {
     margin: 7px;
@@ -467,6 +520,7 @@ body {
 }
 
 .projectItem {
+    position: relative;
     display: flex;
     background-color: var(--item_bg_color);
     border-radius: 8px;
@@ -474,6 +528,16 @@ body {
     width: 100%;
     backdrop-filter: blur(var(--card_filter));
     transition: opacity 0.5s ease, background-color 0.2s ease, border 0.2s ease, transform 0.3s ease;
+}
+
+.sticky-icon {
+    position: absolute;
+    top: 5px; /* 调整此值以改变图标在垂直方向上的位置 */
+    right: 5px; /* 调整此值以改变图标在水平方向上的位置 */
+    color: #ff6347; /* 图标颜色 */
+    font-size: 1.5em; /* 图标大小 */
+    top:15px;
+    right:15px;
 }
 
 .projectItem:hover {
@@ -524,7 +588,7 @@ footer {
     position: absolute;
     padding: 10px;
     text-align: center;
-    width: 94%;
+    width: 85%;
     backdrop-filter: blur(var(--card_filter));
     background: var(--item_bg_color);
     color: var(--footer_text_color);
