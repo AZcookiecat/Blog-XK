@@ -1,309 +1,130 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
-    <meta name="google-adsense-account" content="ca-pub-1078287385751140">
-    <title>Ciin7mo's个人主页</title>
-    <link rel="icon" href="./templates/static/img/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="./css/loading.css"> 
-    <link rel="stylesheet" href="css/tab.css">
-    <link rel="stylesheet" href="css/rss.css">
-    <link rel="stylesheet" href="css/clock.css">
-    <link rel="stylesheet" href="css/Right.css">
-    <link rel="stylesheet" type="text/css" href="css/font_3165812_pvad0am2nmp.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/terminal.css">
-    <link rel="stylesheet" href="css/fira_code.css">
-    <!--  引入JS -->   
-    <script src="js/instantclick.min.js"></script>
-    <!-- data-no-instant表示该标签不进行预加载 -->
-    <script data-no-instant>
-    //选择点击瞬间预加载模式
-    InstantClick.init("mousedown");
-    </script>
-    <script type="text/javascript">
-        /*  动态网页标题*/
-        var OriginTitile = document.title,
-        titleTime;
-        // 添加事件监听器，当页面可见性改变时触发
-        document.addEventListener("visibilitychange",
-        function() {
-            // 如果页面被隐藏
-            if (document.hidden) {
-                // 更改页面标题以提醒用户
-                document.title = "你别走吖 Σ(っ °Д °;)っ";
-                // 清除定时器
-                clearTimeout(titleTime)
-            } else {
-                // 恢复页面标题并添加欢迎信息
-                document.title = "你可算回来了 (｡•ˇ‸ˇ•｡)" + OriginTitile;
-                // 设置定时器，2秒后恢复原标题
-                titleTime = setTimeout(function() {
-                    document.title = OriginTitile
-                },
-                2000)
-            }
-        });
-    </script>
-    <script src="https://cdn.staticfile.net/popper.js/1.15.0/umd/popper.min.js"></script>
-    <script defer src="https://cdn.staticfile.net/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
-	 <!-- 浏览器强制刷新 --> 
-	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-</head>
-<body>
-     <!-- 右键菜单 -->
-<body oncontextmenu="openMenu(event)">
-    <div class="menu">
-        <ul class="menu-list01">
-            <li class="menu-item" onclick="toggleFullScreen()">
-                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
-                    <path d="M200 32H56C42.7 32 32 42.7 32 56V200c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l40-40 79 79-79 79L73 295c-6.9-6.9-17.2-8.9-26.2-5.2S32 302.3 32 312V456c0 13.3 10.7 24 24 24H200c9.7 0 18.5-5.8 22.2-14.8s1.7-19.3-5.2-26.2l-40-40 79-79 79 79-40 40c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H456c13.3 0 24-10.7 24-24V312c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2l-40 40-79-79 79-79 40 40c6.9 6.9 17.2 8.9 26.2 5.2s14.8-12.5 14.8-22.2V56c0-13.3-10.7-24-24-24H312c-9.7 0-18.5 5.8-22.2 14.8s-1.7 19.3 5.2 26.2l40 40-79 79-79-79 40-40c6.9-6.9 8.9-17.2 5.2-26.2S209.7 32 200 32z"/>
-                </svg>
-                <span style="margin-left: 2px;">全屏</span>
-            </li>
-            <li class="menu-item" onclick="refreshPage()">
-                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M142.9 142.9c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5c0 0 0 0 0 0H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5c7.7-21.8 20.2-42.3 37.8-59.8zM16 312v7.6 .7V440c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l41.6-41.6c87.6 86.5 228.7 86.2 315.8-1c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.2 62.2-162.7 62.5-225.3 1L185 329c6.9-6.9 8.9-17.2 5.2-26.2s-12.5-14.8-22.2-14.8H48.4h-.7H40c-13.3 0-24 10.7-24 24z"/></svg>
-                <span style="margin-left: 2.3px;">刷新</span>
-            </li>
-            <li class="menu-item" onclick="goBack()">
-                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32C28.7 32 0 60.7 0 96L0 416zM128 256c0-6.7 2.8-13 7.7-17.6l112-104c7-6.5 17.2-8.2 25.9-4.4s14.4 12.5 14.4 22l0 208c0 9.5-5.7 18.2-14.4 22s-18.9 2.1-25.9-4.4l-112-104c-4.9-4.5-7.7-10.9-7.7-17.6z"/></svg>
-                <span style="margin-left: 2.7px;">返回</span>
-            </li>
-            <li class="menu-item">
-                <a href="#" style="color: white; text-decoration: none;" onclick="showImage()">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
-                        <path d="M385.2 167.6c6.4 0 12.6 .3 18.8 1.1C387.4 90.3 303.3 32 207.7 32 100.5 32 13 104.8 13 197.4c0 53.4 29.3 97.5 77.9 131.6l-19.3 58.6 68-34.1c24.4 4.8 43.8 9.7 68.2 9.7 6.2 0 12.1-.3 18.3-.8-4-12.9-6.2-26.6-6.2-40.8-.1-84.9 72.9-154 165.3-154zm-104.5-52.9c14.5 0 24.2 9.7 24.2 24.4 0 14.5-9.7 24.2-24.2 24.2-14.8 0-29.3-9.7-29.3-24.2 .1-14.7 14.6-24.4 29.3-24.4zm-136.4 48.6c-14.5 0-29.3-9.7-29.3-24.2 0-14.8 14.8-24.4 29.3-24.4 14.8 0 24.4 9.7 24.4 24.4 0 14.6-9.6 24.2-24.4 24.2zM563 319.4c0-77.9-77.9-141.3-165.4-141.3-92.7 0-165.4 63.4-165.4 141.3S305 460.7 397.6 460.7c19.3 0 38.9-5.1 58.6-9.9l53.4 29.3-14.8-48.6C534 402.1 563 363.2 563 319.4zm-219.1-24.5c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.8 0 24.4 9.7 24.4 19.3 0 10-9.7 19.6-24.4 19.6zm107.1 0c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.5 0 24.4 9.7 24.4 19.3 .1 10-9.9 19.6-24.4 19.6z"/>
-                    </svg>
-                    <span style="margin-left: -4.5px;">联系</span>
-                </a>
-            </li>
-            <li class="menu-item-divider"></li>
-            <li class="menu-item menu-item-danger">
-                <a href="#" style="color: white; text-decoration: none;"></a>
-                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm175 79c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>
-                <span style="margin-left: 2px;">关闭</span>
-            </li>
-        </ul>
-    </div>
-    <!-- loading加载--> 
-    <div id="spinner-container">
-        <div class="spinner"></div>
-    </div>
-    <!-- 弹窗信息提醒代码开始 -->
-    <script>
-    window.addEventListener('load', function() {
-        var currentTime = new Date().getHours();
-        var greeting;
-        if (currentTime < 5) {
-            greeting = "凌晨好！";
-        } else if (currentTime < 8) {
-            greeting = "早上好！";
-        } else if (currentTime < 11) {
-            greeting = "上午好！";
-        } else if (currentTime < 13) {
-            greeting = "中午好！";
-        } else if (currentTime < 18) {
-            greeting = "下午好！";
-        } else if (currentTime < 19) {
-            greeting = "傍晚好！";
-        } else if (currentTime < 24) {
-            greeting = "晚上好！";
-        }
-     
-		layer.msg(greeting + "👏欢迎你的访问！");
-    });
-    </script>
-    <!-- 弹窗信息提醒代码结束 -->
-    <!-- 添加Service Worker -->
-    <script>
-        // 检查浏览器是否支持 service worker
-        if ('serviceWorker' in navigator) {
-            // 在窗口加载完成后注册 service worker
-            window.addEventListener('load', function() {
-                // 注册 service worker 并处理成功或失败的情况
-                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }).catch(function(error) {
-                    console.log('ServiceWorker registration failed: ', error);
-                });
-            });
-        }
-    </script>
-    <div class="node" id="node"></div>
-    <div class="cursor" id="cursor"></div>
-    <div id="sence">
-        <div id="background" data-depth="0.8"></div>
-        <div id="bg" data-depth="0.6"></div>   
-		<script src="js/suiji-picture.js"></script> 
-    </div>
-    <div class="main">
-        <div class="about">
-            <h2 class="chtitle">欢迎访问<span>Ciin7mo's</span>个人博客</h2>
-            <div id="clear">
-                <div id="avatar"></div>
-                <div id="persontag">
-                    <div class="line">🌟&nbsp;芝士星球<div class="tag">【探索】</div>&nbsp;发现者</div>
-                    <div class="line">📷&nbsp;爱<div class="tag">'摄影'</div>的<div class="tag">【自由派】</div></div>
-                    <div class="line">🕹️&nbsp;SWITCH&nbsp;重度爱好者</div>
-                    <div class="line">🌟&nbsp;自己有了光才配得上自己追逐的星星</div>
-                </div>
-                <div id="terminal"></div>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="./templates/static/img/favicon.ico">
+        <title>Ciin7mo's 个人主页</title>
+        <meta name="description" content="期待与更多的人相遇！">
+        <link rel="stylesheet" type="text/css" href="css/h.9c69ed6c.css">
+        <link rel="stylesheet" type="text/css" href="css/nekotora.99cf6f8c.css">
+        </head>
+        <body> 
+<style>
+ .toast-bottom-center {
+  position: absolute;
+  left: 30px;
+  right:10px;
+  top: 20px;
+}
+   </style>
+   
+        <div class="background"> 
+        <canvas id="startrack"></canvas> 
+        <div class="cover"></div> </div>
+        <div class="main"> <div class="ch intro">
+        <div class="container"> <div class="hello">
+            <h1 id="slogan">思考中...</h1> 
+            <h2> <div class="circle"> <span></span> <span></span> 
+            <span></span> </div>Ciin7mo</h2> </div> </div> </div> 
+            <div class="ch about"> <div class="container"> 
+            <h2 class="chtitle">Who is <span>Ciin7mo</span>?</h2> 
+            <div class="clear"> <div class="introduct"> 
+            <img class="avatar" src="images/2.jpg"> <P> 不要被别人的节奏打乱了，因为乱世中亦有侠客</p> 
+            <p style="padding-bottom:1em;">How lucky to meet you!</p> 
+            <p>你好，I am &nbsp;<sup>Ciin7mo</sup>&nbsp;我们趋行在人生这个亘古的旅行</p> 
+            <p>就是要在坎坷中奔跑，在在挫折里涅槃</p> 
+            <div class="chatbox">   <div class="line loading"> <span></span> 
+            <span></span> <span></span> </div> </div> </div> 
+            <ul class="skill clear"> <li> <p>HTML5/CSS3</p> 
+            <div class="progress"> <div style="width:75%;"></div>
+            <span>制作网站程度的能力</span> </div> </li> 
+            <li> <p>JavaScript/Typescript</p> 
+            <div class="progress"> <div style="width:55%;"></div>
+            <span>使用现代轮子程度的能力</span> 
+            </div> </li> <li> <p>Python</p>
+            <div class="progress"> <div style="width:70%;"></div>
+            <span>赞美最好的语言程度的能力</span> </div> </li> 
+            <li> <p>数字设计</p>
+            <div class="progress"> 
+            <div style="width:60%;">
+            </div><span>让自己舒服程度的能力</span> </div> </li> 
+            <li> <p>世界</p> <div class="progress"> 
+            <div style="width:20%;"></div>
+            <span>观测世界程度的能力</span> </div> </li> 
+            <li> <p>搞事情</p> <div class="progress"> 
+            <div style="width:82%;"></div>
+            <span>让事情发生程度的能力</span> </div> </li> 
+            <li> <p>魔法</p> <div class="progress"> 
+            <div style="width:1%;"></div>
+            <span>和普通人相同程度的能力</span> </div> </li> 
+            <li> <p>独</p> 
+            <div class="progress"> 
+            <div style="width:99%;"></div>
+            <span>独处的能力</span> 
+            </div> 
+            </li> 
+            </ul> 
             </div>
-        </div>
-        <!-- 流动代码-->
-        <marquee scrollamount="3" direction="right" behavior="alternate">
-            <div class="container">
-                📢：<span id="hitokoto">正在获取中...</span>
-            </div>
-            <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script>  
-        </marquee>    
-        <!-- 流动代码结束-->
-         <!--向下滑动提示-->
-        <div class="scroll-down">
-            <span>向下滑动查看</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M0 0h24v24H0z" fill="none"/>
-                <path d="M12 16l-6-6h12z"/>
-            </svg>
-        </div>
-       <!--向下滑动提示结束-->
-        <div class="find">
-            <h2 class="chtitle"><span>社交</span>媒体</h2>
-            <div id="linkbox">
-                <a href="https://twitter.com/XXX" target="_blank">
-                    <div class="item" style="--color: rgba(40, 169, 224,0.3)">
-                        <div class="bg" style="background-color:rgb(40, 169, 224)"></div>
-                        <div class="inner"><i class="fa-brands fa-x-twitter"></i><span>Twitter</span></div>
-                    </div>
-                </a>
-                <a href="https://github.com/xxx" target="_blank">
-                    <div class="item" style="--color:rgba(53, 53, 53,0.3)">
-                        <div class="bg" style="background-color:rgb(53, 53, 53)"></div>
-                        <div class="inner"> <i class="fa-brands fa-github"></i><span>Github</span></div>
-                    </div>
-                </a>
-                <a href="mailto:xxxx@qq.com"target="_blank">
-                    <div class="item" style="--color:rgba(251, 114, 153,0.3)">
-                        <div class="bg" style="background-color:rgb(251, 114, 153)"></div>
-                        <div class="inner"><i class="fa-solid fa-square-envelope"></i><span>邮箱</span></div>
-                    </div>
-                </a>
-                <a href="templates/blog.html" target="_blank">
-                    <div class="item" style="--color:rgba(1, 193, 157,0.3)">
-                        <div class="bg" style="background-color: rgb(1, 193, 157);"></div>
-                        <div class="inner"> <i class="fa-solid fa-blog"></i><span>Blog</span></div>
-                    </div>
-                </a>
-                <a href="https://"target="_blank">
-                    <div class="item" style="--color:rgba(109, 136, 255)">
-                        <div class="bg" style="background-color:rgb(109, 136, 255)"></div>
-                        <div class="inner"> <i class="fa-brands fa-pinterest"></i><span>QQ</span></div>
-                    </div>
-                </a>
-                <a href="/static/img/weixin.png" target="_blank">
-                    <div class="item" style="--color:rgba(53, 57, 59)">
-                        <div class="bg" style="background-color: rgb(53, 57, 59);"></div>
-                        <div class="inner"> <i class="fa-brands fa-weixin"></i><span>微信号</span></div>
-                    </div>
-                </a>  
-            </div>
-        </div>
-        <div class="work">
-            <h2 class="chtitle"><span>网站</span>合集</span>【滑动或左右键可切换】</h2>
-            <div class="workbox">
-                <a href="" title="右滑动查看,手机用户请用键盘左右键或触控板上下滑动查看，PC用户鼠标滚轮向右查看" target="_blank"><div id="first"></i><i class="fa-solid fa-wand-magic-sparkles"></i><span>更换风格查看</span></div></a>
-                <div class="project">
-                    <i class="fa-solid fa-star"></i>
-                    <a href="https://" target="_blank"><h3>站点1</h3></a>
-                    <p>网页前端组件资源分享</p>
-                    <div class="language"><div style="--color:#f1e05a">综合且全面</div></div>
-                </div>
-            </div>
-        </div>
-        <div class="menu-box">
-            <!-- 图标按钮 -->
-            <div class="menu-button">
-                <div class="line-box">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                </div>
-            </div>
-            <!-- 菜单列表 -->
-            <div>
-                <ul class="menu-list">
-                    <li><a style="color:rgb(252, 246, 246);" href="/" target="_blank"></i><span> 🧧赞助支持</span></a></li>
-                    <li><a style="color:rgb(248, 244, 244);" href="/" target="_blank"></i><span>📧邮件咨询</span></a></li>
-                    <li><a style="color:rgb(248, 244, 244);" href="/" target="_blank"></i><span>📠欢迎联系</span></a></li>
-                    <li><a style="color:rgb(248, 244, 244);" href="/" target="_blank"></i><span>🎉公共服务</span></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!--隐藏式页脚-->
-    <div id="footer">
-        <p>本站已安全运行: <span id="days"></span></p>
-      </div>
-    <!--向下滑动监听-->
-    <script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-        // 获取类名为 'scroll-down' 的元素
-        var scrollDown = document.querySelector('.scroll-down');
-        
-        // 定义处理滚动事件的函数
-        function handleScroll() {
-            // 获取当前页面的垂直滚动位置
-            var scrollPos = window.pageYOffset;
-            // 获取视口的高度
-            var windowHeight = window.innerHeight;
-            // 获取整个文档的高度
-            var documentHeight = document.documentElement.scrollHeight;
-            
-            // 当窗口宽度小于或等于 768 像素时，根据滚动位置决定显示或隐藏 'scroll-down' 元素
-            if (window.innerWidth <= 768) {
-                if (scrollPos + windowHeight >= documentHeight) {
-                    scrollDown.style.display = 'none';
-                } else {
-                    scrollDown.style.display = 'block';
-                }
-            } else {
-                // 当窗口宽度大于 768 像素时，隐藏 'scroll-down' 元素
-                scrollDown.style.display = 'none';
-            }
-        }
-    
-        // 定义处理点击事件的函数，使页面平滑滚动到下一个视口
-        function handleButtonClick() {
-            window.scrollBy({
-                top: window.innerHeight,
-                behavior: 'smooth'
-            });
-        }
-    
-        // 为 'scroll-down' 元素添加点击事件监听器
-        scrollDown.addEventListener('click', handleButtonClick);
-        // 为 window 添加滚动事件监听器
-        window.addEventListener('scroll', handleScroll);
-    });
-    </script>
-    <!--向下滑动监听结束-->    
-    <script src="./js/25cfefa7b1.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.staticfile.net/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.net/layer/3.1.1/layer.js"></script>
-    <script src="js/fetch.min.js"></script>
-    <script src="js/axios.min.js"></script>
-    <script src="js/parallax.min.js"></script>
-    <script src="js/Right.js"></script>
-    <script src="js/nodecursor-jquery.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/terminal.js"></script>
-    <script src="js/loading.js"></script>
-    <script src="js/tab.js"></script>
-    <script src="js/rss.js"></script>
-    <script src="js/fireworks.js"></script>
-</body>
+            </div> 
+            </div> 
+            <div class="find ch"> <div class="container links">
+                 <h2 class="chtitle">我走过的地方<span>地方</span></h2> 
+                 <div class="clear col-3"> 
+                 <a href="./templates/blog.html" target="_blank"> 
+                 <div class="item"> 
+                 <div class="bg" style="background-color:#28a9e0"></div> 
+                 <div class="inner"> <span>个人博客</span> </div> </div> </a> 
+                 <a href="https://" target="_blank">
+                  <div class="item"> <div class="bg" style="background-color:#28a9e0"></div> 
+                   <div class="inner"> <span>暂无</span> </div> </div> </a> 
+                     <a href="https://" target="_blank"> 
+                      <div class="item"> 
+                       <div class="bg" style="background-color:#28a9e0"></div>
+                       <div class="inner"> <span>暂无</span> </div> </div> </a> </div> 
+                      <div class="clear"> 
+                       <a href="https:///" target="_blank">
+                        <div class="item"> 
+                         <div class="bg" style="background-color:#28a9e0"></div> 
+                          <div class="inner"> <i class="icon-qq"></i> 
+                           <span>QQ</span> </div> </div> </a> 
+                            <a href="https:// /" target="_blank">
+                     <div class="item"> <div class="bg" style="background-color:#28a9e0"></div> 
+                     <div class="inner"> <i class="icon-mail"></i> <span>Mail</span> </div> </div> </a>
+                     <a href="https:// /" target="_blank"> 
+                     <div class="item"> <div class="bg" style="background-color:#e6162d"></div>
+                     <div class="inner"> <i class="icon-weibo"></i> <span>Weibo</span> </div> </div> </a> 
+                     <a href="https:// /" target="_blank"> 
+                     <div class="item"> <div class="bg" style="background-color:#f9a2a8"></div> 
+                     <div class="inner"> <i class="icon-bilibili"></i> 
+                     <span>Bilibili</span> </div> </div> </a> 
+                     <a href="https:// /" target="_blank"> 
+                     <div class="item"> <div class="bg" style="background-color:#28a9e0"></div> 
+                     <div class="inner"> <i class="icon-twitter"></i> <span>Twitter</span> </div> </div> </a> 
+                     <a href="https:// /" target="_blank">
+                        <div class="item"> <div class="bg" style="background-color:#0f88eb"></div>
+                         <div class="inner"> <i class="icon-zhihu"></i> 
+                          <span>知乎</span> </div> </div> </a> 
+                          <a href="https:// /" target="_blank"> 
+                          <div class="item"> <div class="bg" style="background-color:#f09199"></div>
+                          <div class="inner"> <i class="icon-bookmark"></i> <span>Bangumi</span> </div> </div> </a> <a href="http://music.163.com" target="_blank"> 
+                          <div class="item"> <div class="bg" style="background-color:#f12d35"></div>
+                          <div class="inner"> <i class="icon-netease_music"></i> 
+                          <span>网易云音乐</span> </div> </div> </a> 
+                          <a href="https:// /" target="_blank"> 
+                          <div class="item"> <div class="bg" style="background-color:#353535"></div> 
+                          <div class="inner"> <i class="icon-github"></i> <span>Github</span> </div> </div> </a> 
+                          <a href="https:// /" target="_blank"> <div class="item"> <div class="bg" style="background-color:#b600ff"></div> 
+                          <div class="inner"> <i class="icon-instagram"></i> <span>Instgram</span> </div> </div> </a> </div> </div> </div>
+                          <div class="gate ch"> <div class="container links"> 
+                 <div class="footer ch"> <div class="container"> <h3>只要许愿</h3> <p>就会成功，对吧</p><img src="./images/1.jpg", style="width: 300px; height: 120px;">
+                 <p class="c">@版权所有 &copy; 2025 Ciin7mo</p> 
+                  </div> 
+                 </div>
+              <script src="js/page.3a0791a3.js"></script> 
+              <script src="js/fireworks.js"></script>
+           <script type="text/javascript" src="js/stats.js" charset="UTF-8">
+       </script>
+  
+    </body>
 </html>
