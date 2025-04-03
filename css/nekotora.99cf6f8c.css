@@ -92,12 +92,11 @@
     content: '\f16d';
 }
 
-.icon-weibo:before {
-    content: '\f18a';
+.icon-weixin:before {
+    content: '\e802';
 }
 
 .icon-qq:before {
     content: '\f1d6';
 }
 
-/*# sourceMappingURL=/nekotora.99cf6f8c.css.map */
