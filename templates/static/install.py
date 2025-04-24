@@ -3,9 +3,12 @@ import sys
 import time
  
 libraries = [
-    'flask',
-    'pymysql',
-    'flask_mysqldb',
+    'Flask==3.1.0',
+    'Flask_MySQLdb==2.0.0',
+    'MySQL-python==1.2.5',
+    'PyMySQL==1.1.1',
+    'Werkzeug==3.1.3',
+]
 
 ]
 
