@@ -16,6 +16,8 @@ body, html {
     overflow-x: hidden;
 }
 
+
+
 .intro {
     position: relative;
 }
@@ -460,6 +462,13 @@ ul.skill li .progress div {
     font-size: 13px;
     color: hsla(0, 0%, 100%, 0.6);
 }
+
+
+
+
+
+
+
 
 .footer {
     text-align: center;

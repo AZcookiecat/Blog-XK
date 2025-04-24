@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<head class="noisework.cn">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>网页组协作及本地测试手册</title>
+	<link rel="icon" href="./static/img/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="./static/css/style.css">
+	<link rel="stylesheet" href="./static/css/root.css">
+	<script src="https://kit.fontawesome.com/25cfefa7b1.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="./static/css/loading.css"> 
+</head>
+<body>
+	 <!-- loading加载--> 
+	 <div id="spinner-container">
+        <div class="spinner"></div>
+	 </div>
+     <div class="container">
+        <h2>打开Unity的WebGL包及网页中嵌入的方法</h2>
+        <div class="meta-info">
+            <span>作者：Ciin7mo</span>
+            <span>发布时间：2025.04.24</span>
+        </div>
+        <div class="separator"></div>
+        <div class="content">
+            <h3>打开WebGL包</h3>
+            <p>在vscode的插件库中安装Live Server插件</p>
+            <br>
+            <p>打开Unity的WebGL包，找到并打开index.html文件</p>
+            <br>
+            <p>右键菜单，找到并点击Open with Live Server就可以在网页中打开</p>
+            <br>
+            <br>
+            <br>
+            <h3>网页中嵌入Unity</h3>
+            <p>将Unity的WebGL包放在如图所示的文件夹中，保持项目目录结构相同</p>
+            <img src="./static/imgs/W-2-1.png", class="imges">
+            <br>
+            <p>然后将index.html文件中的路径修改为/static/unity</p>
+            <br>
+            <p>&nbsp;&nbsp;将Build/xxx和TemplateData/xxx的路径改为绝对路径（添加/static/unity/前缀）</p>
+            <img src="./static/imgs/W-2-2.png", class="imges">
+            <br>
+            <p>&nbsp;&nbsp;如果Unity生成的index.html中有类似loaderUrl: "Build/xxx.loader.js"的配置，同样需要修改路径</p>
+            <img src="./static/imgs/W-2-3.png", class="imges">
+            <br>
+            <p>以Flask为例，配置路由</p>
+            <img src="./static/imgs/W-2-4.png", class="imges">
+            <br>
+            <p>在原来的页面中添加跳转连接即可将Unity嵌入到网页中</p>
+            <br>
+            <br>
+            <br>
+            <h5>常见问题</h5>
+            <h3>1.白屏或网页资源404</h3>
+            <p>如何查看，进入网页后按F12，查看控制台，一般是资源加载失败，检查路径是否正确。</p>
+            <br>
+            <h4>解决办法：</h4>
+            <p>检查index.html中的路径是否包含/static/unity/前缀，检查Build/xxx和TemplateData/xxx的路径是否为绝对路径。</p>
+            <h3>2.控制台提示跨域错误</h3>
+            <h4>解决办法：</h4>
+            <p>启用Flask-CORS或确保资源路径统一端口</p>
+            <img src="./static/imgs/W-2-5.png", class="imges">
+            <h3>3.页面仍跳转到5500端口</h3>
+            <h4>解决办法：</h4>
+            <p>关闭其他本地服务器，确保链接指向/unity路由</p>
+        </div>
+    </div>
+
+	<footer>		
+		  <span class="astro-OY55P3EK"><span class="astro-OY55P3EK"><p class="c">@版权所有 &copy; 2025 Ciin7mo&nbsp;&nbsp;本站已安全运行 <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>现在时间：<span id="show_time"></span></p> 
+	</footer>
+    
+	
+	</div>
+</body>
+<script src="./static/js/script.js"> </script>
+<script src="./static/js/Meting.min.js"> </script>
+<script src="./static/js/loading.js"></script>
+<script src="../js/fireworks.js"></script>
+<script src="../js/date.js"></script>
+</html>

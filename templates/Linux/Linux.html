@@ -54,7 +54,7 @@
 					<a href="./Web前端/Web前端.html">Web前端</a>
 				</div>
 				<div class="left-tag-a">
-					<a href="./Linux/Linux.html">Linux</a>
+					<a href="Linux.html">Linux</a>
 				</div>
 				<div class="left-tag-a">
 					<a href="./Unity/Unity.html">Unity</a>
@@ -117,136 +117,18 @@
 				</div>
 			</content>	
 
-	<footer>		
-		  <span class="astro-OY55P3EK"><span class="astro-OY55P3EK">@版权所有 &copy; 2025 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本站已安全运行 <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>现在时间：<span id="show_time"></span>   
-		  <script>
-		  var now = new Date();
-		  function createtime() {
-			var grt= new Date("03/01/2025 00:00:00");
-			now.setTime(now.getTime()+250);
-			days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-			hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-			if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-			mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-			seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-			snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-			document.getElementById("timeDate").innerHTML = dnum+" 天 ";
-			document.getElementById("times").innerHTML = hnum + " 时 " ;
-		  }
-		  setInterval("createtime()",250);
-		  </script>
-		  <!-- 时间 -->
-			<span id="RGB"></span> 
-		  <meta charset="utf-8">   
-	  <div id="main">  
-	  <div id="show_time0">
-	  <script>
-	  //显示时间
-	  //setInterval("show_time0.innerHTML=new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay());",1000);
-	  </script>
-	  </div>
-	  <script>  
-	  //定义
-	  setInterval("fun(show_time)",1);
-	  function fun(timeID){ 
-	  var date = new Date();  //创建对象  
-	  var y = date.getFullYear();     //获取年份  
-	  var m =date.getMonth()+1;   //获取月份  返回0-11  
-	  var d = date.getDate(); // 获取日  
-	  var w = date.getDay();   //获取星期几  返回0-6   (0=星期天) 
-	  var ww = ' 星期'+'日一二三四五六'.charAt(new Date().getDay()) ;//星期几
-	  var h = date.getHours();  //时
-	  var minute = date.getMinutes()  //分
-	  var s = date.getSeconds(); //秒
-	  var sss = date.getMilliseconds() ; //毫秒
-	  if(m<10){
-	  m = "0"+m;
-	  }
-	  if(d<10){
-	  d = "0"+d;
-	  }
-	  if(h<10){
-	  h = "0"+h;
-	  }
+			<footer>		
+				<span class="astro-OY55P3EK"><span class="astro-OY55P3EK"><p class="c">@版权所有 &copy; 2025 Ciin7mo&nbsp;&nbsp;本站已安全运行 <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>现在时间：<span id="show_time"></span></p>   
+				<script>
+		  </footer>
+		  
 	  
-	  if(minute<10){
-	  minute = "0"+minute;
-	  }
+		  </div>
+	  </body>
+	  <script src="../static/js/script.js"> </script>
+	  <script src="../static/js/Meting.min.js"> </script>
+	  <script src="../static/js/loading.js"></script>
+	  <script src="../../js/fireworks.js"></script>
+	  <script src="../../js/date.js"></script>
+	  </html>
 	  
-	  if(s<10){
-	  s = "0"+s;
-	  }
-	  
-	  if(sss<10){
-	  sss = "00"+sss;
-	  }else if(sss<100){
-	  sss = "0"+sss;
-	  }
-	  
-	  document.getElementById(timeID.id).innerHTML =  y+"-"+m+"-"+d+"   "+h+":"+minute+"     "+ww;
-	  //document.write(y+"-"+m+"-"+d+"   "+h+":"+minute+":"+s);  
-	  }
-	  </script>
-	</footer>
-	
-<script>
-	function updateClock() {
-	  const now = new Date();
-	  const year = now.getFullYear();
-	  const month = (now.getMonth() + 1).toString().padStart(2, '0');
-	  const day = now.getDate().toString().padStart(2, '0');
-	  const hours = now.getHours().toString().padStart(2, '0');
-	  const minutes = now.getMinutes().toString().padStart(2, '0');
-	  document.getElementById('clock').textContent = `${year}年${month}月${day}日 ${hours}点${minutes}分`;
-	}
-  
-	// 初始更新时钟
-	updateClock();
-	// 每分钟更新时钟
-	setInterval(updateClock, 60000);
-  </script>
-  <script>
-    var weekday = new Array(7);
-    weekday[0] = "周日";
-    weekday[1] = "周一";
-    weekday[2] = "周二";
-    weekday[3] = "周三";
-    weekday[4] = "周四";
-    weekday[5] = "周五";
-    weekday[6] = "周六";
-
-    
-    var today = new Date();
-    var hrs = today.getHours();
-    var dayOfWeek = weekday[today.getDay()];
-    var date = dayOfWeek+" "   ;
-
-    var greet;
-
-    if (hrs >= 0 && hrs <= 4)
-        greet = "🙃 凌晨好  ";
-    if (hrs >= 5 && hrs <= 8) 
-        greet = "😘 早上好  ";
-    if (hrs >= 9 && hrs <= 11) 
-        greet = "😜 上午好  ";
-    if (hrs >= 11 && hrs <= 13) 
-        greet = "🥳 中午好  ";
-    if (hrs >= 13 && hrs <= 17) 
-        greet = "🥰 下午好  ";
-    if (hrs >= 18 && hrs <= 19) 
-        greet = "🧐 傍晚好  ";
-    if (hrs >= 19 && hrs <= 22) 
-       greet = "🥳 晚上好  ";
-    if (hrs >= 22 && hrs <= 24) 
-       greet = "🥺 夜深了  ";
-
-    document.getElementById('lbl').innerHTML =
-        greet+=` 👉 今天是：${date}</div>`;
-</script> 
-	</div>
-</body>
-<script src="../static/js/script.js"> </script>
-<script src="../static/js/Meting.min.js"> </script>
-<script src="../static/js/loading.js"></script>
-<script src="../../js/fireworks.js"></script>
-</html>
