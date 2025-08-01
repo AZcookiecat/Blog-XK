@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ciin7mo's 个人博客</title>
+  <link rel="icon" href="../../img/favicon.ico">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/blog.css">
+  <script src="../../js/jq.js"></script>
+</head>
+
+
+<body>
+  <canvas class="canvas-wrap" id="triangle-lost-in-space" resize="true"></canvas>
+
+  <!-- loadding -->
+  <div class="lodding-wrap">
+    <div class="loadding-div"></div>
+  </div>
+
+  <!-- 主要页面 -->
+  <div class="box">
+
+    <!-- 顶部栏 -->
+    <div class="header borderafter">
+      <!-- 返回按钮 -->
+      <a style="position: absolute;left:50px;" href="javascript:history.back()">
+        <svg t="1649246285004" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          p-id="3737" width="20" height="20">
+          <path
+            d="M98 468.9l322.8-322.8v184.4C743.6 376.7 881.9 607.3 928 837.8 812.7 676.4 651.3 602.6 420.8 602.6v189.1L98 468.9z"
+            p-id="3738" fill="#254665"></path>
+        </svg>
+      </a>
+
+      <div class="col">
+        <span>个人简历</span>
+        <!-- 右边操作栏 -->
+        <div class="header-right">
+          <!-- 按钮 -->
+          <div class="min_menu-wrap" id="minmenu">
+            <span class="min_menu"></span>
+          </div>
+          <!-- 列表 -->
+          <div class="menu_list">
+            <!-- 栏目 -->
+            <ul class="header-nav">
+              <li><a href="../../index2.html">主页</a></li>
+              <li><a href="../../home.html">项目</a></li>
+              <li><a href="../../resume.html">经验</a></li>
+              <li><a href="../../contact.html">联系</a></li>
+              <li class="active"><a href="../../blog.html">博客</a></li>
+              <li><a href="../../live.html">其他</a></li>
+            </ul>
+            <!-- 开关灯 -->
+            <span class="kaig-bottm">
+              <svg t="1649159647627" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                xmlns="http://www.w3.org/2000/svg" p-id="2250" width="15" height="15">
+                <path
+                  d="M1008.535135 710.670332l-70.446388 116.386904a112.099975 112.099975 0 0 1-140.572857 43.829042l-69.422645-17.083729c-5.502624 3.1992-11.133217 6.3984-16.763809 9.341665l-18.299425 62.896276C687.335435 981.514621 639.4754 1023.744064 582.657604 1023.744064H441.764828c-56.817796 0-104.677831-42.293427-110.308423-97.703574l-18.299425-62.896276a422.166458 422.166458 0 0 1-16.827793-9.341665l-69.614597 17.083729a112.163959 112.163959 0 0 1-140.508873-43.893026L15.631361 710.542364a107.493127 107.493127 0 0 1 32.43989-144.731817L96.251206 518.910272a410.649338 410.649338 0 0 1 0-14.204448l-48.179955-46.836291a107.365159 107.365159 0 0 1-32.375906-144.731817l70.190452-116.450888a112.099975 112.099975 0 0 1 140.572857-43.893026l69.550612 17.083729c5.566608-3.1992 11.133217-6.3984 16.827794-9.341665l18.299425-62.896276C336.831061 42.229443 384.691096 0 441.508892 0H582.529636c56.817796 0 104.677831 42.293427 110.372407 97.63959l18.235441 62.704324c5.75856 3.007248 11.325169 6.142464 16.827793 9.341665l69.678581-17.083729a112.163959 112.163959 0 0 1 140.508873 43.893026l70.446388 116.514872a107.493127 107.493127 0 0 1-32.375906 144.731817l-48.179955 46.772307a414.616346 414.616346 0 0 1 0 14.204448l48.243939 46.836291c47.092227 31.928018 62.192452 94.952262 32.247938 145.115721z m-213.066733-142.23644l3.391152-31.032242a246.210447 246.210447 0 0 0 0-51.699076l-3.263184-30.904274 93.992502-91.305173-53.554612-88.553862-131.615096 32.311922-23.546113-16.059985a294.134466 294.134466 0 0 0-48.627844-26.809297l-27.513121-11.901025L568.453156 127.968008H455.649356L419.370426 252.736816l-27.705074 11.965009c-16.635841 7.166208-32.951762 16.187953-48.499875 26.745313l-23.610097 15.996001-131.487128-32.247938-53.36266 88.489878 94.056486 91.433141-3.263184 30.968258a247.874031 247.874031 0 0 0 0 51.699076l3.1992 30.904274-93.928518 91.369157 53.554612 88.489878 131.551112-32.311922 23.610097 16.059985c15.292177 10.429393 31.544114 19.451137 48.563859 26.809297l27.577106 11.965009L455.905292 895.776056h112.611848l36.342914-124.768808 27.64109-11.965009c16.699825-7.166208 32.951762-16.187953 48.563859-26.745313l23.546113-15.996001 131.423144 32.247938 53.68258-88.745814-94.184454-91.369157zM512.147232 615.846038c57.329668 0 103.846038-46.516371 103.974006-103.974006 0-57.329668-46.644339-103.974006-103.974006-103.974007S408.173225 454.542364 408.173225 511.872032 454.817564 615.846038 512.147232 615.846038z m0 127.968008c-127.968008 0-231.942014-103.910022-231.942015-231.942014 0-127.968008 103.910022-231.942014 231.942015-231.942015 127.968008 0 231.942014 103.910022 231.942014 232.133967A232.133967 232.133967 0 0 1 512.147232 743.814046z"
+                  p-id="2251"></path>
+              </svg>
+              <!-- 开关按钮 -->
+              <span class="my-radio active" id="myRadio">
+                <i></i>
+              </span>
+              <svg t="1649159678284" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                xmlns="http://www.w3.org/2000/svg" p-id="3376" width="15" height="15">
+                <path
+                  d="M505.4 878.6c-196.7 0-358-150.9-374.9-343.1 1-18.6 16.1-33.4 34.9-33.4 10.8 0 20.5 4.8 26.9 12.4 0.2 0.3 0.5 0.1 0.5-0.7 41.6 44.2 100.5 71.9 166.1 71.9 127.1 0 230.1-103 230.1-230.1 0-66.1-28-125.1-72.6-166.8 0.1-0.1 0.5-0.1 0.3-0.3-7-6.5-11.4-15.7-11.4-26.1 0-19 14.9-34.1 33.7-35.3 192.1 17.1 342.9 178.3 342.9 375 0 208-168.5 376.5-376.5 376.5z"
+                  p-id="3377"></path>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 顶部导航 -->
+    <div class="navigation">
+      <div class="nav-titleBox co zz">
+        <!-- 占位符 -->
+        <div class="co-left"></div>
+
+        <!-- 标题 -->
+        <div class="co-right">
+          <span class="titleBox-tag"></span>
+          <h1>
+            网页前端技术
+          </h1>
+          <a class="buttom navbtn" href="#next-one">看看我发表的文章吧
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主要修改部分 -->
+    <div class="content zz">
+      
+        <div class="content-li li2">
+          <div class="li2-box carbox">
+            <div class="address-wrap">
+              <div class="address-left">
+                <span class="zd" id="next-one">置顶</span>
+                <span>网页组前端协作</span>
+              </div>
+              <div class="address-right">
+                <span>作者：Ciin7mo</span>
+                <svg t="1663149212139" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                  xmlns="http://www.w3.org/2000/svg" p-id="1979" width="20" height="20">
+                  <path
+                    d="M192 512a320 320 0 1 1 640 0 320 320 0 0 1-640 0zM512 128a384 384 0 1 0 0 768 384 384 0 0 0 0-768z m21.333333 224a32 32 0 0 0-64 0V554.666667h202.666667a32 32 0 0 0 0-64H533.333333V352z"
+                    fill="#222222" p-id="1980"></path>
+                </svg>
+                <span>2025-03-21 </span>
+              </div>
+            </div>
+            <div class="article">
+            <h1 style="font-size: 30px;">网页组协作及本地测试手册</h1>
+            <div class="text-block">
+              <blockquote>
+                <h3 style="color: red; font-weight: bold;">[注意]开始之前请确认你的电脑上已经安装好了python，以及vscode或者pycharm等代码编辑平台</h3>
+              </blockquote>
+            </div>
+            <h2>协作部分</h2>
+            <h2>1.git,sourcetree安装</h2>
+            <p>&nbsp;&nbsp;下载连接：通过网盘分享的文件：网页组本地软件  
+                <p>&nbsp;&nbsp;提取码: hutb</p>
+                <a href ="https://pan.baidu.com/s/15YGC9gM98TOpCWBmVwk_PA" >&nbsp;&nbsp;链接: https://pan.baidu.com/s/15YGC9gM98TOpCWBmVwk_PA</a>
+                <br>&nbsp;&nbsp;下载完成后，无脑安装即可
+            </br>
+            </br>
+            <h2>2.访问gitee官网，并注册账号</h2>
+            <p>&nbsp;&nbsp;访问地址：<a href="https://gitee.com/">https://gitee.com/</a>
+                <p>&nbsp;&nbsp;若注册未绑定邮箱，先绑定邮箱，然后将注册或绑定邮箱发送至3424255277@qq.com</p>
+            </p>
+            </br>
+            <h2>3.创建本地仓库，并连接远端gitee仓库</h2>
+            <p>&nbsp;&nbsp;先在本地新建文件夹，命名完成之后，打开sourcetree，点击上方加号之后选择clone</p>
+            <div class="text-img">
+              <img src="./imgs/000+1.png">
+            </div>
+            <p>&nbsp;&nbsp;输入gitee仓库地址，点击clone，等待克隆完成
+                <br>&nbsp;&nbsp;仓库url: https://gitee.com/xiang-embroidery-team/xiangxiu.git
+            </p>
+            </br>
+            <div class="text-block">
+              <blockquote>
+                <h3 style="color: red; font-weight: bold;">&nbsp;&nbsp;!!!注意事项：
+                  <br>&nbsp;&nbsp;1）在本地仓库中对原有代码进行修改保存，进入sourcetree点击文件状态会有刚才修改的文件，选择需要上传的代码，点击暂存所选，然后点击提交，在推送前点击拉去，防止有人同时提交代码，之后点击推送即可更新代码
+                  <br>&nbsp;&nbsp;2）每次打开项目修改之前，先对最新代码进行拉取后再进行修改，避免冲突
+                </h3>
+              </blockquote>
+            </div>
+            </br>
+            </br>
+            <h2>本地测试：</h2>
+            <h2>1.mysql数据库安装配置</h2>
+            <p>&nbsp;&nbsp;1）官网下载地址:<a href="https://dev.mysql.com/downloads/mysql/5.5.html#downloads">https://dev.mysql.com/downloads/mysql/5.5.html#downloads</a>
+                <br>&nbsp;&nbsp;建议下载LTS版本
+            </p>
+            <p>&nbsp;&nbsp;2）下载完成之后,将压缩包进行解压。建议大家把自己的mysql放到D盘根目录下,防止后面出现问题,自己找的时候也方便</p>
+            <p>&nbsp;&nbsp;3）环境配置
+                <br>&nbsp;&nbsp;>1 打开电脑系统环境变量,在系统变量中找到Path,点击进入编辑,加上自己mysql中bin文件夹的路径,然后确定退出即可
+                </br>
+                </br>
+                <div class="text-block">
+                  <blockquote>
+                    <h3 style="color: red; font-weight: bold;">&nbsp;&nbsp;[注意:这一步非常重要,很多人就是因为没有进行环境变量的配置, 直接在任务指示符上用'mysqld'命令进行安装,就会爆出这样的错误:
+                      &nbsp;&nbsp;'mysqld' 不是内部或外部命令，也不是可运行的程序 或批处理文件。]
+                    </h3>
+                  </blockquote>
+                </div>
+                <p>
+                <br>&nbsp;&nbsp;>2 安装mysql
+                <br>&nbsp;&nbsp;(1)新建一个txt文档，命名为my.ini,然后打开编辑器，输入以下内容：
+                <br>&nbsp;&nbsp;[mysql]
+                <br>&nbsp;&nbsp;# 设置mysql客户端默认字符集
+                <br>&nbsp;&nbsp;default-character-set=utf8
+                <br>&nbsp;&nbsp;[mysqld]
+                <br>&nbsp;&nbsp;# 设置3306端口
+                <br>&nbsp;&nbsp;port = 3306
+                <br>&nbsp;&nbsp;# 设置mysql的安装目录
+                <br>&nbsp;&nbsp;basedir = D:\mysql-9.1.0-winx64
+                <br>&nbsp;&nbsp;# 设置mysql数据库的数据的存放目录
+                <br>&nbsp;&nbsp;datadir = D:\mysql-9.1.0-winx64\data
+                <br>&nbsp;&nbsp;# 允许最大连接数
+                <br>&nbsp;&nbsp;max_connections=20
+                <br>&nbsp;&nbsp;# 服务端使用的字符集默认为8比特编码的latin1字符集
+                <br>&nbsp;&nbsp;character-set-server=utf8
+                <br>&nbsp;&nbsp;# 创建新表时将使用的默认存储引擎
+                <br>&nbsp;&nbsp;default-storage-engine=INNODB
+                <br>&nbsp;&nbsp;# 创建模式
+                <br>&nbsp;&nbsp;sql_mode = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+                </p>
+                <br>
+                <br>
+                <div class="text-block">
+                  <blockquote>
+                    <h3 style="color: red; font-weight: bold;">&nbsp;&nbsp;[注意：这两个位置需要自己去设置的
+                        <br>&nbsp;&nbsp;# 设置mysql的安装目录
+                        <br>&nbsp;&nbsp;basedir = D:\mysql-9.1.0-winx64
+                        <br>&nbsp;&nbsp;# 设置mysql数据库的数据的存放目录
+                        <br>&nbsp;&nbsp;datadir = D:\mysql-9.1.0-winx64\data]
+                    </h3>
+                  </blockquote>
+                </div>
+            </p>
+            <p>&nbsp;&nbsp;(2)用管理员身份打开cmd命令行，进入下载好mysql中bin的路径下，输入代码进行初始化mysql: mysqld --initialize</p>
+            </br>
+            </br>
+            <div class="text-block">
+              <blockquote>
+                <h3 style="color: red; font-weight: bold;">&nbsp;&nbsp;[注意:这里一定要使用管理员的身份运行,不然后面可能会出现权限不够的错误]</h3>
+              </blockquote>
+            </div>
+            </br>   
+                <p>&nbsp;&nbsp;命令成功后(没有出现错误信息),回到自己mysql的文件中,会出现之前没有的data文件,进入data文件,里面有后缀名.err的文件,里面存放了你登入mysql的密码,双击打开,找到自己的用户和密码
+                    &nbsp;&nbsp;一般来说root@localhost是你的初始账户,:冒号后面便是你的密码</p>
+                <br><p>&nbsp;&nbsp;(3)然后输入下面代码开启mysql服务: net start mysql  
+                <br>&nbsp;&nbsp;然后输入：mysql -u root -p 回车之后会提示输入密码.没有报错,显示你mysql的版本就是安装成功了
+                </p>
+                <p></p>
+                <br><p>&nbsp;&nbsp;(4)然后进行密码的修改,使用命令：
+                <br>&nbsp;&nbsp;alter user 'root'@'localhost' identified with mysql_native_password by ' **这里填写新密码** ';这里大家在''里面填入改后的密码
+                </p>
+            </br>
+            </br>
+            <h2>2.Navicat下载安装</h2>
+            <p>&nbsp;&nbsp;（1）下载：通过网盘分享的文件：Navicat  
+                <p>&nbsp;&nbsp;提取码: hutb</p>
+                <a href ="https://pan.baidu.com/s/15YGC9gM98TOpCWBmVwk_PA" >&nbsp;&nbsp;链接: https://pan.baidu.com/s/15YGC9gM98TOpCWBmVwk_PA</a>
+                <br>&nbsp;&nbsp;下载完成后，无脑安装即可
+            <div class="text-img">
+              <img src="./imgs/000+2.png">
+              <img src="./imgs/000+3.png">
+              <img src="./imgs/000+4.png">
+            </div>
+            <p>&nbsp;&nbsp;(2)关键步骤：
+                <br>&nbsp;&nbsp;1.解压补丁压缩包
+                <br>&nbsp;&nbsp;2.双击bat文件
+            </p>
+            <div class="text-img">
+              <img src="./imgs/000+5.png">
+            </div>
+            <p><br>&nbsp;&nbsp;3.将winmm.dll复制到安装Navicat的路径中</p>
+            <div class="text-img">
+              <img src="./imgs/000+6.png">
+            </div>
+            <p>&nbsp;&nbsp;4.打开Navicat
+                <br>&nbsp;&nbsp;如果没有提示试用，则说明成功了</p>
+            </br>
+            </br>
+            <p>&nbsp;&nbsp;5.连接数据库
+                <br>&nbsp;&nbsp;新建连接，自行设置配置
+            </p>
+            <div class="text-img">
+              <img src="./imgs/000+7.png">
+            </div>
+            <P>&nbsp;&nbsp;6.用管理员身份打开命令窗口，输入net start mysql 启动mysql服务</p>
+            <div class="text-img">
+              <img src="./imgs/000+8.png">
+              
+            </div>
+            <p>&nbsp;&nbsp;7.输入mysql -u root -p，回车输入密码，进入mysql命令行</p>
+            <div class="text-img">
+              <img src="./imgs/000+9.png">
+            </div>
+            <p>&nbsp;&nbsp;8.运行sql脚本，输入source + data.sql地址 回车提示全部OK即可</p>
+            
+            <div class="text-img">
+              <img src="./imgs/000+10.png">
+            </div>
+            <p>&nbsp;&nbsp;9.将项目的config,py中的数据库配置改成自己的本地数据库配置
+                <br>&nbsp;&nbsp;主要是password
+            </p>
+
+            <div class="text-img">
+              <img src="./imgs/000+11.png">
+            </div>
+            <p>&nbsp;&nbsp;10.在vscode或者其他平台安装项目的依赖库
+                <br>&nbsp;&nbsp;进入项目文件夹，打开cmd命令行，输入pip install -r requirements.txt  等待安装完成
+                <br>&nbsp;&nbsp;或者&nbsp;&nbsp;<a href="./py/install.py" download="install.py" style="color:blue">点击这里下载文件</a>,下载完成后，在Python终端运行即可
+            </p>
+            <p>&nbsp;&nbsp;11.在vscode或者其他平台运行app.py  访问http://127.0.0.1:5000/  即可看到项目结果</p>
+            <div class="text-img">
+              <img src="./imgs/000+12.png">
+            </div>
+            <div class="text-block">
+              <blockquote>
+                <h3 style="color: red; font-weight: bold;">&nbsp;&nbsp;[注意：首次执行data.sql文件后，登录前需要先注册账号]</h3>
+              </blockquote>
+            </div>
+
+          </div>
+        </div>
+        </div>
+
+      </div>
+      <footer>
+        <div class="carbox copybottm">
+          @版权所有 &copy;2025 Ciin7mo&nbsp;&nbsp;本站已安全运行 <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>现在时间：<span id="show_time"></span>
+        </div>
+      </footer>
+    </div>
+</body>
+
+<script src="../../js/base.js"></script>
+<script type="text/javascript" src="../../js/paper-full.min.js"></script>
+<script type="text/javascript" src="../../js/canvas.js"></script>
+<script src="../../js/date.js"></script>
+<script src="../../js/fireworks.js"></script>
+
+</html>
