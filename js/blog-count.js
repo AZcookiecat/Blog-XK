@@ -1,30 +1,15 @@
 /**
  * 博客类别筛选和统计功能
- * 不修改原有HTML结构，通过内容分析自动归类
+ * 通过统计carbox li3-box的id来统计文章数量
  */
 (function() {
   // 页面加载完成后执行
   document.addEventListener('DOMContentLoaded', function() {
-    // 类别映射：关键词 -> 类别
-    const categoryMap = {
-      'vue': 'frontend',
-      'react': 'frontend',
-      'html': 'frontend',
-      'css': 'frontend',
-      'js': 'frontend',
-      '人工智能': 'ai',
-      '数据分析': 'dataanalysis',
-      '网络安全': 'network-security',
-      'mysql': 'database',
-      '数据库': 'database',
-      'python': 'python',
-    };
- 
     // 获取所有文章项
     const blogPosts = document.querySelectorAll('.carbox.li3-box');
     // 获取所有类别标签
     const categoryTags = document.querySelectorAll('.time-tags-wrap span');
- 
+
     // 初始化类别计数
     const categoryCounts = {
       'all': blogPosts.length,
@@ -35,71 +20,102 @@
       'database': 0,
       'python': 0
     };
- 
-    // 为每篇文章自动添加类别属性并统计
+
+    // 通过id统计文章数量
     blogPosts.forEach(post => {
-      const addressLeft = post.querySelector('.address-left');
-      if (addressLeft) {
-        const text = addressLeft.textContent.toLowerCase();
-        let postCategory = null;
- 
-        // 根据关键词判断类别
-        for (const [keyword, category] of Object.entries(categoryMap)) {
-          if (text.includes(keyword)) {
-            postCategory = category;
-            break;
-          }
-        }
- 
-        // 默认分类为'frontend'（如果没有匹配到其他类别）
-        if (!postCategory) {
-          postCategory = 'frontend';
-        }
- 
+      // 获取文章的id
+      const postId = post.id;
+      
+      // 根据id更新类别计数
+      if (categoryCounts.hasOwnProperty(postId)) {
+        categoryCounts[postId]++;
         // 添加类别属性
-        post.setAttribute('data-category', postCategory);
-        // 更新计数
-        categoryCounts[postCategory]++;
+        post.setAttribute('data-category', postId);
+      } else {
+        // 默认分类为'frontend'
+        categoryCounts.frontend++;
+        post.setAttribute('data-category', 'frontend');
       }
     });
  
-    // 更新类别计数显示
-    for (const [category, count] of Object.entries(categoryCounts)) {
-      const categoryElement = document.querySelector(`.time-tags-wrap span.${category}`);
-      if (categoryElement) {
-        const countElement = categoryElement.querySelector('i');
-        if (countElement) {
-          countElement.textContent = count;
-        }
-      }
-    }
- 
-    // 添加筛选功能
+    // 更新类别标签上的数量显示
     categoryTags.forEach(tag => {
-      // 只处理带有类别class的标签
-      for (const category of Object.keys(categoryCounts)) {
-        if (tag.classList.contains(category)) {
-          tag.addEventListener('click', function() {
-            const selectedCategory = category;
- 
-            // 更新选中状态
-            categoryTags.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
- 
-            // 筛选文章
-            blogPosts.forEach(post => {
-              if (selectedCategory === 'all' || post.getAttribute('data-category') === selectedCategory) {
-                post.style.display = 'block';
-              } else {
-                post.style.display = 'none';
-              }
-            });
-          });
-          break;
+      // 保留原始标签文本（移除可能存在的数字部分）
+      const originalText = tag.textContent.replace(/\s*\(\d+\)/, '').trim();
+      tag.textContent = originalText;
+      
+      let category = 'all';
+
+      // 根据标签文本确定对应的类别
+      if (originalText.includes('前端技术')) {
+        category = 'frontend';
+      } else if (originalText.includes('人工智能')) {
+        category = 'ai';
+      } else if (originalText.includes('数据分析')) {
+        category = 'dataanalysis';
+      } else if (originalText.includes('网络安全')) {
+        category = 'network-security';
+      } else if (originalText.includes('数据库')) {
+        category = 'database';
+      } else if (originalText.includes('Python')) {
+        category = 'python';
+      }
+
+      // 如果是全部文章标签
+      if (originalText.includes('全部文章')) {
+        category = 'all';
+      }
+
+      // 在右上角显示统计结果
+      if (categoryCounts.hasOwnProperty(category)) {
+        // 查找或创建i元素
+        let countElement = tag.querySelector('i');
+        if (!countElement) {
+          countElement = document.createElement('i');
+          tag.appendChild(countElement);
         }
+        // 设置统计数字
+        countElement.textContent = categoryCounts[category];
       }
     });
- 
+
+    // 为类别标签添加点击筛选功能
+    categoryTags.forEach(tag => {
+      tag.addEventListener('click', function() {
+        // 移除所有标签的active状态
+        categoryTags.forEach(t => t.classList.remove('active'));
+        // 为当前点击的标签添加active状态
+        this.classList.add('active');
+
+        const tagText = this.textContent;
+        let targetCategory = 'all';
+
+        // 根据点击的标签确定要显示的类别
+        if (tagText.includes('前端技术')) {
+          targetCategory = 'frontend';
+        } else if (tagText.includes('人工智能')) {
+          targetCategory = 'ai';
+        } else if (tagText.includes('数据分析')) {
+          targetCategory = 'dataanalysis';
+        } else if (tagText.includes('网络安全')) {
+          targetCategory = 'network-security';
+        } else if (tagText.includes('数据库')) {
+          targetCategory = 'database';
+        } else if (tagText.includes('Python')) {
+          targetCategory = 'python';
+        }
+
+        // 筛选显示文章
+        blogPosts.forEach(post => {
+          if (targetCategory === 'all' || post.getAttribute('data-category') === targetCategory) {
+            post.style.display = 'block';
+          } else {
+            post.style.display = 'none';
+          }
+        });
+      });
+    });
+
     // 设置默认选中'全部文章'
     const allCategory = document.querySelector('.time-tags-wrap span.all');
     if (allCategory) {

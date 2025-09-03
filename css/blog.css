@@ -1,5 +1,5 @@
 
- .content-li.li1 {
+.content-li.li1 {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -208,14 +208,29 @@ footer .carbox.copybottm {
   display: flex;
   flex-wrap: wrap;
 }
-.time-tags-wrap span{
+
+.time-tags-wrap span {
   position: relative;
   margin-right: 10px;
   border-radius: 10px;
   padding: 5px;
   cursor: pointer;
   background: var(--headerCOlor);
+  transition: all 0.3s ease-in-out;
 }
+
+.time-tags-wrap span:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.time-tags-wrap span.active {
+  background: var(--mainColor);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255, 129, 129, 0.5);
+}
+
 .time-tags-wrap span>i{
   position: absolute;
   right: -8px;
