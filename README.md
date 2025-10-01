@@ -1,26 +1,104 @@
-# 个人网站resume
+# 井上川的个人博客
 
-#### 介绍
-Web前端个人网站，网页个人网站模版，HTML&CSS&JS制作个人网站
+一个基于Vue 3构建的个人博客网站，具有简约但专业的设计风格，适合程序员展示个人信息、技术栈、博客文章和项目荣誉。
 
-#### 相关技术
-- paper-full.min粒子插件
+## 功能特性
 
+### 首页
+- 个人信息展示
+- 技术栈展示（带动画效果）
+- 联系信息（带图标）
+- 快速导航链接
 
-#### 在线预览
-[web前端个人网站：我的愿望是世界和平](http://117.72.115.233)
+### 博客页面
+- 分类筛选功能
+  - 按技术栈分类（Vue3, JavaScript, HTML, CSS, Python, C#, Django, Flask, MySQL, node.js, git）
+  - 按软件分类（VScode, wireshark, unity, github）
+- 博客文章列表展示
+  - 标题和简述
+  - 技术栈和软件标签
+  - 发布时间和作者信息
+- Markdown格式的博客内容展示
 
-直接运行index.html文件
+### 项目展示页面
+- 个人项目展示
+- 荣誉成就展示
 
+## 项目结构
 
-### 截图预览
+```
+├── src/
+│   ├── views/           # 页面组件
+│   │   ├── HomeView.vue      # 首页
+│   │   ├── BlogView.vue      # 博客列表页
+│   │   ├── BlogDetailView.vue # 博客详情页
+│   │   └── ProjectView.vue   # 项目展示页
+│   ├── router/          # 路由配置
+│   │   └── index.js     # 路由定义
+│   ├── assets/          # 静态资源
+│   ├── components/      # 通用组件
+│   ├── App.vue          # 应用根组件
+│   ├── main.js          # 应用入口
+│   └── style.css        # 全局样式
+├── blogs/               # 博客文章（Markdown格式）
+├── public/              # 静态资源
+├── package.json         # 项目配置和依赖
+├── vite.config.js       # Vite配置
+└── .gitignore           # Git忽略规则
+```
 
-![首页1](https://foruda.gitee.com/images/1660233236541138096/qq图片20220811235044.png "QQ图片20220811235044.png")
-![首页2](https://foruda.gitee.com/images/1660233255916987209/qq图片20220811235120.png "QQ图片20220811235120.png")
-![首页3](https://foruda.gitee.com/images/1660233273207133049/qq图片20220811235142.png "QQ图片20220811235142.png")
-![项目页](https://foruda.gitee.com/images/1660233284830546684/qq图片20220811235238.png "QQ图片20220811235238.png")
-白色主题页
-![白色主题页](https://foruda.gitee.com/images/1660233327357495145/qq截图20220811235318.png "QQ截图20220811235318.png")
+## 快速开始
 
-#### 联系我：远程调试/二次开发/毕设
-![远程调试/二次开发/毕设](https://gitee.com/wttAndroid/wttAndroid.github.io/raw/master/src/img/%E6%97%A0%E6%A0%87%E9%A2%98.png)
+### 安装依赖
+
+```bash
+npm install
+```
+
+### 开发模式
+
+```bash
+npm run dev
+```
+
+### 构建生产版本
+
+```bash
+npm run build
+```
+
+### 预览生产版本
+
+```bash
+npm run preview
+```
+
+## 添加博客文章
+
+要添加新的博客文章，只需在`blogs`目录下创建Markdown格式的文件，并遵循以下格式：
+
+```markdown
+---
+title: 文章标题
+date: 发布日期（YYYY-MM-DD格式）
+author: 作者名称
+techTags: 技术栈标签1,技术栈标签2
+softwareTags: 软件标签1,软件标签2
+---
+
+# 文章内容
+
+这里是Markdown格式的文章内容...
+```
+
+## 技术栈
+
+- Vue 3
+- Vue Router
+- Vite
+- Markdown (marked库)
+- FontAwesome (图标库)
+
+## License
+
+MIT
