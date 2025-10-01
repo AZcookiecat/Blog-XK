@@ -74,6 +74,13 @@
           <span class="blog-date">{{ blog.date }}</span>
           <span class="blog-author">作者：{{ blog.author }}</span>
         </div>
+        <!-- 显示合集 -->
+        <div class="blog-detail-collection" v-if="blog.collection">
+          <span class="collection-tag">
+            <i class="fas fa-book-open"></i> 合集：{{ blog.collection }}
+          </span>
+        </div>
+        
         <!-- 显示techTags和softwareTags -->
         <div class="blog-detail-tags" v-if="(blog.techTags && blog.techTags.length > 0) || (blog.softwareTags && blog.softwareTags.length > 0)">
           <span 
@@ -91,6 +98,7 @@
             {{ tag }}
           </span>
         </div>
+
       </header>
       
       <main class="blog-detail-body">
@@ -189,6 +197,7 @@ export default {
         const metadataLines = [
           /^pinned:\s*(true|false)\s*$/im,
           /^techTags:.*$/im,
+          /^softwareTags:.*$/im,
           /^tools:.*$/im,
           /^author:.*$/im,
           /^date:.*$/im
@@ -271,6 +280,10 @@ export default {
       const pinnedMatch = content.match(/pinned:\s*(true|false)/i);
       const pinned = pinnedMatch ? pinnedMatch[1].toLowerCase() === 'true' : false;
       
+      // 解析合集标记
+      const collectionMatch = content.match(/collection:\s*([^\n]+)/i);
+      const collection = collectionMatch ? collectionMatch[1].trim() : '';
+      
       // 构建博客数据对象
       return {
         id,
@@ -280,6 +293,7 @@ export default {
         techTags,
         softwareTags,
         pinned,
+        collection,
         contentPath: `../../${fileName}` // 相对路径，用于详情页加载
       };
     },
@@ -287,8 +301,8 @@ export default {
     // 从所有博客文件中查找指定ID的博客
     async findBlogById(id) {
       try {
-        // 使用import.meta.glob动态导入blogs目录下的所有md文件
-        const markdownFiles = import.meta.glob('/blogs/*.md', { as: 'raw' });
+        // 使用import.meta.glob动态导入blogs目录下的所有md文件（包括子目录）
+        const markdownFiles = import.meta.glob(['/blogs/*.md', '/blogs/*/*.md'], { as: 'raw' });
         
         // 遍历所有文件并查找匹配的ID
         let fileId = 1;
@@ -477,16 +491,20 @@ export default {
     
     async loadMarkdownContent(path) {
       try {
-        // 使用Vite的动态导入功能加载Markdown文件
+        // 使用Vite的动态导入功能加载Markdown文件（包括子目录）
         // 注意：在实际生产环境中，需要确保路径正确且文件存在
         const relativePath = path.replace(/^\.\.\//, '/');
         
-        // 使用import.meta.glob动态导入项目根目录下的blogs文件夹中的Markdown文件
-        const markdownFiles = import.meta.glob('/blogs/*.md', { as: 'raw' });
+        // 使用import.meta.glob动态导入项目根目录下的blogs文件夹及其子目录中的Markdown文件
+        const markdownFiles = import.meta.glob(['/blogs/*.md', '/blogs/*/*.md'], { as: 'raw' });
+        
+        // 获取文件名
+        const fileName = path.split('/').pop();
         
         // 找到匹配的文件路径
+        // 对于子目录中的文件，路径可能包含文件夹名，所以我们需要更宽松的匹配
         const fileKey = Object.keys(markdownFiles).find(key => 
-          key.includes(path.split('/').pop())
+          key.includes(fileName)
         );
         
         if (fileKey) {
@@ -494,17 +512,8 @@ export default {
           const content = await markdownFiles[fileKey]();
           return content;
         } else {
-          // 如果找不到文件，尝试使用fetch（在开发环境中可能有效）
-          try {
-            const response = await fetch(relativePath);
-            if (!response.ok) {
-              throw new Error(`无法加载文件: ${response.statusText}`);
-            }
-            return await response.text();
-          } catch (fetchError) {
-            console.warn('使用fetch加载失败，尝试查找替代文件:', fetchError);
-            throw new Error('博客文件不存在或无法访问');
-          }
+          // 直接返回博客ID对应的文件内容，避免使用fetch
+          throw new Error('博客文件不存在或无法访问');
         }
       } catch (error) {
         console.error('加载Markdown文件失败:', error);
@@ -588,11 +597,28 @@ export default {
   font-weight: 500;
 }
 
+/* 合集标签样式 */
+.blog-detail-collection {
+  margin-bottom: 1rem;
+}
+
+.blog-detail-collection .collection-tag {
+  background-color: #eafaf1;
+  color: #2ecc71;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.3s ease;
+}
+
 .blog-detail-body {
   margin-bottom: 3rem;
 }
 
-.blog-detail-body :deep(h1),
 .blog-detail-body :deep(h2),
 .blog-detail-body :deep(h3),
 .blog-detail-body :deep(h4),
@@ -603,10 +629,9 @@ export default {
   color: #2c3e50;
 }
 
+/* 隐藏main部分的h1标签 */
 .blog-detail-body :deep(h1) {
-  font-size: 1.8rem;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 0.5rem;
+  display: none;
 }
 
 .blog-detail-body :deep(h2) {
@@ -619,6 +644,7 @@ export default {
   font-size: 1.4rem;
 }
 
+/* 恢复main部分的p标签显示 */
 .blog-detail-body :deep(p) {
   margin-bottom: 1.5rem;
   line-height: 1.8;
@@ -895,5 +921,71 @@ export default {
     flex-direction: column;
     gap: 0.5rem;
   }
+}
+
+/* 深色模式样式 */
+.dark .blog-detail-container {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+}
+
+.dark .blog-detail-title {
+  color: #ffffff;
+}
+
+.dark .blog-detail-meta {
+  color: #999999;
+}
+
+.dark .blog-detail-header {
+  border-bottom-color: #404040;
+}
+
+.dark .blog-detail-collection .collection-tag {
+  background-color: #2d3e32;
+  color: #4cd137;
+}
+
+/* 深色模式下博客内容样式 */
+.dark .blog-detail-body :deep(p) {
+  color: #e0e0e0;
+}
+
+.dark .blog-detail-body :deep(h1),
+.dark .blog-detail-body :deep(h2),
+.dark .blog-detail-body :deep(h3),
+.dark .blog-detail-body :deep(h4),
+.dark .blog-detail-body :deep(h5),
+.dark .blog-detail-body :deep(h6) {
+  color: #ffffff;
+}
+
+.dark .blog-detail-body :deep(ul),
+.dark .blog-detail-body :deep(ol),
+.dark .blog-detail-body :deep(li) {
+  color: #e0e0e0;
+}
+
+.dark .blog-detail-body :deep(pre) {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.dark .blog-detail-body :deep(code) {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.dark .blog-detail-body :deep(blockquote) {
+  color: #b0b0b0;
+  border-left-color: #3498db;
+}
+
+.dark .blog-detail-body :deep(a) {
+  color: #3498db;
+}
+
+.dark .blog-detail-body :deep(a:hover) {
+  color: #2980b9;
 }
 </style>

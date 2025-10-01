@@ -44,6 +44,28 @@
     <!-- 筛选区域 -->
     <section class="filter-section">
       <div class="filter-group">
+        <h3 class="filter-title">合集筛选</h3>
+        <div class="filter-tags">
+          <button 
+            class="filter-tag" 
+            :class="{ active: selectedCollection === 'all' }"
+            @click="selectedCollection = 'all'"
+          >
+            全部
+          </button>
+          <button 
+            v-for="collection in collectionFilters" 
+            :key="collection"
+            class="filter-tag"
+            :class="{ active: selectedCollection === collection }"
+            @click="selectedCollection = collection"
+          >
+            {{ collection }}
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-group">
         <h3 class="filter-title">技术栈筛选</h3>
         <div class="filter-tags">
           <button 
@@ -104,6 +126,7 @@
         <p class="blog-card-summary">{{ blog.summary }}</p>
         <div class="blog-card-meta">
           <div class="blog-card-tags">
+            <CollectionTag :collection="blog.collection" />
             <span 
               v-for="tag in blog.techTags" 
               :key="tag"
@@ -137,23 +160,27 @@
 
 <script>
 import PinnedBadge from '../components/PinnedBadge.vue'
+import CollectionTag from '../components/CollectionTag.vue'
 
 export default {
   name: 'BlogView',
   components: {
-    PinnedBadge
+    PinnedBadge,
+    CollectionTag
   },
   data() {
     return {
       selectedTech: 'all',
       selectedSoftware: 'all',
+      selectedCollection: 'all',
       techFilters: [
         'Vue3', 'JavaScript', 'HTML', 'CSS', 'Python', 
-        'C#', 'Django', 'Flask', 'MySQL', 'node.js', 'git', 'Markdown', 'yaml'
+        'C#', 'Django', 'Flask', 'MySQL', 'node.js', 'git', 'Markdown', 'yaml', 'Hadoop', 'Linux',
       ],
       softwareFilters: [
         'VScode', 'wireshark', 'unity', '教程', 'github', 'Git LFS', 'sourcetree'
       ],
+      collectionFilters: [], // 合集筛选列表会在加载博客时动态生成
       // 博客数据
       blogs: [],
       // 搜索相关状态
@@ -164,7 +191,12 @@ export default {
   },
   computed: {
     filteredBlogs() {
-      return this.blogs.filter(blog => {
+      // 先筛选后排序，置顶博客排在前面
+      const filtered = this.blogs.filter(blog => {
+        // 合集筛选
+        const collectionMatch = this.selectedCollection === 'all' || 
+                               (blog.collection && blog.collection === this.selectedCollection)
+        
         // 技术栈筛选
         const techMatch = this.selectedTech === 'all' || 
                           blog.techTags.some(tag => tag === this.selectedTech)
@@ -178,13 +210,21 @@ export default {
                             blog.title.toLowerCase().includes(this.searchKeyword.toLowerCase()) ||
                             blog.summary.toLowerCase().includes(this.searchKeyword.toLowerCase()) ||
                             blog.techTags.some(tag => tag.toLowerCase().includes(this.searchKeyword.toLowerCase())) ||
-                            blog.softwareTags.some(tag => tag.toLowerCase().includes(this.searchKeyword.toLowerCase()))
+                            blog.softwareTags.some(tag => tag.toLowerCase().includes(this.searchKeyword.toLowerCase())) ||
+                            (blog.collection && blog.collection.toLowerCase().includes(this.searchKeyword.toLowerCase()))
         
         // 日期筛选
         const dateMatch = !this.searchDate || blog.date === this.searchDate
         
-        return techMatch && softwareMatch && keywordMatch && dateMatch
+        return collectionMatch && techMatch && softwareMatch && keywordMatch && dateMatch
       })
+      
+      // 排序：置顶博客在前，然后按日期降序
+      return filtered.sort((a, b) => {
+        if (a.pinned && !b.pinned) return -1;
+        if (!a.pinned && b.pinned) return 1;
+        return new Date(b.date) - new Date(a.date);
+      });
     }
   },
   methods: {
@@ -210,8 +250,8 @@ export default {
     // 加载博客文件的方法，从blogs文件夹读取Markdown文件
     async loadBlogFiles() {
       try {
-        // 使用import.meta.glob动态导入blogs目录下的所有md文件
-        const markdownFiles = import.meta.glob('/blogs/*.md', { as: 'raw' });
+        // 使用import.meta.glob动态导入blogs目录下的所有md文件（包括子目录）
+        const markdownFiles = import.meta.glob(['/blogs/*.md', '/blogs/*/*.md'], { as: 'raw' });
         
         // 清空现有博客数据
         this.blogs = [];
@@ -238,12 +278,19 @@ export default {
           }
         }
         
+        // 动态生成合集筛选列表
+        const collections = [...new Set(this.blogs.map(blog => blog.collection).filter(Boolean))];
+        this.collectionFilters = collections.sort();
+        
         console.log('博客文件加载完成:', this.blogs);
         
       } catch (error) {
         console.error('加载博客文件失败:', error);
         // 如果出错，添加一些默认的模拟数据
         this.addDefaultBlogs();
+        // 为默认数据生成合集列表
+        const collections = [...new Set(this.blogs.map(blog => blog.collection).filter(Boolean))];
+        this.collectionFilters = collections.sort();
       }
     },
     
@@ -284,6 +331,10 @@ export default {
       const pinnedMatch = content.match(/pinned:\s*(true|false)/i);
       const pinned = pinnedMatch ? pinnedMatch[1].toLowerCase() === 'true' : false;
       
+      // 解析合集标记
+      const collectionMatch = content.match(/collection:\s*([^\n]+)/i);
+      const collection = collectionMatch ? collectionMatch[1].trim() : '';
+      
       // 生成摘要（获取第一段内容）
       const paragraphs = content.split(/\n\s*\n/).filter(p => p.trim() && !p.startsWith('#'));
       const summary = paragraphs.length > 0 ? 
@@ -300,6 +351,7 @@ export default {
         techTags,
         softwareTags,
         pinned,
+        collection,
         contentPath: `../../${fileName}` // 相对路径，用于详情页加载
       };
     },
@@ -307,28 +359,7 @@ export default {
     // 添加默认博客数据（当加载失败时使用）
     addDefaultBlogs() {
       this.blogs = [
-        {
-          id: '1',
-          title: 'GitHub大文件推送限制问题解决方案报告',
-          summary: '本文详细介绍了在GitHub中推送大文件时遇到的问题及解决方案，包括Git LFS的使用、文件分割等多种方法...',
-          date: '2024-09-15',
-          author: '井上川',
-          techTags: ['git', 'GitHub'],
-          softwareTags: ['VScode', 'github'],
-          pinned: true,
-          contentPath: '../../GitHub大文件推送限制问题解决方案报告.md'
-        },
-        {
-          id: '2',
-          title: 'Vue3入门指南',
-          summary: '本文介绍了Vue3的核心特性、性能改进和使用方法，包括组合式API、Teleport、Suspense等新特性...',
-          date: '2024-09-10',
-          author: '井上川',
-          techTags: ['Vue3', 'JavaScript'],
-          softwareTags: ['VScode', 'github'],
-          pinned: false,
-          contentPath: '../../vue3-introduction.md'
-        }
+        {          id: '1',          title: 'GitHub大文件推送限制问题解决方案报告',          summary: '本文详细介绍了在GitHub中推送大文件时遇到的问题及解决方案，包括Git LFS的使用、文件分割等多种方法...',          date: '2024-09-15',          author: '井上川',          techTags: ['git', 'GitHub'],          softwareTags: ['VScode', 'github'],          pinned: true,          collection: 'Git进阶教程',          contentPath: '../../GitHub大文件推送限制问题解决方案报告.md'        },        {          id: '2',          title: 'Vue3入门指南',          summary: '本文介绍了Vue3的核心特性、性能改进和使用方法，包括组合式API、Teleport、Suspense等新特性...',          date: '2024-09-10',          author: '井上川',          techTags: ['Vue3', 'JavaScript'],          softwareTags: ['VScode', 'github'],          pinned: false,          collection: '前端框架学习',          contentPath: '../../vue3-introduction.md'        },        {          id: '3',          title: 'Python数据分析实战',          summary: '本文介绍了如何使用Python进行数据分析，包括Pandas、NumPy和Matplotlib等库的使用方法...',          date: '2024-09-05',          author: '井上川',          techTags: ['Python', '数据分析'],          softwareTags: ['VScode', 'jupyter'],          pinned: false,          collection: 'Python数据分析',          contentPath: '../../python-data-analysis.md'        }
       ];
     }
   },
