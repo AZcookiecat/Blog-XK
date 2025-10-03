@@ -127,8 +127,8 @@ export default {
         },
         {
           id: '2',
-          title: '麓水云传——湖湘文化数字化平台',
-          description: '麓水云传——湖湘文化数字化平台是一个致力于通过数字化手段展示、传播和传承湖湘文化精髓的综合性Web应用。',
+          title: '湘缘——湘绣传统文化元宇宙实验平台',
+          description: '湘缘——湘绣传统文化元宇宙实验平台计算机软件著作权',
           icon: 'fab fa-vuejs fa-2x',
           tags: ['Vue.js', 'Node.js'],
           githubLink: 'https://github.com/AZcookiecat/huxiangwenhua',
