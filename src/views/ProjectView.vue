@@ -127,8 +127,8 @@ export default {
         },
         {
           id: '2',
-          title: '湘缘——湘绣传统文化元宇宙实验平台',
-          description: '湘缘——湘绣传统文化元宇宙实验平台计算机软件著作权',
+          title: '麓水云传——湖湘文化数字化平台',
+          description: '基于Vue 3和Vite开发的湖湘文化数字化平台，旨在通过数字化手段展示和传承湖湘这一非物质文化遗产，让更多人了解和欣赏湖湘的魅力',
           icon: 'fab fa-vuejs fa-2x',
           tags: ['Vue.js', 'Node.js'],
           githubLink: 'https://github.com/AZcookiecat/huxiangwenhua',
@@ -159,8 +159,8 @@ export default {
         },
         {
           id: '2',
-          title: '麓水云传——湖湘文化数字化平台',
-          description: '湖南省大学生计算机作品赛一等奖',
+          title: '湘缘——湘绣传统文化元宇宙实验平台',
+          description: '湘缘——湘绣传统文化元宇宙实验平台计算机软件著作权',
           date: '2025年',
           imagePath: honorImage2
         }
