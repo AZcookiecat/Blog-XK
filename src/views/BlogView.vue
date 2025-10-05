@@ -45,7 +45,7 @@
     <section class="filter-section">
       <div class="filter-group">
         <h3 class="filter-title">合集筛选</h3>
-        <div class="filter-tags">
+        <div class="filter-tags" :class="{ 'expanded': expandedCollections }">
           <button 
             class="filter-tag" 
             :class="{ active: selectedCollection === 'all' }"
@@ -54,7 +54,7 @@
             全部
           </button>
           <button 
-            v-for="collection in collectionFilters" 
+            v-for="collection in visibleCollections" 
             :key="collection"
             class="filter-tag"
             :class="{ active: selectedCollection === collection }"
@@ -63,11 +63,19 @@
             {{ collection }}
           </button>
         </div>
+        <div v-if="collectionFilters.length > maxTagsToShow" class="toggle-buttons">
+          <button 
+            class="toggle-button"
+            @click="toggleCollections"
+          >
+            {{ expandedCollections ? '显示更少' : `显示更多 (${collectionFilters.length - maxTagsToShow})` }}
+          </button>
+        </div>
       </div>
 
       <div class="filter-group">
         <h3 class="filter-title">技术栈筛选</h3>
-        <div class="filter-tags">
+        <div class="filter-tags" :class="{ 'expanded': expandedTech }">
           <button 
             class="filter-tag" 
             :class="{ active: selectedTech === 'all' }"
@@ -76,7 +84,7 @@
             全部
           </button>
           <button 
-            v-for="tech in techFilters" 
+            v-for="tech in visibleTech"
             :key="tech"
             class="filter-tag"
             :class="{ active: selectedTech === tech }"
@@ -85,11 +93,19 @@
             {{ tech }}
           </button>
         </div>
+        <div v-if="techFilters.length > maxTagsToShow" class="toggle-buttons">
+          <button 
+            class="toggle-button"
+            @click="toggleTech"
+          >
+            {{ expandedTech ? '显示更少' : `显示更多 (${techFilters.length - maxTagsToShow})` }}
+          </button>
+        </div>
       </div>
 
       <div class="filter-group">
         <h3 class="filter-title">软件筛选</h3>
-        <div class="filter-tags">
+        <div class="filter-tags" :class="{ 'expanded': expandedSoftware }">
           <button 
             class="filter-tag" 
             :class="{ active: selectedSoftware === 'all' }"
@@ -98,13 +114,21 @@
             全部
           </button>
           <button 
-            v-for="software in softwareFilters" 
+            v-for="software in visibleSoftware"
             :key="software"
             class="filter-tag"
             :class="{ active: selectedSoftware === software }"
             @click="selectedSoftware = software"
           >
             {{ software }}
+          </button>
+        </div>
+        <div v-if="softwareFilters.length > maxTagsToShow" class="toggle-buttons">
+          <button 
+            class="toggle-button"
+            @click="toggleSoftware"
+          >
+            {{ expandedSoftware ? '显示更少' : `显示更多 (${softwareFilters.length - maxTagsToShow})` }}
           </button>
         </div>
       </div>
@@ -175,10 +199,10 @@ export default {
       selectedCollection: 'all',
       techFilters: [
         'Vue3', 'JavaScript', 'HTML', 'CSS', 'Python', 
-        'C#', 'Django', 'Flask', 'MySQL', 'node.js', 'git', 'Markdown', 'yaml', 'Hadoop', 'Linux',
+        'C#', 'Django', 'Flask', 'MySQL', 'node.js', 'git', 'Markdown', 'yaml', 'Hadoop', 'Linux', '机器学习', '决策树', '数据分析', '大数据', '数据挖掘', '深度学习', 'AI'
       ],
       softwareFilters: [
-        'VScode', 'wireshark', 'unity', '教程', 'github', 'Git LFS', 'sourcetree'
+        'VScode', 'wireshark', 'unity', '教程', 'github', 'Git LFS', 'sourcetree', '算法实现'
       ],
       collectionFilters: [], // 合集筛选列表会在加载博客时动态生成
       // 博客数据
@@ -186,12 +210,39 @@ export default {
       // 搜索相关状态
       searchKeyword: '',
       searchDate: '',
-      showSearchInfo: false
+      showSearchInfo: false,
+      // 标签折叠相关状态
+      maxTagsToShow: 8, // 默认显示的标签数量
+      expandedCollections: false,
+      expandedTech: false,
+      expandedSoftware: false
     }
   },
   computed: {
-    filteredBlogs() {
-      // 先筛选后排序，置顶博客排在前面
+      // 可见的合集标签
+      visibleCollections() {
+        if (this.expandedCollections) {
+          return this.collectionFilters;
+        }
+        return this.collectionFilters.slice(0, this.maxTagsToShow);
+      },
+      // 可见的技术标签
+      visibleTech() {
+        if (this.expandedTech) {
+          return this.techFilters;
+        }
+        return this.techFilters.slice(0, this.maxTagsToShow);
+      },
+      // 可见的软件标签
+      visibleSoftware() {
+        if (this.expandedSoftware) {
+          return this.softwareFilters;
+        }
+        return this.softwareFilters.slice(0, this.maxTagsToShow);
+      },
+      // 筛选后的博客列表
+      filteredBlogs() {
+        // 先筛选后排序，置顶博客排在前面
       const filtered = this.blogs.filter(blog => {
         // 合集筛选
         const collectionMatch = this.selectedCollection === 'all' || 
@@ -245,6 +296,21 @@ export default {
       this.searchKeyword = ''
       this.searchDate = ''
       this.showSearchInfo = false
+    },
+    
+    // 切换合集标签展开/折叠
+    toggleCollections() {
+      this.expandedCollections = !this.expandedCollections;
+    },
+    
+    // 切换技术标签展开/折叠
+    toggleTech() {
+      this.expandedTech = !this.expandedTech;
+    },
+    
+    // 切换软件标签展开/折叠
+    toggleSoftware() {
+      this.expandedSoftware = !this.expandedSoftware;
     },
     
     // 加载博客文件的方法，从blogs文件夹读取Markdown文件
@@ -315,15 +381,25 @@ export default {
       const techTagsMatch = content.match(/techTags:\s*([^\n]+)/i);
       if (techTagsMatch) {
         techTags = techTagsMatch[1].split(',')
-          .map(tag => tag.trim())
-          .filter(tag => this.techFilters.includes(tag)); // 只保留分类筛选中存在的标签
+          .map(tag => tag.trim());
+        // 添加新标签到筛选列表
+        techTags.forEach(tag => {
+          if (!this.techFilters.includes(tag)) {
+            this.techFilters.push(tag);
+          }
+        });
       }
       
       const softwareTagsMatch = content.match(/softwareTags:\s*([^\n]+)/i);
       if (softwareTagsMatch) {
         softwareTags = softwareTagsMatch[1].split(',')
-          .map(tag => tag.trim())
-          .filter(tag => this.softwareFilters.includes(tag)); // 只保留分类筛选中存在的标签
+          .map(tag => tag.trim());
+        // 添加新标签到筛选列表
+        softwareTags.forEach(tag => {
+          if (!this.softwareFilters.includes(tag)) {
+            this.softwareFilters.push(tag);
+          }
+        });
       }
       
       
@@ -335,11 +411,19 @@ export default {
       const collectionMatch = content.match(/collection:\s*([^\n]+)/i);
       const collection = collectionMatch ? collectionMatch[1].trim() : '';
       
-      // 生成摘要（获取第一段内容）
-      const paragraphs = content.split(/\n\s*\n/).filter(p => p.trim() && !p.startsWith('#'));
-      const summary = paragraphs.length > 0 ? 
-        (paragraphs[0].replace(/#/g, '').substring(0, 150) + '...') : 
-        '暂无摘要';
+      // 生成摘要（优先从metadata中获取专门的summary字段）
+      const summaryMatch = content.match(/summary:\s*([^\n]+)/i);
+      let summary = '暂无摘要';
+      
+      if (summaryMatch) {
+        summary = summaryMatch[1].trim();
+      } else {
+        // 如果没有专门的summary字段，才使用第一段内容作为后备
+        const paragraphs = content.split(/\n\s*\n/).filter(p => p.trim() && !p.startsWith('#'));
+        if (paragraphs.length > 0) {
+          summary = paragraphs[0].replace(/#/g, '').substring(0, 150) + '...';
+        }
+      }
       
       // 构建博客数据对象
       return {
@@ -535,7 +619,47 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
+  max-height: 60px; /* 默认高度，限制显示的行数 */
+  overflow: hidden;
+  transition: max-height 0.3s ease;
 }
+
+.filter-tags.expanded {
+  max-height: 500px; /* 展开后的最大高度，足够显示所有标签 */
+}
+
+.toggle-buttons {
+  margin-top: 1rem;
+}
+
+.toggle-button {
+  padding: 0.3rem 1rem;
+  background-color: transparent;
+  color: #3498db;
+  border: 1px solid #3498db;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.toggle-button:hover {
+    background-color: #3498db;
+    color: white;
+  }
+
+  /* 深色模式下的toggle-button样式 */
+  .dark .toggle-button {
+    background-color: transparent;
+    color: #5dade2;
+    border-color: #5dade2;
+  }
+  
+  .dark .toggle-button:hover {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+  }
 
 .filter-tag {
   padding: 0.5rem 1.2rem;
