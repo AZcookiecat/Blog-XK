@@ -84,7 +84,14 @@
                 <h4 class="task-title">{{ task.title }}</h4>
                 <p class="task-description">{{ task.description }}</p>
                 <div class="task-meta">                  <div class="task-assignee">
-                    <img :src="getAvatarUrl(task.assignee.avatar)" :alt="task.assignee.name" class="assignee-avatar">
+                    <img 
+                      :src="getAvatarUrl(task.assignee.avatar)" 
+                      :alt="task.assignee.name" 
+                      class="assignee-avatar"
+                      loading="lazy"
+                      :width="30"
+                      :height="30"
+                    >
                     <span>{{ task.assignee.name }}</span>
                   </div>
                   <div class="task-due">
@@ -111,7 +118,14 @@
         </h2>
         <div class="team-members">
           <div class="member-card" v-for="member in teamMembers" :key="member.id">
-            <img :src="getAvatarUrl(member.avatar)" :alt="member.name" class="member-avatar">
+            <img 
+  :src="getAvatarUrl(member.avatar)" 
+  :alt="member.name" 
+  class="member-avatar"
+  loading="lazy"
+  :width="80"
+  :height="80"
+>
             <div class="member-info">
               <h4>{{ member.name }}</h4>
                 <p class="member-role">{{ member.role }}</p>
@@ -153,7 +167,14 @@
           <div class="detail-info">
             <div class="info-item">
               <strong>发布人：</strong>
-              <img :src="getAvatarUrl(selectedTask.assignee.avatar)" :alt="selectedTask.assignee.name" class="small-avatar">
+              <img 
+                :src="getAvatarUrl(selectedTask.assignee.avatar)" 
+                :alt="selectedTask.assignee.name" 
+                class="small-avatar"
+                loading="lazy"
+                :width="24"
+                :height="24"
+              >
               {{ selectedTask.assignee.name }}
             </div>
             <div class="info-item">
@@ -211,22 +232,21 @@ export default {
         { id: 6, name: '汤青榕', role: '', avatar: '/avatar/微信图片_2025-10-23_123813_525.jpg', website: '' },
         { id: 7, name: '王海', role: '', avatar: '/avatar/微信图片_2025-10-23_123828_698.jpg', website: '' },
         { id: 8, name: '余思哲', role: '', avatar: '/avatar/微信图片_2025-10-23_123822_747.jpg', website: '' },
-        { id: 9, name: '胡富喻', role: '', avatar: '/avatar/微信图片_2025-10-23_123838_958.jpg', website: '' },
+        { id: 9, name: '胡富喻', role: '', avatar: '/avatar/微信图片_2025-10-23_123838_958.jpg', website: '' }
       ],
       tasks: [
         {
           id: 1,
           title: '个人博客网页构建',
-          description: '构建一个属于自己的个人博客网页，展示个人项目、技术博客和个人介绍。谨记：“先实现再优化”',
+          description: '构建一个属于自己的个人博客网页，展示个人项目、技术博客和个人介绍。谨记：先实现再优化',
           status: 'todo',
           priority: 'high',
           assignee: { id: 1, name: '向烁安', avatar: '/avatar/head.jpg' },
           createdDate: '2025-10-23',
-          dueDate: '2025-11-5',
-
+          dueDate: '2025-11-5'
         }
       ]
-    }
+    };
   },
   computed: {
     // 计算属性：总项目数
@@ -275,8 +295,39 @@ export default {
       return tasks;
     }
   },
+  // 组件挂载时预加载关键头像
+  mounted() {
+    // 预加载团队成员和任务的头像
+    this.preloadAvatars();
+  },
   methods: {
-    // 更新任务的头像路径处理
+    
+    // 预加载头像图片
+    preloadAvatars() {
+      const avatarUrls = new Set();
+      
+      // 收集所有团队成员的头像URL
+      this.teamMembers.forEach(member => {
+        if (member.avatar) {
+          avatarUrls.add(this.getAvatarUrl(member.avatar));
+        }
+      });
+      
+      // 收集所有任务中的头像URL
+      this.tasks.forEach(task => {
+        if (task.assignee && task.assignee.avatar) {
+          avatarUrls.add(this.getAvatarUrl(task.assignee.avatar));
+        }
+      });
+      
+      // 预加载头像图片
+      avatarUrls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+      });
+    },
+    
+    // 生成头像URL，支持占位图
     getAvatarUrl(avatar) {
       // 如果是绝对URL或已经是导入的图片对象，直接返回
       if (typeof avatar === 'string' && (avatar.startsWith('http') || avatar.startsWith('https'))) {
@@ -322,29 +373,37 @@ export default {
     // 加载任务markdown内容
     async loadTaskMarkdown(taskId) {
       try {
+        // 重置内容为加载中状态
+        this.taskMarkdownContent = '<p style="text-align: center; color: #666;">加载中...</p>';
+        
         // 尝试加载对应编号的md文件
         // 文件位于task文件夹中，命名格式为 "任务{id}.md"
         const response = await fetch(`/task/任务${taskId}.md`);
+        
         if (response.ok) {
           const markdown = await response.text();
-          this.taskMarkdownContent = marked.parse(markdown);
+          // 确保marked可用
+          if (marked && typeof marked.parse === 'function') {
+            this.taskMarkdownContent = marked.parse(markdown);
+          } else {
+            this.taskMarkdownContent = '<p>Markdown解析器加载失败，请刷新页面重试。</p>';
+          }
         } else {
           // 如果文件不存在，显示默认内容
           this.taskMarkdownContent = '<p>暂无任务详情文档。</p>';
         }
       } catch (error) {
         console.error('加载任务详情失败:', error);
-        this.taskMarkdownContent = '<p>加载任务详情失败，请稍后重试。</p>';
+        this.taskMarkdownContent = `<p>加载任务详情失败：${error.message || '未知错误'}</p>`;
       }
     },
     // 关闭任务详情
     closeTaskDetails() {
       this.showTaskDetails = false;
       this.selectedTask = null;
-    },
-
+    }
   }
-}
+};
 </script>
 
 <style scoped>
