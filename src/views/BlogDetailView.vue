@@ -683,19 +683,50 @@ export default {
 }
 
 .blog-detail-body :deep(blockquote) {
-  border-left: 4px solid #3498db;
-  padding-left: 1rem;
-  margin-left: 0;
-  margin-bottom: 1.5rem;
-  color: #7f8c8d;
-  font-style: italic;
-}
+    border-left: 4px solid #3498db;
+    padding-left: 1rem;
+    margin-left: 0;
+    margin-bottom: 1.5rem;
+    color: #7f8c8d;
+    font-style: italic;
+  }
 
-.blog-detail-footer {
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #eee;
+  /* 图片样式 - 使用max-width控制，最大高度限制 */
+.blog-detail-body :deep(img) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  max-height: 400px;
+  margin: 1rem auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
+  
+  /* 表格样式 */
+  .blog-detail-body :deep(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+  }
+  
+  .blog-detail-body :deep(th),
+  .blog-detail-body :deep(td) {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .blog-detail-body :deep(th) {
+    background-color: #f8f9fa;
+    font-weight: 600;
+  }
+
+  .blog-detail-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+  }
 
 .back-link {
   display: inline-flex;
@@ -958,6 +989,21 @@ export default {
 .dark .blog-detail-body :deep(h5),
 .dark .blog-detail-body :deep(h6) {
   color: #ffffff;
+}
+
+/* 深色模式下列表样式 */
+.dark .blog-detail-body :deep(ul),
+.dark .blog-detail-body :deep(ol) {
+  color: #e0e0e0;
+}
+
+/* 深色模式下图片样式 */
+.dark .blog-detail-body :deep(img) {
+  max-width: 100%;
+  height: auto;
+  max-height: 400px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 }
 
 .dark .blog-detail-body :deep(ul),

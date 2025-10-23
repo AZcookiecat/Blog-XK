@@ -175,10 +175,10 @@ export default {
       selectedCollection: 'all',
       techFilters: [
         'Vue3', 'JavaScript', 'HTML', 'CSS', 'Python', 
-        'C#', 'Django', 'Flask', 'MySQL', 'node.js', 'git', 'Markdown', 'yaml', 'Hadoop', 'Linux', '机器学习', '决策树', '数据分析', '大数据', '数据挖掘', '深度学习', 'AI'
+        'C#', 'Django', 'Flask', 'MySQL', 'node.js', 'git', 'Markdown', 'yaml', 'Linux', 'Netlify'
       ],
       softwareFilters: [
-        'VScode', 'wireshark', 'unity', '教程', 'github', 'Git LFS', 'sourcetree', '算法实现'
+        'VScode', 'wireshark', 'unity', '教程', 'github', 'Git LFS', 'sourcetree', 
       ],
       collectionFilters: [], // 合集筛选列表会在加载博客时动态生成
       // 博客数据

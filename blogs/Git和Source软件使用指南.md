@@ -1,9 +1,10 @@
-# Git和SourceTree软件使用完全指南
+# 网页组协作指南：Git和SourceTree软件使用完全指南
 pinned: true
-author: 井上川
+author: Ciin7mo
 date: 2025-10-21
-techTags: Git, Source, 版本控制, 协作开发
+techTags: Git, Source
 softwareTags: Git, SourceTree, VS Code
+
 ## 概述
 
 本文档详细介绍Git版本控制系统的使用方法，以及如何通过SourceTree和VS Code等工具提高开发效率。无论您是个人开发者还是团队协作，掌握这些工具都能帮助您更好地管理代码版本，追踪变更，避免代码丢失，并实现高效的团队协作。
@@ -14,16 +15,20 @@ softwareTags: Git, SourceTree, VS Code
 
 #### Windows系统
 
-1. 访问[Git官网](https://git-scm.com/download/win)下载最新版本的Git安装程序
-2. 运行安装程序，按照向导完成安装
+1. 访问[Git官网](https://git-scm.com/download/win)下载最新版本的Git安装程序（一般较慢，建议用镜像网站）[镜像网站](https://registry.npmmirror.com/binary.html?path=git-for-windows)(不要选带有rc0,rc1的，都是预发布版本)
+![mirror](../src/blogimgs//屏幕截图%202025-10-23%20142946.png)
+进入之后下载64位的安装程序
+![exe](../src/blogimgs/屏幕截图%202025-10-23%20143223.png)
+2. 找到你下载的安装目录，双击进行安装，一路next，最后出现安装路径时候可以放在你设置的盘下，尽量不放C盘。
 3. 安装完成后，打开命令提示符或Git Bash验证安装：
-4. 或点击以下链接获取百度网盘资源
-    [Git下载](https://pan.baidu.com/s/1d2CHCB4-zlj2Xex_tc4MKQ?pwd=hutb)
-    [SourceTree下载](https://pan.baidu.com/s/1gcFFiAUsN0OKDoP-OB7x3w?pwd=hutb)
-
 ```bash
 git --version
 ```
+![version](../src/blogimgs/屏幕截图%202025-10-23%20144116.png)
+4. 或点击以下链接获取百度网盘资源
+   [Git下载](https://pan.baidu.com/s/1d2CHCB4-zlj2Xex_tc4MKQ?pwd=hutb)
+    
+
 
 ### 2. Git配置
 
@@ -39,6 +44,15 @@ git config --global user.email "your.email@example.com"
 ```bash
 git config --list
 ```
+![git](../src/blogimgs/屏幕截图%202025-10-23%20144400.png)
+添加环境变量，找到git安装目录，找到下面图片的cmd目录添加至环境变量Path中
+![env](../src/blogimgs/屏幕截图%202025-10-23%20143748.png)
+配置完成之后输入以下命令检查配置是否成功：
+```bash
+git 
+```
+![git](../src/blogimgs/屏幕截图%202025-10-23%20144131.png)
+
 
 ## Git工作流程
 
@@ -114,7 +128,7 @@ git branch -d feature-branch
 
 ### 1. 安装与配置
 
-1. 访问[SourceTree官网](https://www.sourcetreeapp.com/)下载并安装
+1. 访问[SourceTree官网](https://www.sourcetreeapp.com/)或者获取百度网盘资源[SourceTree下载](https://pan.baidu.com/s/1gcFFiAUsN0OKDoP-OB7x3w?pwd=hutb)下载并安装
 2. 首次运行需要配置账户信息（可选GitHub、GitLab等）
 3. 克隆现有仓库或添加本地仓库
 
@@ -123,8 +137,15 @@ git branch -d feature-branch
 #### 克隆仓库
 
 1. 点击"Clone/New"
+![clone](../src/blogimgs/屏幕截图%202025-10-23%20150354.png)
 2. 输入仓库URL和本地目标路径
+![clone](../src/blogimgs/屏幕截图%202025-10-23%20150414.png)
 3. 点击"Clone"完成克隆
+4. 克隆完成后，您可以在SourceTree中查看和管理您的仓库
+![index](../src/blogimgs/屏幕截图%202025-10-23%20150430.png)
+未暂存文件为已更改但未准备提交文件
+已暂存文件为已更改且准备提交文件
+上方可查看当前分支、提交信息、暂存文件列表等
 
 #### 提交更改
 
@@ -139,50 +160,56 @@ git branch -d feature-branch
 2. 选择需要推送的分支
 3. 点击"OK"完成推送
 
+#### 将本地项目推送到GitHub
+
+如果您有一个本地项目需要推送到GitHub，请按照以下步骤操作：
+
+1. **在GitHub上创建新仓库**
+   - 登录您的GitHub账号
+   - 点击右上角的"+"按钮，选择"New repository"
+   - 填写仓库名称、描述（可选）
+   - 选择公开或私有仓库
+   - 不要勾选"Initialize this repository with a README"（因为我们要推送现有项目）
+   - 点击"Create repository"
+   - 复制生成的仓库URL（如 https://github.com/yourusername/repositoryname.git）
+
+2. **在SourceTree中添加远程仓库**
+   - 打开SourceTree，加载您的本地Git仓库
+   - 点击顶部菜单栏中的"Repository" → "Repository Settings"
+   - 在左侧导航中选择"Remotes"
+   - 点击"Add"
+   - 名称填写"origin"（标准远程仓库名称）
+   - URL/路径粘贴刚才从GitHub复制的仓库URL
+   - 点击"OK"保存设置
+
+3. **推送本地分支到远程仓库**
+   - 返回SourceTree主界面
+   - 确保您在要推送的分支上（通常是main或master）
+   - 点击顶部工具栏中的"Push"按钮
+   - 在弹出的推送对话框中，确保勾选了要推送的分支
+   - 首次推送时，您需要勾选"Push all branches"或选择特定分支
+   - 点击"OK"开始推送
+   - 如果提示输入GitHub凭据，请输入您的GitHub用户名和密码（或个人访问令牌）
+
+4. **确认推送成功**
+   - 推送完成后，您可以在SourceTree中看到远程分支信息
+   - 您也可以访问GitHub仓库页面，确认文件已成功上传
+
+5. **常见问题与解决方案**
+   - **推送失败并提示权限问题**：确保您的GitHub凭据正确，并且您对该仓库有推送权限
+   - **找不到远程仓库**：检查远程URL是否正确，尝试重新添加远程仓库
+   - **分支不存在于远程**：确保您选择了正确的本地分支进行推送
+
+通过这种方式，您可以轻松地将本地开发的项目推送到GitHub，实现代码的云端存储和团队协作。
+
 #### 分支管理
 
 1. 在分支标签页可以查看、创建、切换分支
 2. 通过右键菜单可以合并、删除分支
 
-## VS Code中的Git集成
 
-### 1. 基本功能
 
-VS Code内置了Git支持，可以直接在编辑器中进行常用的Git操作：
-
-1. **源代码控制**：通过左侧边栏的源代码控制图标访问
-2. **暂存更改**：点击文件旁边的"+"图标
-3. **提交更改**：输入提交信息后点击勾号
-4. **查看更改**：点击文件可以查看具体的更改内容
-
-### 2. 扩展功能
-
-可以安装以下扩展增强Git功能：
-
-- **GitLens**：提供更丰富的Git历史查看功能
-- **Git History**：可视化Git历史
-- **Git Graph**：以图形化方式显示Git提交历史
-
-## 团队协作最佳实践
-
-### 1. 分支策略
-
-推荐使用Git Flow分支策略：
-
-- `main`：主分支，始终保持稳定
-- `develop`：开发分支，包含最新开发功能
-- `feature/*`：特性分支，用于开发新功能
-- `release/*`：发布分支，用于准备发布版本
-- `hotfix/*`：热修复分支，用于修复生产环境问题
-
-### 2. 代码审查
-
-1. 创建Pull/Merge Request
-2. 团队成员进行代码审查
-3. 解决评论和建议
-4. 合并到目标分支
-
-### 3. 提交规范
+### 提交规范
 
 遵循以下提交消息规范：
 

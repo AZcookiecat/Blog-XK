@@ -1,6 +1,6 @@
 # GitHub大文件推送限制问题解决方案报告
 pinned: true
-author: 井上川
+author: Ciin7mo
 date: 2025-10-01
 techTags: git
 softwareTags: github, Git LFS

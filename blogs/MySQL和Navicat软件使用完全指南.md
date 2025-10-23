@@ -1,6 +1,6 @@
-# MySQL和Navicat软件使用完全指南
+# 网页组后端本地数据库指南：MySQL和Navicat软件使用完全指南
 pinned: true
-author: 井上川
+author: Ciin7mo
 date: 2025-10-21
 techTags: MySQL, 数据库, SQL
 softwareTags: MySQL, Navicat, 数据库管理工具

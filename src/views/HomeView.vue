@@ -7,7 +7,7 @@
           <img src="../assets/1EFA3EA1614871308E7A161E34598E50.jpg" alt="个人头像" class="avatar">
         </div>
         <div class="personal-info">
-          <h1 class="header-title">井上川</h1>
+          <h1 class="header-title">Ciin7mo</h1>
           <p class="header-subtitle">Frontend Developer & Full Stack Enthusiast</p>
           <div class="personal-meta">
             <span class="location"><i class="fas fa-map-marker-alt"></i> 湖南长沙</span>

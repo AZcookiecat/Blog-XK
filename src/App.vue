@@ -4,7 +4,7 @@
     <nav class="navbar">
       <div class="navbar-container">
         <router-link to="/" class="navbar-brand">
-          <span class="brand-name">井上川</span>
+          <span class="brand-name">Ciin7mo</span>
           <span class="brand-subtitle">Personal Blog</span>
         </router-link>
         
@@ -20,6 +20,11 @@
           <router-link to="/projects" class="navbar-link" :class="{ active: $route.path === '/projects' }">
             <i class="fas fa-code"></i>
             项目
+          </router-link>
+          
+          <router-link to="/collaboration" class="navbar-link" :class="{ active: $route.path === '/collaboration' }">
+            <i class="fas fa-users"></i>
+            协作
           </router-link>
           
           <router-link to="/contact" class="navbar-link" :class="{ active: $route.path === '/contact' }">
@@ -48,7 +53,7 @@
     <!-- 页脚 -->
     <footer class="footer">
       <div class="footer-content">
-        <p>&copy; 版权所有  2025 井上川的个人博客 本站已安全运行 <span class="time-animation">{{ daysRunning }}</span> 天 <span class="time-animation">{{ hoursRunning }}</span> 时 现在时间：
+        <p>&copy; 版权所有  2025 Ciin7mo的个人博客 本站已安全运行 <span class="time-animation">{{ daysRunning }}</span> 天 <span class="time-animation">{{ hoursRunning }}</span> 时 现在时间：
           <span v-for="char in currentTime.split('')" :key="char" :class="{ 'time-animation': /\\d/.test(char) }">
             {{ char }}
           </span> {{ dayOfWeek }}
