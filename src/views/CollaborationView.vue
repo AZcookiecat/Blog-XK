@@ -203,15 +203,15 @@ export default {
       taskMarkdownContent: '', // 存储解析后的任务markdown内容
       // 模拟数据
       teamMembers: [
-        { id: 1, name: '向烁安', role: '全栈开发', avatar: '/src/avatar/head.jpg', website: 'https://blog-xk.netlify.app/' },
-        { id: 2, name: '万郅轩', role: '全栈开发', avatar: '/src/avatar/微信图片_2025-10-23_123708_657.jpg', website: '' },
-        { id: 3, name: '李神洲', role: '项目负责人', avatar: '/src/avatar/微信图片_2025-10-23_123802_269.jpg', website: '' },
-        { id: 4, name: '宋雨昕', role: '前端开发', avatar: '/src/avatar/微信图片_2025-10-23_130009_179.jpg', website: '' },
-        { id: 5, name: '宁妍', role: '', avatar: '/src/avatar/微信图片_2025-10-23_123808_511.jpg', website: '' },
-        { id: 6, name: '汤青榕', role: '', avatar: '/src/avatar/微信图片_2025-10-23_123813_525.jpg', website: '' },
-        { id: 7, name: '王海', role: '', avatar: '/src/avatar/微信图片_2025-10-23_123828_698.jpg', website: '' },
-        { id: 8, name: '余思哲', role: '', avatar: '/src/avatar/微信图片_2025-10-23_123822_747.jpg', website: '' },
-        { id: 9, name: '胡富喻', role: '', avatar: '/src/avatar/微信图片_2025-10-23_123838_958.jpg', website: '' },
+        { id: 1, name: '向烁安', role: '全栈开发', avatar: '/avatar/head.jpg', website: 'https://blog-xk.netlify.app/' },
+        { id: 2, name: '万郅轩', role: '全栈开发', avatar: '/avatar/微信图片_2025-10-23_123708_657.jpg', website: '' },
+        { id: 3, name: '李神洲', role: '项目负责人', avatar: '/avatar/微信图片_2025-10-23_123802_269.jpg', website: '' },
+        { id: 4, name: '宋雨昕', role: '前端开发', avatar: '/avatar/微信图片_2025-10-23_130009_179.jpg', website: '' },
+        { id: 5, name: '宁妍', role: '', avatar: '/avatar/微信图片_2025-10-23_123808_511.jpg', website: '' },
+        { id: 6, name: '汤青榕', role: '', avatar: '/avatar/微信图片_2025-10-23_123813_525.jpg', website: '' },
+        { id: 7, name: '王海', role: '', avatar: '/avatar/微信图片_2025-10-23_123828_698.jpg', website: '' },
+        { id: 8, name: '余思哲', role: '', avatar: '/avatar/微信图片_2025-10-23_123822_747.jpg', website: '' },
+        { id: 9, name: '胡富喻', role: '', avatar: '/avatar/微信图片_2025-10-23_123838_958.jpg', website: '' },
       ],
       tasks: [
         {
@@ -220,7 +220,7 @@ export default {
           description: '构建一个属于自己的个人博客网页，展示个人项目、技术博客和个人介绍。谨记：“先实现再优化”',
           status: 'todo',
           priority: 'high',
-          assignee: { id: 1, name: '向烁安', avatar: '/src/avatar/head.jpg' },
+          assignee: { id: 1, name: '向烁安', avatar: '/avatar/head.jpg' },
           createdDate: '2025-10-23',
           dueDate: '2025-11-5',
 
@@ -282,7 +282,17 @@ export default {
       if (typeof avatar === 'string' && (avatar.startsWith('http') || avatar.startsWith('https'))) {
         return avatar;
       }
-      // 直接返回传入的头像路径/对象
+      
+      // 处理相对路径 - 在Vue/Vite项目中，应该使用正确的资源引用方式
+      // 移除/src前缀，因为部署后这个路径不存在
+      if (typeof avatar === 'string' && avatar.startsWith('/src/')) {
+        // 在Vite项目中，public文件夹下的资源可以通过根路径直接访问
+        // 因此我们需要将头像图片移动到public/avatar文件夹下
+        // 这里我们将/src/avatar/替换为/avatar/
+        return avatar.replace('/src/avatar/', '/avatar/');
+      }
+      
+      // 直接返回其他情况
       return avatar;
     },
     // 获取指定状态的任务
