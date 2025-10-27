@@ -146,7 +146,7 @@ export default {
         {
           id: '4',
           title: '课程学习平台',
-          description: '基于Vue 3和Vite开发的湘绣传统文化元宇宙展示平台，旨在通过数字化手段展示和传承湘绣这一非物质文化遗产，让更多人了解和欣赏湘绣的魅力',
+          description: '基于Vue 3和Vite开发的课程学习平台，旨在通过数字化手段帮助学生学习知识，提升学习效率',
           icon: 'fab fa-vuejs fa-2x',
           tags: ['Vue.js', 'Node.js'],
           githubLink: 'https://github.com/AZcookiecat/schoolclasses',

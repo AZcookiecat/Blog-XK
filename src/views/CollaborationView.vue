@@ -229,9 +229,9 @@ export default {
         { id: 3, name: '李神洲', role: '项目负责人', avatar: '/avatar/微信图片_2025-10-23_123802_269.jpg', website: '' },
         { id: 4, name: '宋雨昕', role: '前端开发', avatar: '/avatar/微信图片_2025-10-23_130009_179.jpg', website: '' },
         { id: 5, name: '宁妍', role: '', avatar: '/avatar/微信图片_2025-10-23_123808_511.jpg', website: '' },
-        { id: 6, name: '汤青榕', role: '', avatar: '/avatar/微信图片_2025-10-23_123813_525.jpg', website: '' },
+        { id: 6, name: '汤青榕', role: '', avatar: '/avatar/微信图片_2025-10-23_123813_525.jpg', website: 'https://ttt0507rrr.netlify.app/' },
         { id: 7, name: '王海', role: '', avatar: '/avatar/微信图片_2025-10-23_123828_698.jpg', website: '' },
-        { id: 8, name: '余思哲', role: '', avatar: '/avatar/微信图片_2025-10-23_123822_747.jpg', website: '' },
+        { id: 8, name: '余思哲', role: '', avatar: '/avatar/微信图片_2025-10-23_123822_747.jpg', website: 'https://mufengblog.netlify.app/' },
         { id: 9, name: '胡富喻', role: '', avatar: '/avatar/微信图片_2025-10-23_123838_958.jpg', website: '' }
       ],
       tasks: [
