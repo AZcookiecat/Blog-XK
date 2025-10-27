@@ -239,7 +239,7 @@ export default {
           id: 1,
           title: '个人博客网页构建',
           description: '构建一个属于自己的个人博客网页，展示个人项目、技术博客和个人介绍。谨记：先实现再优化',
-          status: 'todo',
+          status: 'in_progress',
           priority: 'high',
           assignee: { id: 1, name: '向烁安', avatar: '/avatar/head.jpg' },
           createdDate: '2025-10-23',
