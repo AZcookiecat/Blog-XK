@@ -1,6 +1,6 @@
 <template>
   <span class="pinned-badge">
-    <i class="fas fa-thumbtack"></i> 置顶
+    <i class="fas fa-thumbtack"></i>
   </span>
 </template>
 
@@ -13,17 +13,11 @@ export default {
 <style scoped>
 .pinned-badge {
   position: absolute;
-  top: 0;
-  right: 0;
-  background-color: #e74c3c;
-  color: white;
-  font-size: 0.7rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  margin-left: 0.5rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2rem;
-  transform: translateY(-10px);
+  top: -5px;
+  right: -5px;
+  color: #e74c3c;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  z-index: 10;
 }
 </style>

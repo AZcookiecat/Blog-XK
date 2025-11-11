@@ -1,5 +1,9 @@
 <template>
   <div class="blog-detail-container">
+    <!-- 阅读进度条 -->
+    <div class="progress-container">
+      <div class="progress-bar" :style="{ width: progress + '%' }"></div>
+    </div>
     <div v-if="loading" class="loading-state">
       <div class="loading-spinner"></div>
       <p>加载中...</p>
@@ -137,7 +141,8 @@ export default {
       activeSection: '', // 当前激活的章节ID
       isMobile: false, // 是否为移动端视图
       showTocMobile: false, // 移动端是否显示目录
-      previewTimer: null // 预览计时器
+      previewTimer: null, // 预览计时器
+      progress: 0 // 阅读进度百分比
     }
   },
   async mounted() {
@@ -400,8 +405,11 @@ export default {
       }
     },
     
-    // 处理滚动事件，高亮当前阅读的章节
+    // 处理滚动事件，高亮当前阅读的章节并更新阅读进度
     handleScroll() {
+      // 计算阅读进度
+      this.updateReadingProgress();
+      
       const sections = document.querySelectorAll('.blog-detail-body h1, .blog-detail-body h2, .blog-detail-body h3, .blog-detail-body h4, .blog-detail-body h5, .blog-detail-body h6');
       let currentSection = '';
       
@@ -415,6 +423,39 @@ export default {
       
       if (currentSection !== this.activeSection) {
         this.activeSection = currentSection;
+        // 当章节改变时，自动滚动目录到当前章节
+        this.scrollTocToActiveSection();
+      }
+    },
+    
+    // 更新阅读进度
+    updateReadingProgress() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight;
+      const winHeight = window.innerHeight;
+      const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+      
+      this.progress = Math.max(0, Math.min(100, scrollPercent));
+    },
+    
+    // 滚动目录到当前激活的章节
+    scrollTocToActiveSection() {
+      // 桌面端目录滚动
+      const desktopToc = document.querySelector('.blog-sidebar .table-of-contents');
+      if (desktopToc) {
+        const activeLink = desktopToc.querySelector('.toc-link.active');
+        if (activeLink) {
+          desktopToc.scrollTop = activeLink.offsetTop - 50; // 添加一些偏移量
+        }
+      }
+      
+      // 移动端目录滚动
+      const mobileToc = document.querySelector('.toc-mobile-panel .table-of-contents');
+      if (mobileToc) {
+        const activeLink = mobileToc.querySelector('.toc-link.active');
+        if (activeLink) {
+          mobileToc.scrollTop = activeLink.offsetTop - 50; // 添加一些偏移量
+        }
       }
     },
     
@@ -525,6 +566,23 @@ export default {
 </script>
 
 <style scoped>
+/* 阅读进度条样式 */
+.progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: transparent;
+  z-index: 1000;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4ab3df;
+  transition: width 0.2s ease;
+}
+
 .blog-detail-container {
   max-width: 1200px;
   margin: 0 0 0 260px;
@@ -546,7 +604,7 @@ export default {
   width: 40px;
   height: 40px;
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
+  border-top: 4px solid #4ab3df;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 1rem;
@@ -591,7 +649,7 @@ export default {
 .tag {
   padding: 0.3rem 0.8rem;
   background-color: #f8f9fa;
-  color: #3498db;
+  color: #4ab3df;
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 500;
@@ -683,7 +741,7 @@ export default {
 }
 
 .blog-detail-body :deep(blockquote) {
-    border-left: 4px solid #3498db;
+    border-left: 4px solid #4ab3df;
     padding-left: 1rem;
     margin-left: 0;
     margin-bottom: 1.5rem;
@@ -733,7 +791,7 @@ export default {
   align-items: center;
   gap: 0.5rem;
   padding: 0.8rem 1.5rem;
-  background-color: #3498db;
+  background-color: #4ab3df;
   color: white;
   text-decoration: none;
   border-radius: 30px;
@@ -770,8 +828,8 @@ export default {
   /* 章节预览高亮样式 */
   .section-preview {
     animation: highlight 0.3s ease-in-out;
-    background-color: rgba(52, 152, 219, 0.1);
-    border-left: 3px solid #3498db;
+    background-color: rgba(74, 179, 223, 0.1);
+    border-left: 3px solid #4ab3df;
     padding-left: 15px;
     margin-left: -15px;
     margin-right: -15px;
@@ -784,8 +842,8 @@ export default {
       border-left-color: transparent;
     }
     100% {
-      background-color: rgba(52, 152, 219, 0.1);
-      border-left-color: #3498db;
+      background-color: rgba(74, 179, 223, 0.1);
+      border-left-color: #4ab3df;
     }
   }
 
@@ -821,12 +879,12 @@ export default {
 
 .table-of-contents a:hover {
   background-color: #f8f9fa;
-  color: #3498db;
+  color: #4ab3df;
 }
 
 .table-of-contents a.active {
-  background-color: #e3f2fd;
-  color: #3498db;
+  background-color: rgba(74, 179, 223, 0.1);
+  color: #4ab3df;
   font-weight: 500;
 }
 
@@ -837,7 +895,7 @@ export default {
   bottom: 2rem;
   right: 2rem;
   z-index: 1000;
-  background-color: #3498db;
+  background-color: #4ab3df;
   color: white;
   border: none;
   border-radius: 50%;
@@ -848,14 +906,14 @@ export default {
   justify-content: center;
   font-size: 1.2rem;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+  box-shadow: 0 4px 12px rgba(74, 179, 223, 0.4);
   transition: all 0.3s ease;
 }
 
 .toc-mobile-toggle:hover {
-  background-color: #2980b9;
+  background-color: #3a9bc8;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.5);
+  box-shadow: 0 6px 16px rgba(74, 179, 223, 0.5);
 }
 
 .toc-mobile-panel {
@@ -934,7 +992,7 @@ export default {
 }
 
 .back-link:hover {
-  background-color: #2980b9;
+  background-color: #3a9bc8;
   transform: translateY(-2px);
 }
 
@@ -975,6 +1033,59 @@ export default {
 .dark .blog-detail-collection .collection-tag {
   background-color: #2d3e32;
   color: #4cd137;
+}
+
+/* 深色模式目录样式 */
+.dark .blog-sidebar {
+  background-color: #1e1e1e;
+  border-right-color: #333;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.dark .table-of-contents h3 {
+  color: #ffffff;
+}
+
+.dark .table-of-contents a {
+  color: #999999;
+}
+
+.dark .table-of-contents a:hover {
+  background-color: #2d2d2d;
+  color: #4ab3df;
+}
+
+.dark .table-of-contents a.active {
+  background-color: rgba(74, 179, 223, 0.15);
+  color: #4ab3df;
+}
+
+.dark .section-preview {
+  background-color: rgba(74, 179, 223, 0.15);
+  border-left-color: #4ab3df;
+  animation: highlight-dark 0.3s ease-in-out;
+}
+
+@keyframes highlight {
+  0% {
+    background-color: transparent;
+    border-left-color: transparent;
+  }
+  100% {
+    background-color: rgba(74, 179, 223, 0.1);
+    border-left-color: #4ab3df;
+  }
+}
+
+@keyframes highlight-dark {
+  0% {
+    background-color: transparent;
+    border-left-color: transparent;
+  }
+  100% {
+    background-color: rgba(74, 179, 223, 0.15);
+    border-left-color: #4ab3df;
+  }
 }
 
 /* 深色模式下博客内容样式 */
@@ -1024,14 +1135,14 @@ export default {
 
 .dark .blog-detail-body :deep(blockquote) {
   color: #b0b0b0;
-  border-left-color: #3498db;
+  border-left-color: #4ab3df;
 }
 
 .dark .blog-detail-body :deep(a) {
-  color: #3498db;
+  color: #4ab3df;
 }
 
 .dark .blog-detail-body :deep(a:hover) {
-  color: #2980b9;
+  color: #3a9bc8;
 }
 </style>

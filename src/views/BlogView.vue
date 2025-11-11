@@ -15,12 +15,7 @@
           v-model="searchKeyword"
           @input="handleSearch"
         >
-        <input 
-          type="date" 
-          class="date-input"
-          v-model="searchDate"
-          @change="handleSearch"
-        >
+
         <button 
           class="search-button"
           @click="handleSearch"
@@ -41,119 +36,145 @@
       </div>
     </section>
 
-    <!-- 筛选区域 -->
-    <section class="filter-section">
-      <div class="filter-group">
-        <h3 class="filter-title">合集筛选</h3>
-        <div class="filter-tags">
-          <button 
-            class="filter-tag" 
-            :class="{ active: selectedCollection === 'all' }"
-            @click="selectedCollection = 'all'"
-          >
-            全部
-          </button>
-          <button 
-            v-for="collection in collectionFilters" 
-            :key="collection"
-            class="filter-tag"
-            :class="{ active: selectedCollection === collection }"
-            @click="selectedCollection = collection"
-          >
-            {{ collection }}
-          </button>
-        </div>
-      </div>
-
-      <div class="filter-group">
-        <h3 class="filter-title">技术栈筛选</h3>
-        <div class="filter-tags">
-          <button 
-            class="filter-tag" 
-            :class="{ active: selectedTech === 'all' }"
-            @click="selectedTech = 'all'"
-          >
-            全部
-          </button>
-          <button 
-            v-for="tech in techFilters" 
-            :key="tech"
-            class="filter-tag"
-            :class="{ active: selectedTech === tech }"
-            @click="selectedTech = tech"
-          >
-            {{ tech }}
-          </button>
-        </div>
-      </div>
-
-      <div class="filter-group">
-        <h3 class="filter-title">软件筛选</h3>
-        <div class="filter-tags">
-          <button 
-            class="filter-tag" 
-            :class="{ active: selectedSoftware === 'all' }"
-            @click="selectedSoftware = 'all'"
-          >
-            全部
-          </button>
-          <button 
-            v-for="software in softwareFilters" 
-            :key="software"
-            class="filter-tag"
-            :class="{ active: selectedSoftware === software }"
-            @click="selectedSoftware = software"
-          >
-            {{ software }}
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- 博客列表 -->
-    <section class="blog-list">
-      <div 
-        v-for="blog in filteredBlogs" 
-        :key="blog.id"
-        class="blog-card"
-      >
-        <h2 class="blog-card-title">
-          <router-link :to="`/blog/${blog.id}`" class="blog-link">
-            {{ blog.title }}
-            <PinnedBadge v-if="blog.pinned" />
-          </router-link>
-        </h2>
-        <p class="blog-card-summary">{{ blog.summary }}</p>
-        <div class="blog-card-meta">
-          <div class="blog-card-tags">
-            <CollectionTag :collection="blog.collection" />
-            <span 
-              v-for="tag in blog.techTags" 
-              :key="tag"
-              class="tag tech-tag"
-            >
-              {{ tag }}
-            </span>
-            <span 
-              v-for="tag in blog.softwareTags" 
-              :key="tag"
-              class="tag software-tag"
-            >
-              {{ tag }}
-            </span>
+    <!-- 主内容区域 - 左右布局 -->
+    <div class="main-content">
+      <!-- 左侧筛选区域 -->
+      <aside class="sidebar">
+        <section class="filter-section">
+          <div class="filter-group">
+            <h3 class="filter-title">合集筛选</h3>
+            <div class="filter-tags">
+              <button 
+                class="filter-tag" 
+                :class="{ active: selectedCollection === 'all' }"
+                @click="selectedCollection = 'all'"
+              >
+                全部
+              </button>
+              <button 
+                v-for="collection in collectionFilters" 
+                :key="collection"
+                class="filter-tag"
+                :class="{ active: selectedCollection === collection }"
+                @click="selectedCollection = collection"
+              >
+                {{ collection }}
+              </button>
+            </div>
           </div>
-          <div class="blog-card-info">
-            <span class="blog-date">{{ blog.date }}</span>
-            <span class="blog-author">作者：{{ blog.author }}</span>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- 无内容提示 -->
-    <div v-if="filteredBlogs.length === 0" class="empty-state">
-      <i class="fas fa-search fa-3x"></i>
-      <p>没有找到匹配的博客文章</p>
+          <div class="filter-group">
+            <h3 class="filter-title">技术栈筛选</h3>
+            <div class="filter-tags">
+              <button 
+                class="filter-tag" 
+                :class="{ active: selectedTech === 'all' }"
+                @click="selectedTech = 'all'"
+              >
+                全部
+              </button>
+              <button 
+                v-for="tech in techFilters" 
+                :key="tech"
+                class="filter-tag"
+                :class="{ active: selectedTech === tech }"
+                @click="selectedTech = tech"
+              >
+                {{ tech }}
+              </button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <h3 class="filter-title">软件筛选</h3>
+            <div class="filter-tags">
+              <button 
+                class="filter-tag" 
+                :class="{ active: selectedSoftware === 'all' }"
+                @click="selectedSoftware = 'all'"
+              >
+                全部
+              </button>
+              <button 
+                v-for="software in softwareFilters" 
+                :key="software"
+                class="filter-tag"
+                :class="{ active: selectedSoftware === software }"
+                @click="selectedSoftware = software"
+              >
+                {{ software }}
+              </button>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <!-- 右侧博客列表区域 -->
+      <main class="content">
+        <!-- 博客列表 - 瀑布流布局 -->
+        <section class="blog-masonry">
+          <div 
+            v-for="blog in filteredBlogs" 
+            :key="blog.id"
+            class="masonry-card"
+          >
+            <!-- 置顶徽章移到右上角 -->
+            <div class="card-header">
+              <PinnedBadge v-if="blog.pinned" class="pinned-badge" />
+            </div>
+            
+            <h2 class="blog-card-title">
+              <router-link :to="`/blog/${blog.id}`" class="blog-link">
+                {{ blog.title }}
+              </router-link>
+            </h2>
+            <p class="blog-card-summary">{{ blog.summary }}</p>
+            
+            <!-- 重构为两栏布局 -->
+            <div class="blog-card-meta">
+              <!-- 左侧标签区域 -->
+              <div class="left-section">
+                <!-- 技术栈标签 -->
+                <div class="tech-tags-section">
+                  <CollectionTag :collection="blog.collection" />
+                  <span 
+                    v-for="tag in blog.techTags" 
+                    :key="tag"
+                    class="tag tech-tag"
+                  >
+                    {{ tag }}
+                  </span>
+                </div>
+                
+                <!-- 软件标签 -->
+                <div class="software-tags-section">
+                  <span 
+                    v-for="tag in blog.softwareTags" 
+                    :key="tag"
+                    class="tag software-tag"
+                  >
+                    {{ tag }}
+                  </span>
+                </div>
+              </div>
+              
+              <!-- 右侧信息区域 -->
+              <div class="right-section">
+                <div class="blog-card-info">
+                  <span class="blog-date">{{ blog.date }}</span>
+                  <span class="blog-author">作者：{{ blog.author }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 无内容提示 -->
+        <div v-if="filteredBlogs.length === 0" class="empty-state">
+          <i class="fas fa-search fa-3x"></i>
+          <p>没有找到匹配的博客文章</p>
+        </div>
+      </main>
     </div>
   </div>
 </template>
@@ -180,10 +201,8 @@ export default {
       softwareFilters: [
         'VScode', 'wireshark', 'unity', '教程', 'github', 'Git LFS', 'sourcetree', 
       ],
-      collectionFilters: [], // 合集筛选列表会在加载博客时动态生成
-      // 博客数据
+      collectionFilters: [],
       blogs: [],
-      // 搜索相关状态
       searchKeyword: '',
       searchDate: '',
       showSearchInfo: false
@@ -191,21 +210,16 @@ export default {
   },
   computed: {
     filteredBlogs() {
-      // 先筛选后排序，置顶博客排在前面
       const filtered = this.blogs.filter(blog => {
-        // 合集筛选
         const collectionMatch = this.selectedCollection === 'all' || 
                                (blog.collection && blog.collection === this.selectedCollection)
         
-        // 技术栈筛选
         const techMatch = this.selectedTech === 'all' || 
                           blog.techTags.some(tag => tag === this.selectedTech)
         
-        // 软件筛选
         const softwareMatch = this.selectedSoftware === 'all' || 
                               blog.softwareTags.some(tag => tag === this.selectedSoftware)
         
-        // 搜索关键词筛选
         const keywordMatch = !this.searchKeyword || 
                             blog.title.toLowerCase().includes(this.searchKeyword.toLowerCase()) ||
                             blog.summary.toLowerCase().includes(this.searchKeyword.toLowerCase()) ||
@@ -213,102 +227,87 @@ export default {
                             blog.softwareTags.some(tag => tag.toLowerCase().includes(this.searchKeyword.toLowerCase())) ||
                             (blog.collection && blog.collection.toLowerCase().includes(this.searchKeyword.toLowerCase()))
         
-        // 日期筛选
         const dateMatch = !this.searchDate || blog.date === this.searchDate
         
         return collectionMatch && techMatch && softwareMatch && keywordMatch && dateMatch
       })
       
-      // 排序：置顶博客在前，然后按日期降序
       return filtered.sort((a, b) => {
+        // 先按置顶状态排序（置顶的在前）
         if (a.pinned && !b.pinned) return -1;
         if (!a.pinned && b.pinned) return 1;
+        
+        // 如果都是置顶文章，确保GitHub大文件推送限制问题解决方案报告跟在网页组协作指南文章之后
+        if (a.pinned && b.pinned) {
+          // 网页组协作指南文章应该排在GitHub大文件推送限制问题解决方案报告之前
+          if (b.title.includes('GitHub大文件推送限制') && a.title.includes('网页组协作指南')) {
+            return -1;
+          }
+          if (a.title.includes('GitHub大文件推送限制') && b.title.includes('网页组协作指南')) {
+            return 1;
+          }
+        }
+        
+        // 其他情况按日期排序
         return new Date(b.date) - new Date(a.date);
       });
     }
   },
   methods: {
-    // 处理搜索
     handleSearch() {
       this.showSearchInfo = true
-      // 防抖处理，避免频繁搜索
       if (this.searchTimeout) {
         clearTimeout(this.searchTimeout)
       }
-      this.searchTimeout = setTimeout(() => {
-        // 搜索逻辑已经在computed属性中实现
-      }, 300)
+      this.searchTimeout = setTimeout(() => {}, 300)
     },
     
-    // 清除搜索条件
     clearSearch() {
       this.searchKeyword = ''
       this.searchDate = ''
       this.showSearchInfo = false
     },
     
-    // 加载博客文件的方法，从blogs文件夹读取Markdown文件
     async loadBlogFiles() {
       try {
-        // 使用import.meta.glob动态导入blogs目录下的所有md文件（包括子目录）
         const markdownFiles = import.meta.glob(['/blogs/*.md', '/blogs/*/*.md'], { as: 'raw' });
         
-        // 清空现有博客数据
         this.blogs = [];
         
-        // 遍历所有文件并解析
         let id = 1;
         for (const [path, contentPromise] of Object.entries(markdownFiles)) {
           try {
-            // 获取文件名
             const fileName = path.split('/').pop();
-            
-            // 加载文件内容
             const content = await contentPromise();
-            
-            // 解析文件元数据
             const blogData = this.parseBlogMetadata(content, fileName, id.toString());
-            
-            // 添加到博客数组
             this.blogs.push(blogData);
-            
             id++;
           } catch (fileError) {
             console.error(`处理文件 ${path} 失败:`, fileError);
           }
         }
         
-        // 动态生成合集筛选列表
         const collections = [...new Set(this.blogs.map(blog => blog.collection).filter(Boolean))];
         this.collectionFilters = collections.sort();
         
-        console.log('博客文件加载完成:', this.blogs);
-        
       } catch (error) {
         console.error('加载博客文件失败:', error);
-        // 如果出错，添加一些默认的模拟数据
         this.addDefaultBlogs();
-        // 为默认数据生成合集列表
         const collections = [...new Set(this.blogs.map(blog => blog.collection).filter(Boolean))];
         this.collectionFilters = collections.sort();
       }
     },
     
-    // 解析博客文件的元数据
     parseBlogMetadata(content, fileName, id) {
-      // 解析标题（通常是第一个#后面的内容）
       const titleMatch = content.match(/#\s+([^\n]+)/);
       const title = titleMatch ? titleMatch[1].trim() : '无标题博客';
       
-      // 解析日期（寻找日期格式的文本）
       const dateMatch = content.match(/\d{4}-\d{2}-\d{2}/);
       const date = dateMatch ? dateMatch[0] : new Date().toISOString().split('T')[0];
       
-      // 解析作者（寻找作者: 或类似格式）
       const authorMatch = content.match(/作者[:：]\s*([^\n]+)/i);
       const author = authorMatch ? authorMatch[1].trim() : '井上川';
       
-      // 解析标签（从文件头部寻找techTags或tools）
       let techTags = [];
       let softwareTags = [];
       
@@ -316,7 +315,6 @@ export default {
       if (techTagsMatch) {
         techTags = techTagsMatch[1].split(',')
           .map(tag => tag.trim());
-        // 添加新标签到筛选列表
         techTags.forEach(tag => {
           if (!this.techFilters.includes(tag)) {
             this.techFilters.push(tag);
@@ -328,7 +326,6 @@ export default {
       if (softwareTagsMatch) {
         softwareTags = softwareTagsMatch[1].split(',')
           .map(tag => tag.trim());
-        // 添加新标签到筛选列表
         softwareTags.forEach(tag => {
           if (!this.softwareFilters.includes(tag)) {
             this.softwareFilters.push(tag);
@@ -336,30 +333,24 @@ export default {
         });
       }
       
-      
-      // 解析置顶标记
       const pinnedMatch = content.match(/pinned:\s*(true|false)/i);
       const pinned = pinnedMatch ? pinnedMatch[1].toLowerCase() === 'true' : false;
       
-      // 解析合集标记
       const collectionMatch = content.match(/collection:\s*([^\n]+)/i);
       const collection = collectionMatch ? collectionMatch[1].trim() : '';
       
-      // 生成摘要（优先从metadata中获取专门的summary字段）
       const summaryMatch = content.match(/summary:\s*([^\n]+)/i);
       let summary = '暂无摘要';
       
       if (summaryMatch) {
         summary = summaryMatch[1].trim();
       } else {
-        // 如果没有专门的summary字段，才使用第一段内容作为后备
         const paragraphs = content.split(/\n\s*\n/).filter(p => p.trim() && !p.startsWith('#'));
         if (paragraphs.length > 0) {
           summary = paragraphs[0].replace(/#/g, '').substring(0, 150) + '...';
         }
       }
       
-      // 构建博客数据对象
       return {
         id,
         title,
@@ -370,14 +361,24 @@ export default {
         softwareTags,
         pinned,
         collection,
-        contentPath: `../../${fileName}` // 相对路径，用于详情页加载
+        contentPath: `../../${fileName}`
       };
     },
     
-    // 添加默认博客数据（当加载失败时使用）
     addDefaultBlogs() {
       this.blogs = [
-        {          id: '1',          title: 'GitHub大文件推送限制问题解决方案报告',          summary: '本文详细介绍了在GitHub中推送大文件时遇到的问题及解决方案，包括Git LFS的使用、文件分割等多种方法...',          date: '2024-09-15',          author: '井上川',          techTags: ['git', 'GitHub'],          softwareTags: ['VScode', 'github'],          pinned: true,          collection: 'Git进阶教程',          contentPath: '../../GitHub大文件推送限制问题解决方案报告.md'        },        {          id: '2',          title: 'Vue3入门指南',          summary: '本文介绍了Vue3的核心特性、性能改进和使用方法，包括组合式API、Teleport、Suspense等新特性...',          date: '2024-09-10',          author: '井上川',          techTags: ['Vue3', 'JavaScript'],          softwareTags: ['VScode', 'github'],          pinned: false,          collection: '前端框架学习',          contentPath: '../../vue3-introduction.md'        },        {          id: '3',          title: 'Python数据分析实战',          summary: '本文介绍了如何使用Python进行数据分析，包括Pandas、NumPy和Matplotlib等库的使用方法...',          date: '2024-09-05',          author: '井上川',          techTags: ['Python', '数据分析'],          softwareTags: ['VScode', 'jupyter'],          pinned: false,          collection: 'Python数据分析',          contentPath: '../../python-data-analysis.md'        }
+        {
+          id: '1',
+          title: 'GitHub大文件推送限制问题解决方案报告',
+          summary: '本文详细介绍了在GitHub中推送大文件时遇到的问题及解决方案，包括Git LFS的使用、文件分割等多种方法...',
+          date: '2024-09-15',
+          author: '井上川',
+          techTags: ['git', 'GitHub'],
+          softwareTags: ['VScode', 'github'],
+          pinned: true,
+          collection: 'Git进阶教程',
+          contentPath: '../../GitHub大文件推送限制问题解决方案报告.md'
+        }
       ];
     }
   },
@@ -386,11 +387,10 @@ export default {
   },
   
   beforeUnmount() {
-    // 清理定时器
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout)
     }
-  },
+  }
 }
 </script>
 
@@ -403,13 +403,37 @@ export default {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.main-content {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 2rem;
+  align-self: flex-start;
+  height: fit-content;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
 .blog-header {
   text-align: center;
   margin-bottom: 2rem;
   padding: 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 10px;
-  color: white;
+  color: black;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }
@@ -443,7 +467,7 @@ export default {
 
 .search-input:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: #4ab3df;
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
@@ -457,13 +481,13 @@ export default {
 
 .date-input:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: #4ab3df;
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
 .search-button {
   padding: 0.8rem 1.5rem;
-  background-color: #3498db;
+  background-color: #4ab3df;
   color: white;
   border: none;
   border-radius: 5px;
@@ -477,7 +501,7 @@ export default {
 }
 
 .search-button:hover:not(:disabled) {
-  background-color: #2980b9;
+  background-color: #4ab3df;
   transform: translateY(-1px);
 }
 
@@ -525,89 +549,125 @@ export default {
 }
 
 .filter-section {
-  background-color: #f8f9fa;
+  background-color: #fafbfc;
   padding: 1.5rem;
-  border-radius: 10px;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .filter-group {
   margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
 }
 
 .filter-group:last-child {
   margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .filter-title {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-bottom: 1rem;
   color: #2c3e50;
   font-weight: 600;
   transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .filter-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.8rem;
+  gap: 0.7rem;
 }
 
 .filter-tag {
-  padding: 0.5rem 1.2rem;
-  border: 2px solid #3498db;
+  padding: 0.4rem 1rem;
+  border: 1px solid #e0e0e0;
   background-color: white;
-  color: #3498db;
-  border-radius: 30px;
+  color: #555;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
   font-weight: 500;
+  position: relative;
+  overflow: hidden;
+  text-transform: capitalize;
 }
 
 .filter-tag:hover {
-  background-color: #3498db;
-  color: white;
+  background-color: #f5f5f5;
+  border-color: #4ab3df;
+  color: #4ab3df;
   transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .filter-tag.active {
-  background-color: #3498db;
+  background-color: #4ab3df;
   color: white;
+  border-color: #4ab3df;
+  box-shadow: 0 2px 6px rgba(52, 152, 219, 0.3);
 }
 
 .filter-tag:first-child {
-  order: -1; /* 确保"全部"选项始终在最前面 */
+  order: -1;
   background-color: #2c3e50;
   border-color: #2c3e50;
   color: white;
+  text-transform: none;
 }
 
 .filter-tag:first-child:hover,
 .filter-tag:first-child.active {
   background-color: #1a252f;
+  border-color: #1a252f;
+  box-shadow: 0 2px 6px rgba(44, 62, 80, 0.3);
 }
 
-.blog-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.blog-masonry {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 0 auto;
 }
 
-.blog-card {
+.masonry-card {
   background-color: white;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  border-left: 4px solid #3498db;
+  border-left: 4px solid #4ab3df;
+  position: relative;
+  break-inside: avoid;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
 }
 
-.blog-card:hover {
+.masonry-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .blog-masonry {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .blog-masonry {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
 }
 
 .blog-card-title {
@@ -618,8 +678,6 @@ export default {
   transition: color 0.3s ease;
 }
 
-
-
 .blog-link {
   color: #2c3e50;
   text-decoration: none;
@@ -627,7 +685,7 @@ export default {
 }
 
 .blog-link:hover {
-  color: #3498db;
+  color: #4ab3df;
 }
 
 .blog-card-summary {
@@ -647,10 +705,16 @@ export default {
   transition: border-color 0.3s ease;
 }
 
-.blog-card-tags {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+.card-header {
+  position: relative;
+  height: 0;
+}
+
+.pinned-badge {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  z-index: 10;
 }
 
 .tag {
@@ -670,11 +734,73 @@ export default {
   color: #9b59b6;
 }
 
+/* 两栏布局 */
+.blog-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  transition: border-color 0.3s ease;
+}
+
+.left-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tech-tags-section,
+.software-tags-section {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* 自动左边距使其靠右 */
+  padding-left:7rem;
+  min-width: 180px;
+  flex-shrink: 0; /* 防止被压缩 */
+}
+
 .blog-card-info {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 0.3rem;
+  align-items: flex-end; /* 右对齐 */
+  white-space: nowrap; /* 确保不换行 */
+  overflow: visible; /* 允许内容超出容器 */
+  text-overflow: clip; /* 不显示省略号 */
+  text-align: right; /* 文本右对齐 */
+  padding-right: 10px; /* 距离右边框10px */
+}
+
+/* 确保博客卡片有足够的宽度来容纳右侧信息 */
+@media (max-width: 768px) {
+  .blog-masonry {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .blog-card-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .right-section {
+    margin-left: 0;
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .blog-card-info {
+    align-items: flex-start;
+    width: 100%;
+  }
 }
 
 .blog-date,
@@ -697,7 +823,21 @@ export default {
   transition: color 0.3s ease;
 }
 
-/* 响应式设计 */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 220px;
+  }
+  
+  .filter-section {
+    padding: 1.2rem;
+  }
+  
+  .filter-group {
+    margin-bottom: 1.2rem;
+    padding-bottom: 1.2rem;
+  }
+}
+
 @media (max-width: 768px) {
   .blog-container {
     padding: 1rem;
@@ -705,6 +845,27 @@ export default {
   
   .blog-title {
     font-size: 2rem;
+  }
+  
+  .main-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .sidebar {
+    width: 100%;
+    position: static;
+    top: auto;
+    border-radius: 8px;
+  }
+  
+  .filter-section {
+    padding: 1rem;
+  }
+  
+  .filter-group {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
   }
   
   .search-container {
@@ -737,9 +898,8 @@ export default {
   }
 }
 
-/* 深色模式样式 */
 .dark .blog-container {
-  color: #e0e0e0;
+  color: #ffffff !important;
 }
 
 .dark .search-section {
@@ -749,7 +909,7 @@ export default {
 
 .dark .search-input {
   background-color: #34495e;
-  border-color: #5dade2;
+  border-color: #4ab3df;
   color: #ffffff;
 }
 
@@ -764,7 +924,7 @@ export default {
 
 .dark .date-input {
   background-color: #34495e;
-  border-color: #5dade2;
+  border-color: #4ab3df;
   color: #ffffff;
 }
 
@@ -778,13 +938,30 @@ export default {
 }
 
 .dark .blog-header {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  background: #2a2a2a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark .blog-title,
+.dark .blog-subtitle {
+  color: #ffffff !important;
+}
+
+.dark .sidebar {
+  background-color: #2d2d2d;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .dark .filter-section {
   background-color: #2d2d2d;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dark .filter-group {
+  border-bottom-color: #404040;
+}
+
+.dark .main-content {
+  gap: 2rem;
 }
 
 .dark .filter-title {
@@ -793,19 +970,20 @@ export default {
 
 .dark .filter-tag {
   background-color: #34495e;
-  color: #ffffff;
-  border-color: #5dade2;
+  color: #e0e0e0;
+  border-color: #4ab3df;
 }
 
 .dark .filter-tag:hover {
-  background-color: #3498db;
-  color: white;
+  background-color: #4a5f78;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .dark .filter-tag.active {
   background-color: #3498db;
   color: white;
-  border-color: #5dade2;
+  border-color: #4ab3df;
 }
 
 .dark .filter-tag:first-child {
@@ -823,7 +1001,7 @@ export default {
   background-color: #2d2d2d;
   color: #e0e0e0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  border-left: 4px solid #3498db;
+  border-left: 4px solid #4ab3df;
 }
 
 .dark .blog-card:hover {
@@ -840,7 +1018,7 @@ export default {
 }
 
 .dark .blog-link:hover {
-  color: #5dade2;
+  color: #4ab3df;
 }
 
 .dark .blog-card-summary {
@@ -851,7 +1029,9 @@ export default {
   border-top: 1px solid #404040;
 }
 
-.dark .tag, .dark .tech-tag, .dark .software-tag {
+.dark .tag,
+.dark .tech-tag,
+.dark .software-tag {
   background-color: #34495e;
   color: #5dade2;
 }
@@ -865,7 +1045,40 @@ export default {
   color: #777;
 }
 
-.dark .empty-state i {
-  color: #555;
-}
+.dark .empty-state i { color: #555; }
+
+  /* 深色模式 - 博客卡片增强样式 */
+  .dark .masonry-card {
+    background-color: #2d2d2d;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border-left: 4px solid #4ab3df;
+  }
+
+  .dark .masonry-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  }
+
+  .dark .tag {
+    background-color: #34495e;
+    color: #e0e0e0;
+  }
+
+  .dark .tech-tag {
+    background-color: #2c3e50;
+    color: #4ab3df;
+  }
+
+  .dark .software-tag {
+    background-color: #2c3e50;
+    color: #9b59b6;
+  }
+
+  .dark .blog-card-meta {
+    border-top-color: #404040;
+  }
+
+  .dark .right-section {
+    border-left: 1px solid #404040;
+  }
 </style>

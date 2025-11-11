@@ -27,82 +27,267 @@
 
 
     <!-- 技术栈展示 -->
-    <section class="tech-stack-section">
+    <section class="tech-stack-section" id="tech-stack">
       <h2 class="section-title">技术栈</h2>
-      <div class="tech-stack-container">
-        <div class="tech-item" v-for="tech in techStack" :key="tech.name" :class="{ 'animate': isAnimated }">
-          <div class="tech-icon">
-            <i :class="tech.icon"></i>
-          </div>
-          <span class="tech-name">{{ tech.name }}</span>
-          <div class="skill-bar">
-            <div class="skill-progress" :style="{ width: tech.proficiency + '%' }"></div>
-          </div>
-          <span class="proficiency-text">{{ tech.proficiency }}%</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 快速链接 -->
-    <section class="quick-links">
-      <router-link to="/blog" class="quick-link">
-        <i class="fas fa-book"></i>
-        <span>查看博客</span>
-      </router-link>
-      <router-link to="/projects" class="quick-link">
-        <i class="fas fa-code"></i>
-        <span>项目展示</span>
-      </router-link>
-    </section>
-
-    <!-- 访客计数可视化板块 -->
-    <section class="visitor-counter-section">
-      <h2 class="section-title">访客统计</h2>
-      <div class="visitor-stats-grid">
-        <!-- 统计卡片 -->
-        <div class="stats-card">
-          <div class="stats-icon">
-            <i class="fas fa-users"></i>
-          </div>
-          <div class="stats-content">
-            <div class="stats-value">{{ totalVisits.toLocaleString() }}</div>
-            <div class="stats-label">总访问量</div>
+      
+      <!-- 三栏技术栈布局 -->
+      <div class="tech-stack-grid">
+        <!-- 编程语言 -->
+        <div class="tech-category">
+          <h3 class="category-title">编程语言</h3>
+          <div class="tech-items">
+            <div class="tech-item" v-for="lang in programmingLanguages" :key="lang.name" :class="{ 'animate': isAnimated }">
+              <div class="tech-icon">
+                <i :class="lang.icon"></i>
+              </div>
+              <div class="tech-info">
+                <div class="name-percentage">
+                  <span class="tech-name">{{ lang.name }}</span>
+                  <span class="proficiency-text">{{ lang.proficiency }}%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" :style="{ width: lang.proficiency + '%' }"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         
-        <div class="stats-card">
-          <div class="stats-icon">
-            <i class="fas fa-user-plus"></i>
+        <!-- 框架与技术 -->
+        <div class="tech-category">
+          <h3 class="category-title">框架与技术</h3>
+          <div class="tech-items">
+            <div class="tech-item" v-for="framework in frameworks" :key="framework.name" :class="{ 'animate': isAnimated }">
+              <div class="tech-icon">
+                <i :class="framework.icon"></i>
+              </div>
+              <div class="tech-info">
+                <div class="name-percentage">
+                  <span class="tech-name">{{ framework.name }}</span>
+                  <span class="proficiency-text">{{ framework.proficiency }}%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" :style="{ width: framework.proficiency + '%' }"></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="stats-content">
-            <div class="stats-value">{{ todayVisits.toLocaleString() }}</div>
-            <div class="stats-label">今日访问</div>
+        </div>
+        
+        <!-- 数据库 -->
+        <div class="tech-category">
+          <h3 class="category-title">数据库</h3>
+          <div class="tech-items">
+            <div class="tech-item" v-for="db in databases" :key="db.name" :class="{ 'animate': isAnimated }">
+              <div class="tech-icon">
+                <i :class="db.icon"></i>
+              </div>
+              <div class="tech-info">
+                <div class="name-percentage">
+                  <span class="tech-name">{{ db.name }}</span>
+                  <span class="proficiency-text">{{ db.proficiency }}%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" :style="{ width: db.proficiency + '%' }"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       
-      <!-- 图表区域 -->
-      <div class="chart-container">
-        <canvas ref="visitorChart"></canvas>
+      <!-- 其他技术栈 -->
+      <div class="other-tech-stack">
+        <h3 class="category-title">其他技术</h3>
+        <div class="tech-stack-container">
+          <div class="tech-item" v-for="tech in otherTech" :key="tech.name" :class="{ 'animate': isAnimated }">
+              <div class="tech-icon">
+                <i :class="tech.icon"></i>
+              </div>
+              <div class="tech-info">
+                <div class="name-percentage">
+                  <span class="tech-name">{{ tech.name }}</span>
+                  <span class="proficiency-text">{{ tech.proficiency }}%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" :style="{ width: tech.proficiency + '%' }"></div>
+                </div>
+              </div>
+            </div>
+        </div>
       </div>
     </section>
 
-     <!-- 联系信息 -->
-    <section class="contact-section">
-      <h2 class="section-title">联系我</h2>
-      <div class="contact-links">
-        <a href="https://github.com/AZcookiecat" class="contact-link" target="_blank">
-          <i class="fab fa-github fa-2x"></i>
-          <span>GitHub</span>
-        </a>
-        <a href="mailto:example@mail.com" class="contact-link">
-          <i class="fas fa-envelope fa-2x"></i>
-          <span>Email</span>
-        </a>
-        <a href="#" class="contact-link" target="_blank">
-          <i class="fab fa-weixin fa-2x"></i>
-          <span>微信</span>
-        </a>
+    <!-- 项目展示 -->
+    <section class="projects-section" id="projects">
+      <h2 class="section-title">
+        <i class="fas fa-code"></i>
+        项目展示
+      </h2>
+      <div class="projects-grid">
+        <router-link 
+          v-for="project in projects" 
+          :key="project.id"
+          :to="`/projects/${project.id}`"
+          class="project-card-link"
+        >
+          <div class="project-card" :class="{ 'animate': isAnimated }">
+            <div class="project-card-header">
+              <div class="project-card-icon">
+                <i :class="project.icon"></i>
+              </div>
+              <h3 class="project-card-title">{{ project.title }}</h3>
+            </div>
+            <p class="project-card-description">{{ project.description }}</p>
+            <div class="project-card-tags">
+              <span v-for="tag in project.tags" :key="tag" class="project-tag">{{ tag }}</span>
+            </div>
+            <div class="project-card-footer">
+              <span class="view-details">点击查看详情</span>
+              <div class="project-card-links">
+                <a 
+                  v-if="project.githubLink" 
+                  :href="project.githubLink" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="project-link"
+                  @click.stop
+                >
+                  <i class="fab fa-github"></i>
+                  GitHub
+                </a>
+                <a 
+                  v-if="project.demoLink" 
+                  :href="project.demoLink" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="project-link"
+                  @click.stop
+                >
+                  <i class="fas fa-external-link-alt"></i>
+                  演示
+                </a>
+              </div>
+            </div>
+          </div>
+        </router-link>
+      </div>
+    </section>
+
+    <!-- 荣誉展示 -->
+    <section class="honors-section" id="honors">
+      <h2 class="section-title">
+        <i class="fas fa-trophy"></i>
+        荣誉成就
+      </h2>
+      <div class="honors-list">
+        <div 
+          v-for="honor in honors" 
+          :key="honor.id"
+          class="honor-item" :class="{ 'animate': isAnimated }"
+        >
+          <div class="honor-date">{{ honor.date }}</div>
+          <div class="honor-content">
+            <h3 class="honor-title">{{ honor.title }}</h3>
+            <p class="honor-description">{{ honor.description }}</p>
+          </div>
+          <!-- 荣誉图片展示 -->
+          <div v-if="honor.imagePath" class="honor-image-container">
+            <img 
+              :src="honor.imagePath" 
+              :alt="honor.title"
+              class="honor-image"
+              loading="lazy"
+              @click="openImageModal(honor.imagePath, honor.title)"
+              style="cursor: pointer;"
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 图片查看模态框 -->
+    <div v-if="showImageModal" class="image-modal-overlay" @click="closeImageModal">
+      <img :src="currentImagePath" :alt="currentImageTitle" class="image-modal-image">
+      <div class="image-modal-hint">按ESC键关闭</div>
+    </div>
+
+    <!-- 联系信息 -->
+    <section class="contact-section" id="contact">
+      <h2 class="section-title">
+        <i class="fas fa-paper-plane"></i>
+        联系我
+      </h2>
+      
+      <!-- 左右两栏布局容器 -->
+      <div class="contact-layout">
+        <!-- 左侧：联系链接 -->
+        <div class="contact-left">
+          <h3 class="contact-left-title">联系方式</h3>
+          <div class="contact-links">
+            <a href="https://github.com/AZcookiecat" class="contact-link" target="_blank" rel="noopener noreferrer">
+              <div class="contact-icon">
+                <i class="fab fa-github fa-2x"></i>
+              </div>
+              <div class="contact-link-content">
+                <span class="contact-link-title">GitHub</span>
+                <p class="contact-link-description">查看我的代码和项目</p>
+              </div>
+            </a>
+            
+            <a href="mailto:3424255277@qq.com" class="contact-link" target="_blank" rel="noopener noreferrer">
+              <div class="contact-icon">
+                <i class="fas fa-envelope fa-2x"></i>
+              </div>
+              <div class="contact-link-content">
+                <span class="contact-link-title">Email</span>
+                <p class="contact-link-description">发送邮件给我</p>
+              </div>
+            </a>
+            
+            <div class="contact-link wechat-container">
+              <div class="contact-icon wechat-icon">
+                <i class="fab fa-weixin fa-2x"></i>
+              </div>
+              <div class="contact-link-content">
+                <span class="contact-link-title">微信</span>
+                <p class="contact-link-description">扫码添加好友</p>
+              </div>
+              <!-- 微信二维码弹窗 -->
+              <div class="qrcode-popup">
+                <div class="qrcode-content">
+                  <p class="qrcode-text">扫一扫添加微信</p>
+                  <div class="qrcode-placeholder">
+                    <img src="../assets/微信图片_20251104145940_79_3.jpg" alt="微信二维码" class="qrcode-image">
+                  </div>
+                  <p class="qrcode-hint">微信号: XK_180920</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 右侧：联系表单 -->
+        <div class="contact-right">
+          <div class="contact-form-section">
+            <h3 class="contact-form-title">发送消息</h3>
+            <form class="contact-form">
+              <div class="form-group">
+                <input type="text" placeholder="您的姓名" class="form-input">
+              </div>
+              <div class="form-group">
+                <input type="email" placeholder="您的邮箱" class="form-input">
+              </div>
+              <div class="form-group">
+                <textarea placeholder="您的消息" rows="4" class="form-input"></textarea>
+              </div>
+              <button type="submit" class="form-submit-btn">
+                <i class="fas fa-paper-plane"></i>
+                发送消息
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -110,233 +295,144 @@
 </template>
 
 <script>
-import { Chart, registerables } from 'chart.js';
-
-// 注册Chart.js组件
-Chart.register(...registerables);
+// 导入图片资源
+import honorImage1 from '../assets/FF3440EC3D42C496BBA952DB6F65F862.jpg';
+import honorImage2 from '../assets/9B9FA0C5AC80E4B5107A1CEB067461ED.jpg';
 
 export default {
   name: 'HomeView',
   data() {
     return {
       isAnimated: false,
-      totalVisits: 0,
-      todayVisits: 0,
-      weeklyData: [],
-      visitorChart: null,
-      techStack: [
-        { name: 'Vue 3', icon: 'fab fa-vuejs', proficiency: 90 },
-        { name: 'JavaScript', icon: 'fab fa-js', proficiency: 95 },
-        { name: 'HTML5', icon: 'fab fa-html5', proficiency: 90 },
-        { name: 'CSS3', icon: 'fab fa-css3-alt', proficiency: 85 },
-        { name: 'Python', icon: 'fab fa-python', proficiency: 80 },
-        { name: 'C#', icon: 'fas fa-code', proficiency: 70 },
+      // 编程语言
+      programmingLanguages: [
+        { name: 'HTML', icon: 'fab fa-html5', proficiency: 95 },
+        { name: 'CSS', icon: 'fab fa-css3-alt', proficiency: 90 },
+        { name: 'JavaScript', icon: 'fab fa-js', proficiency: 90 },
+        { name: 'Python', icon: 'fab fa-python', proficiency: 85 },
+        { name: 'C#', icon: 'fab fa-cuttlefish', proficiency: 60 },
+        
+      ],
+      // 框架与技术
+      frameworks: [
+        { name: 'Vue.js', icon: 'fab fa-vuejs', proficiency: 88 },
+        { name: 'Node.js', icon: 'fab fa-node-js', proficiency: 80 },
         { name: 'Django', icon: 'fab fa-python', proficiency: 65 },
         { name: 'Flask', icon: 'fab fa-python', proficiency: 75 },
-        { name: 'MySQL', icon: 'fas fa-database', proficiency: 80 },
-        { name: 'Node.js', icon: 'fab fa-node-js', proficiency: 85 },
+      ],
+      // 数据库
+      databases: [
+        { name: 'MySQL', icon: 'fas fa-database', proficiency: 85 },
+      ],
+      // 其他技术
+      otherTech: [
         { name: 'Git', icon: 'fab fa-git', proficiency: 90 },
-      ]
+        { name: 'Linux', icon: 'fab fa-linux', proficiency: 20 },
+      ],
+      // 项目数据
+      projects: [
+        {
+          id: '1',
+          title: '元生湘缘——湘绣传统文化元宇宙平台',
+          description: '基于Vue 3和Vite开发的湘绣传统文化元宇宙展示平台，旨在通过数字化手段展示和传承湘绣这一非物质文化遗产，让更多人了解和欣赏湘绣的魅力',
+          icon: 'fab fa-vuejs fa-2x',
+          tags: ['Vue.js', 'Node.js'],
+          githubLink: 'https://github.com/AZcookiecat/XiangXiu',
+          demoLink: 'https://xiangxiu.netlify.app/'
+        },
+        {
+          id: '2',
+          title: '麓水云传——湖湘文化数字化平台',
+          description: '基于Vue 3和Vite开发的湖湘文化数字化平台，旨在通过数字化手段展示和传承湖湘这一非物质文化遗产，让更多人了解和欣赏湖湘的魅力',
+          icon: 'fab fa-vuejs fa-2x',
+          tags: ['Vue.js', 'Node.js'],
+          githubLink: 'https://github.com/AZcookiecat/huxiangwenhua',
+          demoLink: 'https://huxiangwenhua.netlify.app/'
+        },
+        {
+          id: '3',
+          title: 'LIDAR-RUN',
+          description: '',
+          icon: 'fab fa-vuejs fa-2x',
+          tags: ['Vue.js', 'Node.js'],
+          githubLink: 'https://github.com/AZcookiecat/LIDAR-RUN',
+          demoLink: 'https://lidar-run.netlify.app/'
+        },
+      ],
+      // 荣誉数据
+      honors: [
+        {
+          id: '1',
+          title: '元生湘缘——元宇宙数字湘绣生态系统',
+          description: '第十八届中国大学生计算机设计大赛中南地区赛三等奖',
+          date: '2025年',
+          imagePath: honorImage1
+        },
+        {
+          id: '2',
+          title: '湘缘——湘绣传统文化元宇宙实验平台',
+          description: '湘缘——湘绣传统文化元宇宙实验平台计算机软件著作权',
+          date: '2025年',
+          imagePath: honorImage2
+        }
+      ],
+      // 图片模态框相关状态
+      showImageModal: false,
+      currentImagePath: '',
+      currentImageTitle: ''
     }
   },
   mounted() {
     // 添加滚动动画效果
     this.startAnimation()
     window.addEventListener('scroll', this.handleScroll)
-    
-    // 初始化访问统计
-    this.initVisitorStats();
-    
-    // 创建访客统计图表
-    this.createVisitorChart();
   },
-methods: {
-      startAnimation() {
-        // 延迟启动动画，让用户有时间看到初始状态
-        setTimeout(() => {
+  methods: {
+    startAnimation() {
+      // 延迟启动动画，让用户有时间看到初始状态
+      setTimeout(() => {
+        this.isAnimated = true
+      }, 500)
+    },
+    handleScroll() {
+      const scrollPosition = window.scrollY
+      const techSection = document.querySelector('.tech-stack-section')
+      if (techSection) {
+        const techSectionPosition = techSection.offsetTop
+        const windowHeight = window.innerHeight
+        
+        // 当技术栈区域进入视口时，重新触发动画
+        if (scrollPosition + windowHeight > techSectionPosition + 100 && !this.isAnimated) {
           this.isAnimated = true
-        }, 500)
-      },
-      handleScroll() {
-        const scrollPosition = window.scrollY
-        const techSection = document.querySelector('.tech-stack-section')
-        if (techSection) {
-          const techSectionPosition = techSection.offsetTop
-          const windowHeight = window.innerHeight
-          
-          // 当技术栈区域进入视口时，重新触发动画
-          if (scrollPosition + windowHeight > techSectionPosition + 100 && !this.isAnimated) {
-            this.isAnimated = true
-          }
         }
-      },
-      // 初始化访客统计
-      initVisitorStats() {
-      const today = new Date().toLocaleDateString();
-      
-      // 从本地存储获取访问数据
-      const stats = JSON.parse(localStorage.getItem('visitorStats')) || {
-        totalVisits: 0,
-        dailyVisits: {},
-        weeklyData: { labels: [], data: [] }
-      };
-      
-      // 检查是否是新访问者（当天首次访问）
-      if (!localStorage.getItem('lastVisit') || localStorage.getItem('lastVisit') !== today) {
-        // 更新总访问量
-        stats.totalVisits++;
-        
-        // 更新今日访问量
-        stats.dailyVisits[today] = (stats.dailyVisits[today] || 0) + 1;
-        
-        // 更新最近访问时间
-        localStorage.setItem('lastVisit', today);
-        
-        // 保存更新后的数据
-        localStorage.setItem('visitorStats', JSON.stringify(stats));
       }
-      
-      // 更新一周数据
-      this.updateWeeklyData(stats);
-      
-      // 设置数据
-      this.totalVisits = stats.totalVisits;
-      this.todayVisits = stats.dailyVisits[today] || 0;
-      this.weeklyData = stats.weeklyData;
     },
-    
-    // 更新一周访问数据
-    updateWeeklyData(stats) {
-      const today = new Date();
-      const days = [];
-      const labels = [];
-      
-      // 生成最近7天的日期和标签
-      for (let i = 6; i >= 0; i--) {
-        const date = new Date();
-        date.setDate(today.getDate() - i);
-        const dateStr = date.toLocaleDateString();
-        labels.push(date.toLocaleDateString('zh-CN', { weekday: 'short' }));
-        
-        // 从dailyVisits获取当天的访问量，如果没有则为0
-        days.push(stats.dailyVisits[dateStr] || 0);
+    // 打开图片模态框
+    openImageModal(imagePath, imageTitle) {
+      this.currentImagePath = imagePath;
+      this.currentImageTitle = imageTitle;
+      this.showImageModal = true;
+      // 添加键盘事件监听
+      document.addEventListener('keydown', this.handleKeydown);
+    },
+    // 关闭图片模态框
+    closeImageModal() {
+      this.showImageModal = false;
+      // 移除键盘事件监听
+      document.removeEventListener('keydown', this.handleKeydown);
+    },
+    // 处理键盘事件
+    handleKeydown(event) {
+      // 按下ESC键时关闭模态框
+      if (event.key === 'Escape' || event.key === 'Esc') {
+        this.closeImageModal();
       }
-      
-      // 更新weeklyData
-      stats.weeklyData = {
-        labels,
-        data: days
-      };
-      
-      // 保存更新后的数据
-      localStorage.setItem('visitorStats', JSON.stringify(stats));
-    },
-    
-    // 生成默认的一周数据
-    generateDefaultWeeklyData() {
-      const days = [];
-      const labels = [];
-      
-      for (let i = 6; i >= 0; i--) {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
-        labels.push(date.toLocaleDateString('zh-CN', { weekday: 'short' }));
-        days.push(Math.floor(Math.random() * 50) + 10); // 随机生成10-60之间的访问量
-      }
-      
-      return {
-        labels,
-        data: days
-      };
-    },
-    
-
-    
-    // 创建访客统计图表
-    createVisitorChart() {
-      const ctx = this.$refs.visitorChart.getContext('2d');
-      
-      // 检查是否处于深色模式
-      const isDarkMode = document.documentElement.classList.contains('dark');
-      
-      this.visitorChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: this.weeklyData.labels,
-          datasets: [{
-            label: '访问量',
-            data: this.weeklyData.data,
-            backgroundColor: isDarkMode ? 'rgba(52, 152, 219, 0.2)' : 'rgba(102, 126, 234, 0.2)',
-            borderColor: isDarkMode ? 'rgba(52, 152, 219, 1)' : 'rgba(102, 126, 234, 1)',
-            borderWidth: 3,
-            pointBackgroundColor: isDarkMode ? 'rgba(52, 152, 219, 1)' : 'rgba(102, 126, 234, 1)',
-            pointBorderColor: isDarkMode ? '#ffffff' : '#ffffff',
-            pointRadius: 5,
-            pointHoverRadius: 7,
-            tension: 0.4,
-            fill: true
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false
-            },
-            tooltip: {
-              backgroundColor: isDarkMode ? 'rgba(44, 62, 80, 0.9)' : 'rgba(255, 255, 255, 0.9)',
-              titleColor: isDarkMode ? '#ffffff' : '#2c3e50',
-              bodyColor: isDarkMode ? '#cccccc' : '#7f8c8d',
-              borderColor: isDarkMode ? 'rgba(52, 152, 219, 0.5)' : 'rgba(102, 126, 234, 0.5)',
-              borderWidth: 1,
-              padding: 12,
-              displayColors: false,
-              callbacks: {
-                label: function(context) {
-                  return `访问量: ${context.parsed.y}`;
-                }
-              }
-            }
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              grid: {
-                color: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-                drawBorder: false
-              },
-              ticks: {
-                color: isDarkMode ? '#cccccc' : '#7f8c8d',
-                stepSize: 10
-              }
-            },
-            x: {
-              grid: {
-                display: false
-              },
-              ticks: {
-                color: isDarkMode ? '#cccccc' : '#7f8c8d'
-              }
-            }
-          },
-          interaction: {
-            intersect: false,
-            mode: 'index'
-          },
-          animation: {
-            duration: 2000,
-            easing: 'easeOutQuart'
-          }
-        }
-      });
     }
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
-    if (this.visitorChart) {
-      this.visitorChart.destroy();
-    }
+    // 确保移除键盘事件监听
+    document.removeEventListener('keydown', this.handleKeydown);
   }
 }
 </script>
@@ -356,9 +452,8 @@ methods: {
 .header {
   margin-bottom: 2rem;
   padding: 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 10px;
-  color: white;
+  color: black;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background 0.3s ease;
 }
@@ -462,120 +557,469 @@ methods: {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   color: #2c3e50;
-  border-bottom: 2px solid #3498db;
+  border-bottom: 2px solid #4ab3df;
   padding-bottom: 0.5rem;
   display: inline-block;
   transition: color 0.3s ease;
 }
 
-.tech-stack-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
+/* 技术栈部分样式 */
+.tech-stack-section {
+  padding: 2rem 0;
 }
 
-.tech-item {
-  background-color: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 150px;
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: translateY(20px);
+/* 三栏网格布局 */
+.tech-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
 }
 
-.tech-item.animate {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.tech-item:nth-child(1) { transition-delay: 0.1s; }
-.tech-item:nth-child(2) { transition-delay: 0.2s; }
-.tech-item:nth-child(3) { transition-delay: 0.3s; }
-.tech-item:nth-child(4) { transition-delay: 0.4s; }
-.tech-item:nth-child(5) { transition-delay: 0.5s; }
-.tech-item:nth-child(6) { transition-delay: 0.6s; }
-.tech-item:nth-child(7) { transition-delay: 0.7s; }
-.tech-item:nth-child(8) { transition-delay: 0.8s; }
-.tech-item:nth-child(9) { transition-delay: 0.9s; }
-.tech-item:nth-child(10) { transition-delay: 1.0s; }
-.tech-item:nth-child(11) { transition-delay: 1.1s; }
-
-.tech-icon {
-  font-size: 2.5rem;
-  margin-bottom: 0.8rem;
-  color: #3498db;
-}
-
-.tech-name {
-  font-weight: 600;
-  color: #2c3e50;
-  text-align: center;
-  margin-bottom: 0.8rem;
-  transition: color 0.3s ease;
-}
-
+/* 技术类别样式 */
+  .tech-category {
+    background-color: white;
+    padding: 1.2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .category-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #4ab3df;
+    text-align: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  /* 技术项目容器 */
+  .tech-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  /* 其他技术栈部分 */
+  .other-tech-stack {
+    margin-top: 1rem;
+  }
+  
+  .tech-stack-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+  
+  .tech-item {
+    background-color: white;
+    padding: 0.8rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .tech-item.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .tech-item:nth-child(1) { transition-delay: 0.1s; }
+  .tech-item:nth-child(2) { transition-delay: 0.2s; }
+  .tech-item:nth-child(3) { transition-delay: 0.3s; }
+  .tech-item:nth-child(4) { transition-delay: 0.4s; }
+  .tech-item:nth-child(5) { transition-delay: 0.5s; }
+  .tech-item:nth-child(6) { transition-delay: 0.6s; }
+  .tech-item:nth-child(7) { transition-delay: 0.7s; }
+  .tech-item:nth-child(8) { transition-delay: 0.8s; }
+  .tech-item:nth-child(9) { transition-delay: 0.9s; }
+  .tech-item:nth-child(10) { transition-delay: 1.0s; }
+  .tech-item:nth-child(11) { transition-delay: 1.1s; }
+  
+  .tech-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+  }
+  
+  .tech-icon {
+    font-size: 1.8rem;
+    color: #3498db;
+    flex-shrink: 0;
+  }
+  
+  .tech-info {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .name-percentage {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.2rem;
+  }
+  
+  .tech-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    transition: color 0.3s ease;
+  }
+  
   .skill-bar {
-  width: 100%;
-  height: 8px;
-  background-color: #e9ecef;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 0.5rem;
-  transition: background-color 0.3s ease;
-}
-
+    width: 100%;
+    height: 6px;
+    background-color: #e9ecef;
+    border-radius: 3px;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+  }
+  
   .skill-progress {
-  height: 100%;
-  background-color: #3498db;
-  border-radius: 4px;
-  transition: width 1s ease-in-out;
-}
-
+    height: 100%;
+    background-color: #4ab3df;
+    border-radius: 2px;
+    transition: width 1s ease-in-out;
+  }
+  
   .proficiency-text {
-  font-size: 0.9rem;
-  color: #7f8c8d;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    font-weight: 500;
+    text-align: right;
+    transition: color 0.3s ease;
+    min-width: 40px;
+  }
+
+  /* 深色模式 - 技术栈样式 */
+  .dark .tech-category,
+  .dark .tech-item {
+    background-color: #2d2d2d;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .category-title {
+    color: #4ab3df;
+    border-bottom-color: #444;
+  }
+
+  .dark .tech-name {
+    color: #e0e0e0;
+  }
+
+  .dark .skill-bar {
+    background-color: #444;
+  }
+
+  .dark .proficiency-text {
+    color: #bbb;
+  }
+
+  .dark .tech-item:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+    background-color: #333;
+  }
+
+  .dark .section-title {
+    color: #e0e0e0;
+    border-bottom-color: #4ab3df;
+  }
 
 .contact-section {
-  text-align: center;
+  padding: 2rem 0;
+}
+
+.contact-description {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+/* 左右两栏布局容器 */
+.contact-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+/* 左侧：联系链接 */
+.contact-left {
+  flex: 1;
+  min-width: 300px;
+  text-align: left;
+}
+
+.contact-left-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #3498db;
 }
 
 .contact-links {
   display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .contact-link {
   display: flex;
-  flex-direction: column;
   align-items: center;
   color: #3498db;
   text-decoration: none;
   transition: all 0.3s ease;
-  padding: 1rem;
-  border-radius: 8px;
+  padding: 1.2rem;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  gap: 1rem;
 }
 
 .contact-link:hover {
+  transform: translateX(5px);
   background-color: #f8f9fa;
-  transform: translateY(-3px);
-  color: #2980b9;
+  color: #4ab3df;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.contact-link span {
-  margin-top: 0.5rem;
-  font-weight: 500;
+.contact-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #e8f4fd;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.contact-link:hover .contact-icon {
+  background-color: #4ab3df;
+  color: white;
+  transform: scale(1.1);
+}
+
+.contact-link-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.contact-link-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
   transition: color 0.3s ease;
+}
+
+.contact-link-description {
+  font-size: 0.9rem;
+  color: #777;
+  margin: 0;
+  opacity: 0.9;
+  transition: color 0.3s ease;
+  line-height: 1.4;
+}
+
+/* 微信二维码弹窗 */
+.wechat-container {
+  cursor: pointer;
+}
+
+.qrcode-popup {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 10px;
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  min-width: 250px;
+}
+
+.qrcode-popup::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 50px;
+  transform: translateX(-50%);
+  border: 10px solid transparent;
+  border-top-color: white;
+}
+
+.wechat-container:hover .qrcode-popup {
+  opacity: 1;
+  visibility: visible;
+  margin-bottom: 15px;
+}
+
+.qrcode-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.qrcode-text {
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: #333;
+}
+
+.qrcode-placeholder {
+  width: 200px;
+  height: 200px;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  color: #3498db;
+  overflow: hidden;
+}
+
+.qrcode-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.qrcode-hint {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* 右侧：联系表单 */
+.contact-right {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.contact-form-section {
+  width: 100%;
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.contact-form-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #3498db;
+  transition: color 0.3s ease;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-input {
+  padding: 0.8rem 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: #4ab3df;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+textarea.form-input {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.form-submit-btn {
+  background: #4ab3df;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.form-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.form-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+  .contact-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .contact-left,
+  .contact-right {
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .contact-left {
+    text-align: center;
+  }
+  
+  .contact-left-title {
+    text-align: center;
+  }
+  
+  .contact-link {
+    text-align: left;
+  }
 }
 
 .quick-links {
@@ -601,7 +1045,7 @@ methods: {
 }
 
 .quick-link:hover {
-  background-color: #2980b9;
+  background-color: #4ab3df;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
 }
@@ -792,12 +1236,20 @@ methods: {
   color: #e0e0e0;
 }
 
+/* 修改header样式以匹配协作页面 */
 .dark .header {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  background: #2a2a2a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .dark .header::before {
   background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+/* 将所有标题文字改为白色 */
+.dark .header-title,
+.dark .header-subtitle {
+  color: #ffffff !important;
 }
 
 .dark .tech-item {
@@ -825,13 +1277,89 @@ methods: {
   background-color: #4a5568;
 }
 
-.dark .contact-link {
+.dark .contact-left-title {
+  color: #ffffff;
+  border-bottom-color: #4ab3df;
+}
+
+.dark .contact-link {  
+  color: #3498db;  
+  background-color: #2d2d2d;  
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);  
+}
+
+.dark .contact-link:hover {  
+  color: #4ab3df;  
+  background-color: #34495e;  
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);  
+}
+
+.dark .contact-description {
+  color: #cccccc;
+}
+
+.dark .contact-icon {
+  background-color: #34495e;
   color: #3498db;
 }
 
-.dark .contact-link:hover {
-  color: #5dade2;
-  background-color: #2c3e50;
+.dark .contact-link:hover .contact-icon {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+.dark .contact-link-title {
+  color: #3498db;
+}
+
+.dark .contact-link-description {
+  color: #999999;
+}
+
+.dark .qrcode-popup {
+  background-color: #2d2d2d;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.dark .qrcode-popup::before {
+  border-bottom-color: #2d2d2d;
+}
+
+.dark .qrcode-text {
+  color: #ffffff;
+}
+
+.dark .qrcode-placeholder {
+  background-color: #34495e;
+}
+
+.dark .qrcode-hint {
+  color: #cccccc;
+}
+
+.dark .contact-form-section {
+  background-color: #2d2d2d;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark .contact-form-title {
+  color: #ffffff;
+  border-bottom-color: #3498db;
+}
+
+.dark .form-input {
+  background-color: #34495e;
+  border-color: #4a5568;
+  color: #ffffff;
+}
+
+.dark .form-input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.dark .form-input::placeholder {
+  color: #999999;
 }
 
 .dark .quick-link {
@@ -857,5 +1385,353 @@ methods: {
 .dark .chart-container {
   background: #34495e;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+/* 项目展示样式 */
+.projects-section {
+  margin-bottom: 2rem;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.project-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.project-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.project-card-icon {
+  color: #3498db;
+  flex-shrink: 0;
+}
+
+.project-card-title {
+  font-size: 1.4rem;
+  color: #2c3e50;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.project-card-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+  transition: color 0.3s ease;
+}
+
+.project-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.project-tag {
+  padding: 0.2rem 0.6rem;
+  background-color: #e8f4fd;
+  color: #3498db;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.project-card-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.view-details {
+  display: block;
+  text-align: center;
+  color: #3498db;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+}
+
+.project-card:hover .view-details {
+  color: #2980b9;
+}
+
+.project-card-links {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #f8f9fa;
+  color: #3498db;
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.project-link:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+/* 暗黑模式样式 */
+.dark .project-card {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark .project-card-title {
+  color: #ffffff;
+}
+
+.dark .project-card-description {
+  color: #cccccc;
+}
+
+.dark .project-tag {
+  background-color: #34495e;
+  color: #4ab3df;
+}
+
+.dark .project-link {
+  background-color: #34495e;
+  color: #3498db;
+}
+
+.dark .project-link:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+/* 动画效果 */
+.project-card.animate {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.project-card.animate:nth-child(1) { animation-delay: 0.1s; }
+.project-card.animate:nth-child(2) { animation-delay: 0.2s; }
+.project-card.animate:nth-child(3) { animation-delay: 0.3s; }
+.project-card.animate:nth-child(4) { animation-delay: 0.4s; }
+.project-card.animate:nth-child(5) { animation-delay: 0.5s; }
+.project-card.animate:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 荣誉展示样式 */
+.honors-section {
+  margin-bottom: 2rem;
+}
+
+.honors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.honor-item {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.honor-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.honor-date {
+  background-color: #3498db;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  min-width: 100px;
+  text-align: center;
+}
+
+.honor-content {
+  flex-grow: 1;
+}
+
+.honor-title {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.honor-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+.honor-image-container {
+  flex-shrink: 0;
+}
+
+.honor-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.honor-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 图片模态框样式 */
+.image-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  cursor: pointer;
+  padding: 2rem;
+}
+
+.image-modal-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 5px;
+  cursor: default;
+}
+
+.image-modal-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  text-align: center;
+}
+
+/* 暗黑模式样式 - 荣誉部分 */
+.dark .honor-item {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark .honor-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark .honor-date {
+  background-color: #3498db;
+  color: white;
+}
+
+.dark .honor-title {
+  color: #ffffff;
+}
+
+.dark .honor-description {
+  color: #cccccc;
+}
+
+.dark .honor-image {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dark .image-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.95);
+}
+
+/* 荣誉项动画 */
+.honor-item.animate {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.honor-item.animate:nth-child(1) { animation-delay: 0.1s; }
+.honor-item.animate:nth-child(2) { animation-delay: 0.2s; }
+.honor-item.animate:nth-child(3) { animation-delay: 0.3s; }
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .honor-item {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .honor-date {
+    min-width: auto;
+    align-self: flex-start;
+  }
+  
+  .honor-image-container {
+    align-self: center;
+  }
+  
+  .honor-image {
+    width: 200px;
+    height: 200px;
+  }
 }
 </style>

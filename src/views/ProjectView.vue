@@ -95,13 +95,8 @@
 
     <!-- 图片查看模态框 -->
     <div v-if="showImageModal" class="image-modal-overlay" @click="closeImageModal">
-      <div class="image-modal-content" @click.stop>
-        <button class="image-modal-close" @click="closeImageModal">
-          <i class="fas fa-times"></i>
-        </button>
-        <img :src="currentImagePath" :alt="currentImageTitle" class="image-modal-image">
-        <div class="image-modal-caption">{{ currentImageTitle }}</div>
-      </div>
+      <img :src="currentImagePath" :alt="currentImageTitle" class="image-modal-image">
+      <div class="image-modal-hint">按ESC键关闭</div>
     </div>
   </div>
 </template>
@@ -143,15 +138,6 @@ export default {
           githubLink: 'https://github.com/AZcookiecat/LIDAR-RUN',
           demoLink: 'https://lidar-run.netlify.app/'
         },
-        {
-          id: '4',
-          title: '课程学习平台',
-          description: '基于Vue 3和Vite开发的课程学习平台，旨在通过数字化手段帮助学生学习知识，提升学习效率',
-          icon: 'fab fa-vuejs fa-2x',
-          tags: ['Vue.js', 'Node.js'],
-          githubLink: 'https://github.com/AZcookiecat/schoolclasses',
-          demoLink: 'https://schoolclass.netlify.app/'
-        },
       ],
 
 
@@ -186,19 +172,28 @@ export default {
       this.currentImagePath = imagePath;
       this.currentImageTitle = imageTitle;
       this.showImageModal = true;
-      // 防止背景滚动
-      document.body.style.overflow = 'hidden';
+      // 不再阻止背景滚动，允许用户上下滑动页面
+      // 添加键盘事件监听
+      document.addEventListener('keydown', this.handleKeydown);
     },
     // 关闭图片模态框
     closeImageModal() {
       this.showImageModal = false;
-      // 恢复背景滚动
-      document.body.style.overflow = '';
+      // 移除键盘事件监听
+      document.removeEventListener('keydown', this.handleKeydown);
+    },
+    // 处理键盘事件
+    handleKeydown(event) {
+      // 按下ESC键时关闭模态框
+      if (event.key === 'Escape' || event.key === 'Esc') {
+        this.closeImageModal();
+      }
     }
   },
-  // 组件销毁时恢复背景滚动
+  // 组件销毁时移除事件监听
   beforeUnmount() {
-    document.body.style.overflow = '';
+    // 确保移除键盘事件监听
+    document.removeEventListener('keydown', this.handleKeydown);
   }
 }</script>
 
@@ -215,9 +210,8 @@ export default {
   text-align: center;
   margin-bottom: 3rem;
   padding: 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 10px;
-  color: white;
+  color: black;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }
@@ -237,7 +231,7 @@ export default {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   color: #2c3e50;
-  border-bottom: 2px solid #3498db;
+  border-bottom: 2px solid #4ab3df;
   padding-bottom: 0.5rem;
   display: inline-flex;
   align-items: center;
@@ -280,7 +274,7 @@ export default {
 }
 
 .project-card-icon {
-  color: #3498db;
+  color: #4ab3df;
   flex-shrink: 0;
 }
 
@@ -332,7 +326,7 @@ export default {
 }
 
 .project-card:hover .view-details {
-  color: #2980b9;
+  color: #4ab3df;
 }
 
 .project-card-links {
@@ -355,7 +349,7 @@ export default {
 }
 
 .project-link:hover {
-  background-color: #3498db;
+  background-color: #4ab3df;
   color: white;
 }
 
@@ -381,7 +375,7 @@ export default {
 }
 
 .honor-date {
-  background-color: #3498db;
+  background-color: #4ab3df;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 5px;
@@ -489,58 +483,50 @@ export default {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.9);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   z-index: 1000;
   animation: fadeIn 0.3s ease;
+  cursor: zoom-out;
+  /* 确保模态框在最顶层 */
+  z-index: 9999;
+  /* 允许页面滚动 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
-.image-modal-content {
-  position: relative;
-  max-width: 90%;
-  max-height: 90vh;
-  background-color: white;
-  border-radius: 10px;
-  padding: 1rem;
-  animation: zoomIn 0.3s ease;
-}
-
-.image-modal-close {
+.image-modal-hint {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(0, 0, 0, 0.5);
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   color: white;
-  border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  font-size: 14px;
+  padding: 8px 16px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+  pointer-events: auto;
+  user-select: none;
 }
 
-.image-modal-close:hover {
-  background: rgba(0, 0, 0, 0.8);
-  transform: scale(1.1);
+.image-modal-overlay > img {
+  pointer-events: auto;
 }
 
 .image-modal-image {
-  max-width: 100%;
-  max-height: 80vh;
-  display: block;
-  margin: 0 auto 1rem;
-  border-radius: 5px;
-}
-
-.image-modal-caption {
-  text-align: center;
-  font-size: 1rem;
-  color: #333;
-  transition: color 0.3s ease;
+  max-width: 95%;
+  max-height: 95vh;
+  object-fit: contain;
+  cursor: default;
+  animation: zoomIn 0.3s ease;
+  /* 确保图片完美居中 */
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
 /* 动画效果 */
@@ -574,7 +560,7 @@ export default {
 }
 
 .dark .view-details {
-  color: #5dade2;
+  color: #4ab3df;
 }
 
 .dark .project-card:hover .view-details {
@@ -586,13 +572,18 @@ export default {
 }
 
 .dark .project-header {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  background: #2a2a2a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark .project-title,
+.dark .project-subtitle {
+  color: #ffffff !important;
 }
 
 .dark .section-title {
   color: #ffffff;
-  border-bottom-color: #3498db;
+  border-bottom-color: #4ab3df;
 }
 
 .dark .project-card {
@@ -620,7 +611,7 @@ export default {
 
 .dark .project-tag {
   background-color: #34495e;
-  color: #5dade2;
+  color: #4ab3df;
 }
 
 .dark .project-link {

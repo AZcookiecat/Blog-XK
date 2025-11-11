@@ -269,7 +269,7 @@ export default {
   align-items: center;
   gap: 0.5rem;
   padding: 0.8rem 1.5rem;
-  background-color: #3498db;
+  background-color: #4ab3df;
   color: white;
   border: none;
   border-radius: 5px;
@@ -280,7 +280,7 @@ export default {
 }
 
 .back-button:hover {
-  background-color: #2980b9;
+  background-color: #4ab3df;
   transform: translateX(-3px);
 }
 
@@ -314,7 +314,7 @@ export default {
   color: #2c3e50;
   font-weight: 600;
   padding-bottom: 0.5rem;
-  border-bottom: 3px solid #3498db;
+  border-bottom: 3px solid #4ab3df;
   transition: color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -362,7 +362,7 @@ export default {
 }
 
 .feature-item i {
-  color: #3498db;
+  color: #4ab3df;
   font-size: 1.2rem;
   margin-top: 0.3rem;
   flex-shrink: 0;
@@ -433,7 +433,7 @@ export default {
 .screenshot-image:hover {
   transform: scale(1.02);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  border-color: #3498db;
+  border-color: #4ab3df;
 }
 
 .screenshot-caption {
@@ -560,6 +560,7 @@ export default {
 
 /* 深色模式样式 */
 .dark .project-detail-container {
+  background-color: #121212;
   color: #e0e0e0;
 }
 
@@ -570,7 +571,7 @@ export default {
 
 .dark .section-title {
   color: #ffffff;
-  border-color: #5dade2;
+  border-color: #4ab3df;
 }
 
 .dark .project-description,
@@ -578,8 +579,9 @@ export default {
 .dark .project-tech-stack,
 .dark .project-links,
 .dark .project-screenshots {
-  background-color: #2d2d2d;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #1e1e1e;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
 }
 
 .dark .project-detail-description,
@@ -592,21 +594,34 @@ export default {
 }
 
 .dark .feature-item i {
-  color: #5dade2;
+  color: #4ab3df;
 }
 
 .dark .tech-tag {
-  background-color: #34495e;
+  background-color: #2c3e50;
   color: #5dade2;
+  border: 1px solid #34495e;
 }
 
 .dark .project-detail-link {
-  background-color: #5dade2;
+  background-color: #2c3e50;
+  color: #5dade2;
+  border: 1px solid #34495e;
 }
 
 .dark .project-detail-link:hover {
-  background-color: #3498db;
-  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.5);
+  background-color: #34495e;
+  color: #7f8c8d;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.dark .screenshot-image {
+  border-color: #333;
+}
+
+.dark .screenshot-image:hover {
+  border-color: #4ab3df;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .dark .screenshot-caption {
@@ -622,10 +637,28 @@ export default {
 }
 
 .dark .back-button {
-  background-color: #5dade2;
+  background-color: #2c3e50;
+  color: #5dade2;
+  border: 1px solid #34495e;
 }
 
 .dark .back-button:hover {
-  background-color: #3498db;
+  background-color: #34495e;
+  color: #7f8c8d;
+  transform: translateX(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 图片模态框深色模式样式优化 */
+.dark .image-modal-close:hover {
+  color: #4ab3df;
+}
+
+.dark .image-modal-image {
+  border: 1px solid #444;
+}
+
+.dark .image-modal-caption {
+  color: #ccc;
 }
 </style>

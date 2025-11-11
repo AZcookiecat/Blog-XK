@@ -244,6 +244,16 @@ export default {
           assignee: { id: 1, name: '向烁安', avatar: '/avatar/head.jpg' },
           createdDate: '2025-10-23',
           dueDate: '2025-11-5'
+        },
+        {
+          id: 2,
+          title: '个人网页内容完善',
+          description: '继续完善个人博客网页的内容，包括添加项目展示、技术博客和个人介绍。',
+          status: 'in_progress',
+          priority: 'high',
+          assignee: { id: 1, name: '向烁安', avatar: '/avatar/head.jpg' },
+          createdDate: '2025-11-13',
+          dueDate: '2025-11-20'
         }
       ]
     };
@@ -419,7 +429,7 @@ export default {
 }
 
 .page-header h1 {
-  color: #2c3e50;
+  color: black;
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
@@ -428,7 +438,7 @@ export default {
 }
 
 .page-header p {
-  color: #7f8c8d;
+  color: black;
   font-size: 1.1rem;
 }
 
@@ -452,7 +462,7 @@ export default {
 
 .section-title i {
   margin-right: 0.5rem;
-  color: #3498db;
+  color: #4ab3df;
 }
 
 /* 统计卡片样式 */
@@ -463,7 +473,7 @@ export default {
 }
 
 .stat-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #4ab3df;
   color: white;
   padding: 1.5rem;
   border-radius: 8px;
@@ -512,9 +522,9 @@ export default {
 }
 
 .filter-btn.active {
-  background: #3498db;
+  background: #4ab3df;
   color: #000; /* 设置为黑色 */
-  border-color: #3498db;
+  border-color: #4ab3df;
 }
 
 .search-box {
@@ -894,7 +904,7 @@ export default {
 }
 
 .btn-save:hover {
-  background: #2980b9;
+  background: #3a9bc8;
   color: #000; /* 设置为黑色 */
 }
 
@@ -996,7 +1006,7 @@ export default {
   }
   
   .markdown-content blockquote {
-    border-left: 4px solid #3498db;
+    border-left: 4px solid #4ab3df;
     padding-left: 1rem;
     margin-left: 0;
     margin-right: 0;
@@ -1111,8 +1121,8 @@ export default {
 }
 
 .dark .filter-btn.active {
-  background: #1e3a5f;
-  border-color: #64b5f6;
+  background: #1a5c7a;
+  border-color: #4ab3df;
 }
 
 .dark .search-input {
@@ -1165,7 +1175,7 @@ export default {
 }
 
 .dark .member-stats {
-  color: #64b5f6;
+  color: #4ab3df;
 }
 
 .dark .modal-content {
@@ -1229,7 +1239,7 @@ export default {
   
   .dark .markdown-content blockquote {
     color: #8e8e8e;
-    border-left-color: #64b5f6;
+    border-left-color: #4ab3df;
   }
   
   .dark .markdown-content code,

@@ -1,72 +1,100 @@
 <template>
-  <div class="app" :class="{ 'dark-mode': isDarkMode }">
-    <!-- 导航栏 -->
-    <nav class="navbar">
-      <div class="navbar-container">
-        <router-link to="/" class="navbar-brand">
-          <span class="brand-name">Ciin7mo</span>
-          <span class="brand-subtitle">Personal Blog</span>
-        </router-link>
-        
-        <div class="navbar-menu">
-          <router-link to="/" class="navbar-link" :class="{ active: $route.path === '/' }">
-            <i class="fas fa-home"></i>
-            首页
-          </router-link>
-          <router-link to="/blog" class="navbar-link" :class="{ active: $route.path.startsWith('/blog') && $route.path !== '/blog/' }">
-            <i class="fas fa-book"></i>
-            博客
-          </router-link>
-          <router-link to="/projects" class="navbar-link" :class="{ active: $route.path === '/projects' }">
-            <i class="fas fa-code"></i>
-            项目
-          </router-link>
-          
-          <router-link to="/collaboration" class="navbar-link" :class="{ active: $route.path === '/collaboration' }">
-            <i class="fas fa-users"></i>
-            协作
-          </router-link>
-          
-          <router-link to="/contact" class="navbar-link" :class="{ active: $route.path === '/contact' }">
-            <i class="fas fa-envelope"></i>
-            联系我
-          </router-link>
-          
-          <!-- 黑白模式切换按钮 -->
-          <button 
-            class="dark-mode-toggle"
-            @click="toggleDarkMode"
-            title="切换黑白模式"
-          >
-            <i v-if="isDarkMode" class="fas fa-sun"></i>
-            <i v-else class="fas fa-moon"></i>
-          </button>
+  <ClickSpark 
+    sparkColor="rgba(184,111,211,1)"
+    sparkSize="30"
+    sparkRadius="60"
+    sparkCount="14"
+    duration="900"
+    easing="ease-out"
+    extraScale="1"
+  >
+    <div class="app">
+      <!-- 头部导航 -->
+      <CardNav 
+        :items="navItems"
+        logoAlt="Ciin7mo Logo"
+        :baseColor="isDarkMode ? '#1a1a1a' : '#fff'"
+        :menuColor="isDarkMode ? '#fff' : '#000'"
+        buttonBgColor="#111"
+        buttonTextColor="#fff"
+        ease="power3.out"
+        @switch-change="handleSwitchChange"
+      />
+      
+
+      <!-- 主内容区 -->
+      <main class="content">
+        <router-view />
+      </main>
+
+       <!-- 页脚 -->
+      <footer class="footer">
+        <div class="footer-content">
+          <p>版权所有 2025 Ciin7mo的个人博客 <span style="font-size: 12px; color: #999;">本站已安全运行<span class="time-animation">{{ daysRunning }}</span>天<span class="time-animation">{{ hoursRunning }}</span>时 现在时间：<span v-for="(char, index) in currentTime.split('')" :key="`time-${char}-${index}`" :class="{ 'time-animation': /\d/.test(char) }">
+                {{ char }}
+             </span> {{ dayOfWeek }}</span>
+          </p>
         </div>
-      </div>
-    </nav>
-
-    <!-- 主内容区 -->
-    <main class="main-content">
-      <router-view />
-    </main>
-
-    <!-- 页脚 -->
-    <footer class="footer">
-      <div class="footer-content">
-        <p>&copy; 版权所有  2025 Ciin7mo的个人博客 本站已安全运行 <span class="time-animation">{{ daysRunning }}</span> 天 <span class="time-animation">{{ hoursRunning }}</span> 时 现在时间：
-          <span v-for="char in currentTime.split('')" :key="char" :class="{ 'time-animation': /\\d/.test(char) }">
-            {{ char }}
-          </span> {{ dayOfWeek }}
-        </p>
-      </div>
-    </footer>
-  </div>
+      </footer>
+      
+      <!-- 回到顶部按钮 -->
+      <BackToTop />
+      <BottomDock />
+    </div>
+  </ClickSpark>
 </template>
 
+
 <script>
+import CardNav from './components/CardNav.vue';
+import BackToTop from './components/BackToTop.vue';
+import BottomDock from './components/BottomDock.vue';
+import ClickSpark from './components/ClickSpark.vue';
+
 export default {
+  components: {
+    CardNav,
+    BackToTop,
+    BottomDock,
+    ClickSpark
+  },
   data() {
     return {
+      // 导航栏数据
+      navItems: [
+        {  
+          label: "首页", 
+          bgColor: "#121113",         
+          textColor: "#fff",          
+          links: [            
+            { label: "", href: "/", ariaLabel: "首页" }       
+          ]        
+        },
+        {
+          label: "博客",
+          bgColor: "#170D27",
+          textColor: "#fff",
+          links: [
+            { label: "", href: "/blog", ariaLabel: "查看所有博客文章" }
+          ]
+        },
+        {
+          label: "协作",
+          bgColor: "#271E37",
+          textColor: "#fff",
+          links: [
+            { label: "", href: "/collaboration", ariaLabel: "协作项目列表" }
+          ]
+        },
+        {
+          label: "面试",
+          bgColor: "#372E47",
+          textColor: "#fff",
+          links: [
+            { label: "", href: "/interview", ariaLabel: "面试题集合" }
+          ]
+        }
+      ],
       // 初始运行时间设置为2025年3月12日
       initialRunDate: new Date(2025, 2, 12),
       timer: null,
@@ -74,7 +102,9 @@ export default {
       // 黑白模式状态，默认使用localStorage保存的设置或根据系统偏好自动选择
       isDarkMode: localStorage.getItem('darkMode') === 'true' || 
                   (localStorage.getItem('darkMode') === null && 
-                  window.matchMedia('(prefers-color-scheme: dark)').matches)
+                  window.matchMedia('(prefers-color-scheme: dark)').matches),
+      // 先初始化为空字符串，在mounted中设置实际时间
+      currentTimeValue: ''
     };
   },
   computed: {
@@ -93,11 +123,7 @@ export default {
     },
     // 获取当前时间
     currentTime() {
-      const now = new Date();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      const seconds = now.getSeconds().toString().padStart(2, '0');
-      return `${hours}:${minutes}:${seconds}`;
+      return this.currentTimeValue;
     },
     // 获取星期几
     dayOfWeek() {
@@ -106,12 +132,62 @@ export default {
       return days[now.getDay()];
     }
   },
+  
   methods: {
+    // 获取当前时间并处理基于时间的自动主题切换
+    getCurrentTime() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      
+      // 基于时间的自动主题切换逻辑
+      const hour = now.getHours();
+      
+      // 检查是否应该自动切换主题（避免与用户手动切换冲突）
+      // 只有当localStorage中没有darkMode设置或用户没有手动切换过才自动切换
+      if (!localStorage.getItem('userToggledDarkMode')) {
+        // 22点-7点：自动切换为深色模式
+        if (hour >= 22 || hour < 7) {
+          if (!this.isDarkMode) {
+            this.isDarkMode = true;
+            localStorage.setItem('darkMode', true);
+            this.updateDarkModeClass();
+          }
+        }
+        // 7点-17点：自动切换为浅色模式
+        else if (hour >= 7 && hour < 17) {
+          if (this.isDarkMode) {
+            this.isDarkMode = false;
+            localStorage.setItem('darkMode', false);
+            this.updateDarkModeClass();
+          }
+        }
+        // 17点-22点：每小时20%的进度切换深色模式
+        else if (hour >= 17 && hour < 22) {
+          // 计算当前小时相对于17点的进度百分比
+          const hourProgress = ((hour - 17) + (minutes / 60) + (seconds / 3600)) / 5;
+          const darkLevel = Math.min(Math.floor(hourProgress * 5), 4); // 0-4，对应0%-80%
+          
+          // 当达到20%、40%、60%、80%的进度时切换为深色模式
+          if (darkLevel >= 1 && !this.isDarkMode) {
+            this.isDarkMode = true;
+            localStorage.setItem('darkMode', true);
+            this.updateDarkModeClass();
+          }
+        }
+      }
+      
+      return `${hours}:${minutes}:${seconds}`;
+    },
+    
     // 切换黑白模式
     toggleDarkMode() {
       this.isDarkMode = !this.isDarkMode;
       // 保存到localStorage，使设置在页面刷新后保持
       localStorage.setItem('darkMode', this.isDarkMode);
+      // 设置用户手动切换标志，防止自动切换覆盖用户选择
+      localStorage.setItem('userToggledDarkMode', 'true');
       this.updateDarkModeClass();
     },
     
@@ -123,28 +199,44 @@ export default {
         document.documentElement.classList.remove('dark');
         document.body.classList.remove('dark-body');
       }
+    },
+    
+    // 处理开关变化
+    handleSwitchChange(isDark) {
+      this.isDarkMode = isDark;
+      localStorage.setItem('darkMode', this.isDarkMode);
+      // 设置用户手动切换标志，防止自动切换覆盖用户选择
+      localStorage.setItem('userToggledDarkMode', 'true');
+      this.updateDarkModeClass();
     }
   },
   
   mounted() {
-    // 设置定时器每秒更新时间
-    this.timer = setInterval(() => {
-      this.$forceUpdate();
-    }, 1000);
-    
-    // 设置暗黑模式样式
+    // 初始化时设置黑暗模式
     this.updateDarkModeClass();
     
-    // 监听系统主题变化
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    this.mediaQueryListener = (e) => {
-      // 只有在没有用户设置的情况下才响应系统主题变化
-      if (!localStorage.getItem('darkMode')) {
-        this.isDarkMode = e.matches;
-        this.updateDarkModeClass();
-      }
-    }
-    mediaQuery.addEventListener('change', this.mediaQueryListener);
+    // 初始化当前时间
+    this.currentTimeValue = this.getCurrentTime();
+    
+    // 设置定时器每秒更新时间
+    this.timer = setInterval(() => {
+      // 更新时间数据
+      this.currentTimeValue = this.getCurrentTime();
+      // 确保动画效果
+      this.$nextTick(() => {
+        const timeElements = document.querySelectorAll('.time-animation');
+        timeElements.forEach(el => {
+          // 重置动画
+          el.style.animation = 'none';
+          // 强制重绘
+          void el.offsetWidth;
+          // 重新触发动画
+          el.style.animation = 'pulse 0.5s ease-in-out';
+        });
+      });
+    }, 1000);
+    
+    // 移除旧的监听器，使用props和事件来处理
   },
   
   beforeUnmount() {
@@ -152,30 +244,99 @@ export default {
     if (this.timer) {
       clearInterval(this.timer);
     }
-    
-    // 移除系统主题变化的监听
+    // 清除媒体查询监听器
     if (this.mediaQueryListener) {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      mediaQuery.removeEventListener('change', this.mediaQueryListener);
+      this.mediaQueryListener.removeEventListener('change', this.handleMediaQueryChange);
     }
   }
 }
 </script>
 
-<style scoped>
-/* 全局样式 */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+<style>
+/* 全局CSS变量定义 */
+:root {
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --text-secondary: #666666;
+  --border-color: #e0e0e0;
+  --secondary-color: #4ab3df;
+  --hover-color: #3a9bc8;
+  --card-background: #ffffff;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background-color: #f5f5f5;
-  transition: background-color 0.3s ease, color 0.3s ease;
+/* 深色模式变量 */
+.dark {
+  --background-color: #121212;
+  --text-color: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --border-color: #333333;
+  --secondary-color: #4ab3df;
+  --hover-color: #3a9bc8;
+  --card-background: #1e1e1e;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 深色模式下的body样式 */
+.dark-body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* 确保深色模式下的基础元素样式 */
+.dark a {
+  color: var(--secondary-color);
+}
+
+.dark a:hover {
+  color: var(--hover-color);
+}
+
+.dark button {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.dark input,
+.dark textarea {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.dark ::-webkit-scrollbar {
+  background-color: #2c2c2c;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 10px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
+}
+</style>
+
+<style scoped>
+/* 动画定义 */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+    color: var(--secondary-color);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 时间动画样式 */
+.time-animation {
+  animation: pulse 0.5s ease-in-out;
 }
 
 /* App容器样式 */
@@ -183,240 +344,219 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #f8f9fa;
-  transition: background-color 0.3s ease;
-}
-
-/* 导航栏样式 */
-.navbar {
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.navbar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 80px;
-}
-
-.navbar-brand {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: #2c3e50;
-  transition: color 0.3s ease;
-}
-
-.brand-name {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #3498db;
-  transition: color 0.3s ease;
-}
-
-.brand-subtitle {
-  font-size: 0.8rem;
-  color: #7f8c8d;
-  transition: color 0.3s ease;
-}
-
-.navbar-menu {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.navbar-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  color: #2c3e50;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.navbar-link:hover {
-  background-color: #f8f9fa;
-  color: #3498db;
-}
-
-.navbar-link.active {
-  background-color: #e8f4fd;
-  color: #3498db;
-}
-
-/* 黑白模式切换按钮样式 */
-.dark-mode-toggle {
-  background: none;
-  border: 2px solid #3498db;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  color: #2c3e50;
-  font-size: 1.2rem;
-}
-
-.dark-mode-toggle:hover {
-  background-color: #3498db;
-  color: white;
-}
-
-.main-content {
-  flex-grow: 1;
+  background-color: var(--background-color);
+  color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.footer {
-  background-color: #2c3e50;
-  color: white;
-  padding: 2rem 0;
-  text-align: center;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+/* 头部导航样式 */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--background-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
-.footer-content {
-  max-width: 1200px;
+.header-container {
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
 }
 
-/* 黑白模式（暗黑模式）样式 */
-.dark {
-  color-scheme: dark;
+.header-brand {
+  text-decoration: none;
 }
 
-.dark .app {
-  background-color: #121212;
-  color: #e0e0e0;
+.brand-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  letter-spacing: -0.02em;
 }
 
-.dark .navbar {
-  background-color: #1e1e1e;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+/* 导航菜单样式 */
+.header-nav {
+  display: flex;
+  gap: 2.5rem;
 }
 
-.dark .navbar-brand,
-.dark .navbar-link {
-  color: #e0e0e0;
-}
-
-.dark .brand-name {
-  color: #64b5f6;
-}
-
-.dark .brand-subtitle {
-  color: #b0b0b0;
-}
-
-.dark .navbar-link:hover {
-  background-color: #2a2a2a;
-  color: #64b5f6;
-}
-
-.dark .navbar-link.active {
-  background-color: #1e3a5f;
-  color: #64b5f6;
-}
-
-.dark .dark-mode-toggle {
-  color: #e0e0e0;
-  border-color: #64b5f6;
-}
-
-.dark .dark-mode-toggle:hover {
-  background-color: #64b5f6;
-  color: white;
-}
-
-.dark .footer {
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-}
-
-.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-  color: #ffffff;
-}
-
-.dark p {
-  color: #cccccc;
-}
-
-.dark a {
-  color: #64b5f6;
+.nav-link {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+  text-decoration: none;
+  position: relative;
+  padding: 0.5rem 0;
   transition: color 0.3s ease;
+  letter-spacing: 0.02em;
 }
 
-.dark a:hover {
-  color: #90caf9;
+.nav-link:hover {
+  color: var(--secondary-color);
 }
 
-.dark button {
-  background-color: #34495e;
-  color: #ffffff;
-  border: 1px solid #5dade2;
-  transition: all 0.3s ease;
+.nav-link.active {
+  color: var(--secondary-color);
 }
 
-.dark button:hover {
-  background-color: #3498db;
-  border-color: #5dade2;
+.nav-link.active::after,
+.nav-link:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--secondary-color);
+  transition: width 0.3s ease;
 }
 
-.dark .card, .dark .blog-card, .dark .project-card {
-  background-color: #1e1e1e;
+/* 主内容区样式 */
+.content {
+  flex-grow: 1;
+  max-width: 1440px;
+  width: 100%;
+  margin: 4rem auto;
+  padding: 0 2rem;
+}
+
+/* 页脚样式 */
+.footer {
+  background-color: var(--background-color);
+  border-top: 1px solid var(--border-color);
+  padding: 2rem 0;
+  margin-top: 4rem;
+  position: relative;
+  min-height: 60px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.footer p {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding-bottom: 0.5rem;
+  padding-top: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  width: 100%;
+  text-align: center;
+}
+
+/* 主内容区样式 */
+.content {
+  flex-grow: 1;
+  max-width: 1440px;
+  width: 100%;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  transition: background-color 0.3s ease;
+}
+
+/* 为所有卡片和容器添加深色模式支持 */
+.dark .card,
+.dark .container,
+.dark .section {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+/* 为代码块添加深色模式支持 */
+.dark pre,
+.dark code {
+  background-color: #2d2d2d;
   color: #e0e0e0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  border-color: #333;
+  border-color: #444;
 }
 
-.dark .blog-card:hover, .dark .project-card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+/* 为表单元素添加深色模式支持 */
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="password"],
+.dark input[type="search"],
+.dark select,
+.dark textarea {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border-color: var(--border-color);
 }
 
-.dark .tag, .dark .project-tag {
-  background-color: #34495e;
-  color: #64b5f6;
+/* 确保图片在深色模式下不会有白色背景 */
+.dark img {
+  background-color: transparent;
 }
 
-.dark .dark-body {
-  background-color: #121212;
-  color: #e0e0e0;
+/* 为列表项添加深色模式支持 */
+.dark ul,
+.dark ol {
+  color: var(--text-color);
+}
+
+.dark li {
+  border-color: var(--border-color);
+}
+
+/* 为表格添加深色模式支持 */
+.dark table {
+  border-color: var(--border-color);
+}
+
+.dark th,
+.dark td {
+  border-color: var(--border-color);
+  background-color: var(--card-background);
 }
 
 /* 响应式设计 */
-@media (max-width: 768px) {
-  .navbar-container {
-    flex-direction: column;
-    height: auto;
-    padding: 1rem;
-    gap: 1rem;
+@media (max-width: 1024px) {
+  .header-container,
+  .content,
+  .footer-container {
+    max-width: 100%;
+    padding: 0 1.5rem;
   }
   
-  .navbar-menu {
+  .header-nav {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    height: auto;
+    padding: 1.5rem 1rem;
+    gap: 1.5rem;
+  }
+  
+  .header-nav {
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 1rem;
   }
   
-  .navbar-link {
-    padding: 0.4rem 0.8rem;
+  .nav-link {
     font-size: 0.9rem;
+  }
+  
+  .content {
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  .footer {
+    padding: 2rem 0;
   }
 }
 </style>
