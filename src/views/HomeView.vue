@@ -352,11 +352,20 @@ export default {
         {
           id: '3',
           title: 'LIDAR-RUN',
-          description: '',
+          description: 'LIDAR-RUN是一个专注于激光雷达数据处理与可视化的Web应用。该项目旨在为开发者和研究人员提供一个便捷的工具，用于处理、分析和展示激光雷达数据。平台支持多种格式的激光雷达数据导入，提供丰富的数据处理算法，并能够以3D形式直观地展示处理结果。',
           icon: 'fab fa-vuejs fa-2x',
           tags: ['Vue.js', 'Node.js'],
           githubLink: 'https://github.com/AZcookiecat/LIDAR-RUN',
           demoLink: 'https://lidar-run.netlify.app/'
+        },
+        {
+          id: '4',
+          title: '慧脉中医',
+          description: '',
+          icon: 'fab fa-html5 fa-2x',
+          tags: ['Html', 'CSS','JavaScript'],
+          githubLink: 'https://github.com/AZcookiecat/LIDAR-RUN',
+          demoLink: ''
         },
       ],
       // 荣誉数据

@@ -367,18 +367,6 @@ export default {
     
     addDefaultBlogs() {
       this.blogs = [
-        {
-          id: '1',
-          title: 'GitHub大文件推送限制问题解决方案报告',
-          summary: '本文详细介绍了在GitHub中推送大文件时遇到的问题及解决方案，包括Git LFS的使用、文件分割等多种方法...',
-          date: '2024-09-15',
-          author: '井上川',
-          techTags: ['git', 'GitHub'],
-          softwareTags: ['VScode', 'github'],
-          pinned: true,
-          collection: 'Git进阶教程',
-          contentPath: '../../GitHub大文件推送限制问题解决方案报告.md'
-        }
       ];
     }
   },

@@ -240,7 +240,7 @@ export default {
           title: '个人博客网页构建',
           description: '构建一个属于自己的个人博客网页，展示个人项目、技术博客和个人介绍。谨记：先实现再优化',
           status: 'completed',
-          priority: 'high',
+          priority: 'medium',
           assignee: { id: 1, name: '向烁安', avatar: '/avatar/head.jpg' },
           createdDate: '2025-10-23',
           dueDate: '2025-11-5'
@@ -249,11 +249,21 @@ export default {
           id: 2,
           title: '个人网页内容完善',
           description: '继续完善个人博客网页的内容，包括添加项目展示、技术博客和个人介绍。',
-          status: 'in_progress',
-          priority: 'high',
+          status: 'completed',
+          priority: 'medium',
           assignee: { id: 1, name: '向烁安', avatar: '/avatar/head.jpg' },
           createdDate: '2025-11-13',
           dueDate: '2025-11-20'
+        },
+        {
+          id: 3,
+          title: '慧脉中医项目初步设计',
+          description: '设计一个基于HTML、CSS和JavaScript的简单网页，用于展示慧脉中医的项目信息。',
+          status: 'in_progress',
+          priority: 'high',
+          assignee: { id: 1, name: '向烁安', avatar: '/avatar/head.jpg' },
+          createdDate: '2025-12-01',
+          dueDate: '2025-12-8'
         }
       ]
     };
