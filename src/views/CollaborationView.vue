@@ -257,8 +257,8 @@ export default {
         },
         {
           id: 3,
-          title: '慧脉中医项目初步设计',
-          description: '设计一个基于HTML、CSS和JavaScript的简单网页，用于展示慧脉中医的项目信息。',
+          title: '项目接手初期准备工作',
+          description: '与项目组成员进行项目接手初期准备工作，包括项目背景、项目架构、技术栈、开发环境、项目进度等。',
           status: 'in_progress',
           priority: 'high',
           assignee: { id: 1, name: '向烁安', avatar: '/avatar/head.jpg' },

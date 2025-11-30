@@ -277,6 +277,12 @@ export default {
   --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
+/* 全局禁用深色模式下所有文本元素的下划线和底部边框 */
+.dark * {
+  text-decoration: none;
+  border-bottom: none;
+}
+
 /* 深色模式下的body样式 */
 .dark-body {
   background-color: var(--background-color);
@@ -503,7 +509,7 @@ export default {
 }
 
 .dark li {
-  border-color: var(--border-color);
+  border: none;
 }
 
 /* 为表格添加深色模式支持 */

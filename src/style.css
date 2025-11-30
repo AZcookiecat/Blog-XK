@@ -1,7 +1,7 @@
 /* 字体引入 */
 @font-face {
-  font-family: 'ShangshouTuanyuan';
-  src: url('/font/上首团圆体.ttf') format('truetype');
+  font-family: 'ZihunWuwenguanSuxiu';
+  src: url('/font/字魂吴文化博物馆苏绣体(商用需授权).ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -23,7 +23,7 @@
   font-display: swap;
 }
 
-/* 全局样式变量 - 素马设计风格 */
+/* 全局样式变量 */
 :root {
   /* 颜色变量 - 现代简洁风格 */
   --primary-color: #000000;
@@ -40,7 +40,7 @@
   --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.1);
   
   /* 字体设置 */
-  font-family: 'KanozBrush', 'ShangshouTuanyuan', sans-serif;
+  font-family: 'KanozBrush', 'ZihunWuwenguanSuxiu', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   
